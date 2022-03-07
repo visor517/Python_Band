@@ -1,4 +1,6 @@
 default:
+    ALLOWED_HOSTS:
+        - '*'
     DEBUG: false
     INSTALLED_APPS:
         - django.contrib.admin
@@ -8,12 +10,10 @@ default:
         - django.contrib.messages
         - django.contrib.staticfiles
 development:
-    ALLOWED_HOSTS:
-        - '*'
     SECRET_KEY: ""
     DEBUG: true
 production:
-    ALLOWED_HOSTS:
-        - ''
     SECRET_KEY: ""
     DEBUG: false
+    ALLOWED_HOSTS:
+        - ''
