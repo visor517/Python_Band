@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/owl-slider.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/settings.css' %}" />
+    {% endblock css %}
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
+    <title>
+        {% block title %}
+        {{ title|capfirst }}
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    {% block load_procesing %}
+    <!-- для процесса бар -->
+    {% endblock load_procesing %}
+
+    {% block header %}
+    {% include 'mainapp/includes/inc_header.html' %}
+    <!-- Верхняя часть страницы -->
+    {% endblock header %}
+
+    {% block content %}
+    <!-- пока пустой -->
+    {% endblock content %}
+
+    {% block footer %}
+    {% include 'mainapp/includes/inc_footer.html' %}
+    <!-- Блок подвала -->
+    {% endblock footer %}
+
+    </div>
+
+</body>
+
+</html><!-- Первая буква заглавная-->
