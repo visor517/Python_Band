@@ -1,0 +1,19 @@
+default:
+    ALLOWED_HOSTS:
+        - '*'
+    DEBUG: false
+    INSTALLED_APPS:
+        - django.contrib.admin
+        - django.contrib.auth
+        - django.contrib.contenttypes
+        - django.contrib.sessions
+        - django.contrib.messages
+        - django.contrib.staticfiles
+development:
+    SECRET_KEY: ""
+    DEBUG: true
+production:
+    SECRET_KEY: ""
+    DEBUG: false
+    ALLOWED_HOSTS:
+        - ''
