@@ -4,12 +4,15 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    ADMIN = 1
+    MODERATOR = 2
+    CLIENT = 3
     ROLE_TYPES = (
-        (1, 'Администратор'),
-        (2, 'Модератор'),
-        (3, 'Пользователь'),
+        (ADMIN, 'Администратор'),
+        (MODERATOR, 'Модератор'),
+        (CLIENT, 'Пользователь'),
     )
     uid = models.UUIDField(verbose_name='ид', primary_key=True, default=uuid4)
     avatar = models.ImageField(upload_to='users_images', blank=True)
-    email = models.EmailField(blank=True, unique=True)
-    role = models.IntegerField(verbose_name='Роль', choices=ROLE_TYPES, null=True)
+    email = models.EmailField(unique=True)
+    role = models.IntegerField(verbose_name='Роль', choices=ROLE_TYPES, default=CLIENT)
