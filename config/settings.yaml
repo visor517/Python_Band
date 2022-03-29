@@ -12,6 +12,8 @@ default:
         - mainapp
         - users
         - articleapp
+    LANGUAGE_CODE: 'ru'
+    TIME_ZONE: 'Europe/Moscow'
 development:
     SECRET_KEY: ""
     DEBUG: true

@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
+
 from config.config import settings
 from pathlib import Path
 
@@ -91,9 +93,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = settings.default.LANGUAGE_CODE
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = settings.default.TIME_ZONE
 
 USE_I18N = True
 
@@ -106,8 +108,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'static'),
 )
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
