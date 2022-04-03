@@ -1,0 +1,15 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="post-entry">
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.author }}</p>
+        <p>{{ article.category }}</p>
+        <p>{{ article.content }}</p>
+        <p>{{ article.image }}</p>
+    </div>
+    <a href='{% url 'article_edit' article.pk %}'>Редактировать</a>
+    <a href='{% url 'article_delete' article.pk %}'>Удалить</a>
+{% endblock content %}
+
