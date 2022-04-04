@@ -1,7 +1,6 @@
 from uuid import uuid4
 
 from django.db import models
-
 # Create your models here.
 from django.urls import reverse
 
@@ -32,6 +31,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return self.title
@@ -41,3 +41,7 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse('article_detail', args=[self.uid])
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save()
