@@ -1,9 +1,12 @@
 {% load static %}
 
+<!-- ======= Header ======= -->
 <header id="header" class="d-flex align-items-center">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="logo">
-            <h1><a href="">Habr</a></h1>
+            <h1><a href="index.html">Habr</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
         <nav id="navbar" class="navbar">
             <ul>
@@ -15,20 +18,7 @@
                 <li><a href="#">О Сервисе</a></li>
                 <li><a href="#">Команда</a></li>
                 <li><a href="#">Популярные блоги</a></li>
-                <li class="dropdown">
-                    <a href="#">
-                        {{ user.first_name|default:'Пользователь' }}
-                    </a>
-                    <ul>
-                        {% if user.is_authenticated %}
-                            <li><a href="#">Редактировать</a></li>
-                            <li><a href="#">Мои статьи</a></li>
-                            <li><a href="{% url 'auth:logout' %}">Войти</a></li>
-                        {% else %}
-                            <li><a href="{% url 'auth:login' %}">Войти</a></li>
-                        {% endif %}
-                    </ul>
-                </li>
+                <li><a href="#">Профиль</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
