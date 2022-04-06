@@ -1,5 +1,7 @@
 from django.urls import path, include
 
+from mainapp.views import main
+
 urlpatterns = [
-    path('', include('articleapp.urls'))
+    path('', main),
 ]

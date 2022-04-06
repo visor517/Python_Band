@@ -7,4 +7,5 @@ import mainapp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mainapp.urls')),
+    path('', include('articleapp.urls')),
 ]
