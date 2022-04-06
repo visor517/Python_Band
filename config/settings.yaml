@@ -30,10 +30,10 @@ default:
     TIME_ZONE: 'Europe/Moscow'
     AUTH_USER_MODEL: 'authapp.HabrUser'
 development:
-    SECRET_KEY: ""
+    SECRET_KEY: "1"
     DEBUG: true
 production:
-    SECRET_KEY: ""
+    SECRET_KEY: "1"
     DEBUG: false
     ALLOWED_HOSTS:
         - ''
