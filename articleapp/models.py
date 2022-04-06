@@ -1,7 +1,9 @@
-from django.db import models
 from uuid import uuid4
 
+from django.db import models
 # Create your models here.
+from django.urls import reverse
+
 from users.models import User
 
 
@@ -27,11 +29,19 @@ class Article(models.Model):
                                  verbose_name="Категория", )
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
-    image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True)
+    image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ('-created',)
+
+    def get_absolute_url(self):
+        return reverse('article_detail', args=[self.uid])
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save()
