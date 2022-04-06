@@ -23,7 +23,8 @@
                         {% if user.is_authenticated %}
                             <li><a href="#">Редактировать</a></li>
                             <li><a href="#">Мои статьи</a></li>
-                            <li><a href="{% url 'auth:logout' %}">Войти</a></li>
+                            <li><a href="{% url 'article:add' %}">Добавить статью</a></li>
+                            <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
                         {% else %}
                             <li><a href="{% url 'auth:login' %}">Войти</a></li>
                         {% endif %}

@@ -6,7 +6,7 @@ import mainapp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mainapp.urls')),
+    path('temp/', include('mainapp.urls')),
     path('auth/', include('authapp.urls', namespace='auth')),
-    path('article/', include('articleapp.urls')),
+    path('', include('articleapp.urls', namespace='article')),
 ]
