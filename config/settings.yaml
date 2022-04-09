@@ -10,10 +10,25 @@ default:
         - django.contrib.messages
         - django.contrib.staticfiles
         - mainapp
-        - users
+        - authapp
+#        - users
         - articleapp
+    TEMPLATES:
+        -
+          BACKEND: 'django.template.backends.django.DjangoTemplates'
+          DIRS:
+            - ''
+          APP_DIRS: true
+          OPTIONS:
+            'context_processors':
+              - django.template.context_processors.debug
+              - django.template.context_processors.request
+              - django.contrib.auth.context_processors.auth
+              - django.contrib.messages.context_processors.messages
+#              - authapp.context_processor.authapp_manu_context
     LANGUAGE_CODE: 'ru'
     TIME_ZONE: 'Europe/Moscow'
+    AUTH_USER_MODEL: 'authapp.HabrUser'
 development:
     SECRET_KEY: "1"
     DEBUG: true

@@ -9,7 +9,7 @@
         <p>{{ article.content }}</p>
         <p>{{ article.image }}</p>
     </div>
-    <a href='{% url 'article_edit' article.pk %}'>Редактировать</a>
-    <a href='{% url 'article_delete' article.pk %}'>Удалить</a>
+    <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
+    <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
 {% endblock content %}
 
