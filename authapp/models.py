@@ -9,20 +9,17 @@ from django.dispatch import receiver
 
 
 class HabrUser(AbstractUser):
-
     activation_key = models.CharField(max_length=128, blank=True, null=True)
     activation_key_expires = models.DateTimeField(
         default=(now() + timedelta(hours=48)))
 
     def is_activation_key_expired(self):
-
         if now() < self.activation_key_expires:
             return False
         return True
 
 
 class HabrProfile(models.Model):
-
     MALE = 'M'
     FEMALE = "W"
 
@@ -40,7 +37,6 @@ class HabrProfile(models.Model):
                               choices=GENDER_CHOICES, verbose_name='пол')
     tagline = models.CharField(blank=True, max_length=255, verbose_name='тэги')
     zone = models.IntegerField(verbose_name='часовая зона', default=0)
-
 
     @receiver(post_save, sender=HabrUser)
     def create_user_profile(sender, instance, created, **kwards):

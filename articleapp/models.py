@@ -1,12 +1,12 @@
 from uuid import uuid4
 
 from django.db import models
-# Create your models here.
-from django.urls import reverse
-
 from django.urls import reverse
 
 from authapp.models import HabrUser
+
+
+# Create your models here.
 
 
 class Category(models.Model):
@@ -31,7 +31,7 @@ class Article(models.Model):
     author = models.ForeignKey(HabrUser, on_delete=models.DO_NOTHING,
                                verbose_name="Автор")
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING,
-                                 verbose_name="Категория", )
+                                 verbose_name="Категория")
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')

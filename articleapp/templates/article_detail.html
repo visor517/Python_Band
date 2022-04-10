@@ -2,14 +2,20 @@
 {% load static %}
 
 {% block content %}
-    <div class="post-entry">
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.author }}</p>
-        <p>{{ article.category }}</p>
-        <p>{{ article.content }}</p>
-        <p>{{ article.image }}</p>
-    </div>
-    <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
-    <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="article-edit-form">
+                <div class="post-entry">
+                    <h2>{{ article.title }}</h2>
+                    <p>{{ article.author }}</p>
+                    <p>{{ article.category }}</p>
+                    <p>{{ article.content }}</p>
+                    <p>{{ article.image }}</p>
+                </div>
+                <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
+                <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
 
