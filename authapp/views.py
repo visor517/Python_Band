@@ -9,6 +9,7 @@ from authapp.models import HabrUser
 
 from django.utils.timezone import now
 
+from django.conf.urls import url
 
 def send_verify_mail(user):
     verify_link = reverse('auth:verify', args=[
