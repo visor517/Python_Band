@@ -13,6 +13,7 @@ default:
         - authapp
 #        - users
         - articleapp
+        - adminapp
     TEMPLATES:
         -
           BACKEND: 'django.template.backends.django.DjangoTemplates'
