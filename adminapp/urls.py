@@ -1,6 +1,6 @@
 from django.urls import path
 import adminapp.views as adminapp
-from adminapp.views import index
+# from adminapp.views import index
 
 app_name = 'adminapp'
 

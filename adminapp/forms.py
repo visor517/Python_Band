@@ -36,7 +36,7 @@ class CategoryEditForm(forms.ModelForm):
                 field.widget.attrs['class'] = 'form-chek'
                 field.help_text = ''
                 continue
-            if not field_name == 'is_delete':
+            if field_name not in chek_list:
                 field.widget.attrs['class'] = 'form-control'
                 field.help_text = ''
 
@@ -49,6 +49,6 @@ class ArticletEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if not field_name == 'is_delete':
+            if field_name not in chek_list:
                 field.widget.attrs['class'] = 'form-control'
                 field.help_text = ''

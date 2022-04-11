@@ -10,10 +10,10 @@
     <div class="content">
         <div class="page-wrapper">
             <div class="card-footer">
-                                <a href="{% url 'adminapp:user_create' %}">
-                                    <button class="btn btn-outline-secondary">Создать пользователя</button>
-                                </a>
-                            </div>
+                <a href="{% url 'adminapp:user_create' %}">
+                    <button class="btn btn-outline-secondary">Создать пользователя</button>
+                </a>
+            </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12">
@@ -31,7 +31,6 @@
                                             <th class="border-top-0">Email</th>
                                             <th class="border-top-0">Активный</th>
                                             <th class="border-top-0">Удалить</th>
-                                            <th class="border-top-0">Удаленный</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
@@ -43,7 +42,6 @@
                                             <th class="border-top-0">Email</th>
                                             <th class="border-top-0">Активный</th>
                                             <th class="border-top-0">Удалить</th>
-                                            <th class="border-top-0">Удаленный</th>
                                         </tr>
                                         </tfoot>
 
@@ -56,21 +54,18 @@
                                             <td>{{ user.first_name }}</td>
                                             <td>{{ user.last_name }}</td>
                                             <td>{{ user.email }}</td>
-<!--                                            <td>-->
-<!--                                                {{user.role}}-->
-<!--                                            </td>-->
+                                            <!--                                            <td>-->
+                                            <!--                                                {{user.role}}-->
+                                            <!--                                            </td>-->
                                             <td>
                                                 {% if user.is_active %}
-                                                <i class="fa fa-check-circle"></i>
+                                                да
                                                 {% else %}
-                                                <i class="fa fa-times-circle"></i>
+                                                нет
                                                 {% endif %}
                                             </td>
                                             <td>
                                                 <a href="{% url '_admin:user_delete' user.pk %}">Удалить</a>
-                                            </td>
-                                            <td>
-                                                {% if user.is_delete %}да{% else %}нет{% endif %}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -78,14 +73,11 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
     {% block footer %}
     {% include 'mainapp/includes/inc_footer.html' %}
