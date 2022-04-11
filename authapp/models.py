@@ -35,6 +35,9 @@ class HabrUser(AbstractUser):
         return f'{self.first_name if self.first_name else ""}{ ", "+ self.last_name if self.last_name else ""} ' \
                f'({self.username})'
 
+    def delete(self, using=None, keep_parents=False):
+        """ Переопределение метода delete"""
+        self.is_active = False
 
 class HabrProfile(models.Model):
 
@@ -75,3 +78,9 @@ class HabrProfile(models.Model):
     # @receiver(post_save, sender=HabrUser)
     # def save_user_profile(sender, instance, **kwargs):
     #     instance.user.profile.save()
+
+    def delete(self, using=None, keep_parents=False):
+        """ Переопределение метода delete"""
+        self.is_active = False
+        self.user.is_active = False
+
