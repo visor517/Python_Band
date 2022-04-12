@@ -9,6 +9,7 @@ from authapp.models import HabrUser
 
 from django.utils.timezone import now
 
+from django.conf.urls import url
 
 def send_verify_mail(user):
     verify_link = reverse('auth:verify', args=[
@@ -79,8 +80,10 @@ def register(request):
 
     if request.method == 'POST':
         register_form = UserRegisterForm(request.POST, request.FILES)
-
         if register_form.is_valid():
+            if HabrUser.objects.all().filter(email=register_form.data['email']):
+                context = {'error': f'пользователь уже зарегистрирован с данным EMAIL:{register_form.data["email"]}'}
+                return render(request, 'authapp/error.html', context)
             user = register_form.save()
             if send_verify_mail(user):
                 print("success")
