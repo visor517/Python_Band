@@ -1,6 +1,8 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from articleapp.forms import ArticleForm
 from articleapp.models import Article
 from mainapp.views import main
 
@@ -20,7 +22,17 @@ class ArticleDetailView(DetailView):
 class ArticleCreateView(CreateView):
     model = Article
     template_name = 'article_new.html'
-    fields = ['title', 'author', 'category', 'content', 'image']
+    form_class = ArticleForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.author = request.user
+            self.object = article.save()
+            return redirect(article)
+
+        return self.form_invalid(form)
 
 
 class ArticleUpdateView(UpdateView):
@@ -33,8 +45,5 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
-
-
-from django.shortcuts import render
 
 # Create your views here.
