@@ -13,6 +13,7 @@ default:
         - authapp
 #        - users
         - articleapp
+        - news
     TEMPLATES:
         -
           BACKEND: 'django.template.backends.django.DjangoTemplates'

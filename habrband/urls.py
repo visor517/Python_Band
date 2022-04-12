@@ -8,5 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('temp/', include('mainapp.urls')),
     path('auth/', include('authapp.urls', namespace='auth')),
+    path('news/', include('news.urls', namespace='news')),
     path('', include('articleapp.urls', namespace='article')),
+
 ]
