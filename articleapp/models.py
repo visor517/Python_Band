@@ -9,6 +9,7 @@ from authapp.models import HabrUser
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return self.name
