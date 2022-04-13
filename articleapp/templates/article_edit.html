@@ -6,6 +6,7 @@
         <div class="container">
             <div class="article-edit-form"><h4>Редактировать статью</h4>
                 <form action="" method="post">{% csrf_token %}
+
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <input name="{{ form.title.html_name }}" type="text" class="form-control"
@@ -19,6 +20,7 @@
                     </div>
                     <div class="row">
                         <div class="col form-group">
+                            {{ form.media }}
                             <textarea name="{{ form.content.html_name }}"
                                       class="form-control"
                                       placeholder="{{ form.content.label }}"
