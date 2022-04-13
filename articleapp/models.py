@@ -45,6 +45,8 @@ class Article(models.Model):
 
     class Meta:
         ordering = ('-created',)
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
 
     def get_absolute_url(self):
         return reverse('article:detail', args=[self.uid])

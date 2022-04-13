@@ -17,6 +17,7 @@ class ArticleListView(ListView):
 class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_detail.html'
+    form_class = ArticleForm
 
 
 class ArticleCreateView(CreateView):
