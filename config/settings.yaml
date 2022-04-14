@@ -12,6 +12,7 @@ INSTALLED_APPS:
   - mainapp
   - authapp
   - articleapp
+  - commentapp
 TEMPLATES:
   -
     BACKEND: 'django.template.backends.django.DjangoTemplates'

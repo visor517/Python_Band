@@ -1,5 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormMixin
+from commentapp.forms import CommentsForm
+from commentapp.views import CommentView
 
 from articleapp.models import Article
 from mainapp.views import main
@@ -12,8 +15,9 @@ class ArticleListView(ListView):
 
 
 # Отображение содержимого
-class ArticleDetailView(DetailView):
+class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
+    form_class = CommentsForm
     template_name = 'article_detail.html'
 
 
