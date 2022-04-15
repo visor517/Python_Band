@@ -7,6 +7,7 @@ class Comments(models.Model):
     """
     класс - Комментарии
     """
+
     class Meta:
         """
         класс - Мета
