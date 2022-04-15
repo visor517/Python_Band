@@ -11,7 +11,7 @@
         <div class="page-wrapper">
             <div class="card-footer">
                         <a href="{% url '_admin:category_create' %}">
-                        <button class="btn btn-outline-secondary">Создать категорию</button>
+                        <button class="btn btn-outline-secon dary">Создать категорию</button>
                         </a>
                     </div>
             <div class="container-fluid">
@@ -26,7 +26,6 @@
                                         <tr>
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Имя категории</th>
-                                            <th class="border-top-0">К списку статей</th>
                                             <th class="border-top-0">is-delete</th>
                                             <th class="border-top-0">Удалить</th>
                                         </tr>
@@ -35,7 +34,6 @@
                                         <tr>
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Имя категории</th>
-                                            <th class="border-top-0">К списку товаров</th>
                                             <th class="border-top-0">is-delete</th>
                                             <th class="border-top-0">Удалить</th>
                                         </tr>
@@ -47,7 +45,6 @@
                                             <td>{{ forloop.counter }}</td>
                                             <td><a href="{% url '_admin:category_update' category.pk %}"
                                                    style="color: dodgerblue">{{ category.name }}</a></td>
-                                            <td><a href="#">Перейти</a></td>
                                             <td>
                                                 {% if category.is_deleted %}
                                                 да

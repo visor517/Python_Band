@@ -2,11 +2,7 @@ from uuid import uuid4
 
 from django.db import models
 from django.urls import reverse
-
 from authapp.models import HabrUser
-
-
-# Create your models here.
 
 
 class Category(models.Model):
@@ -15,6 +11,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save()
 
 
 class Article(models.Model):
@@ -36,7 +36,7 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')
-    status = models.CharField(choices=STATUSES, max_length=128)
+    status = models.CharField(choices=STATUSES, max_length=128, default='DF')
     is_deleted = models.BooleanField(default=False, null=False)
 
     def __str__(self):

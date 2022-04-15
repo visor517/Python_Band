@@ -1,28 +1,28 @@
-#Настроить права доступа!!!
+# Настроить права доступа!!!
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.shortcuts import render, get_object_or_404
 
-from articleapp.models import Category
-from authapp.models import HabrUser
-from adminapp.forms import UserRegisterForm, CategoryEditForm
+from articleapp.models import Category, Article
+from authapp.models import HabrUser, HabrProfile
+from adminapp.forms import UserRegisterForm, CategoryRegisterForm, ProfileRegisterForm, ArticleRegisterForm
 
 
-# def index(request):
-#     title = 'Админка'
-#
-#     context = {
-#         'title': title,
-#     }
-#     return render(request, 'adminapp/admin.html', context=context)
+def main(request):
+    title = 'Админка'
+
+    context = {
+        'title': title,
+    }
+    return render(request, 'adminapp/admin.html', context=context)
 
 
 class UserListView(LoginRequiredMixin, ListView):
     model = HabrUser
-    template_name = 'adminapp/users.html'
+    template_name = 'adminapp/users2.html'
     context_object_name = 'objects'
 
 
@@ -38,15 +38,35 @@ class UserListView(LoginRequiredMixin, ListView):
 class UserCreateView(LoginRequiredMixin, CreateView):
     model = HabrUser
     form_class = UserRegisterForm
-    template_name = 'adminapp/user_update.html'
+    template_name = 'adminapp/user_create.html'
     success_url = reverse_lazy('_admin:users')
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = HabrUser
-    form_class = UserRegisterForm
-    template_name = 'adminapp/user_update.html'
-    success_url = reverse_lazy('_admin:users')
+def user_update(request, pk):
+    title = 'редактирование'
+
+    edit_user = get_object_or_404(HabrUser, pk=pk)
+
+    if request.method == 'POST':
+        edit_form = UserRegisterForm(request.POST, request.FILES, instance=edit_user)
+        profile_form = ProfileRegisterForm(request.POST, instance=edit_user.habrprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
+            edit_form.save()
+            profile_form.save()
+            return HttpResponseRedirect(reverse('_admin:users'))
+    else:
+        edit_form = UserRegisterForm(instance=edit_user)
+        profile_form = ProfileRegisterForm(
+            instance=edit_user.habrprofile
+        )
+
+    context = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form
+    }
+
+    return render(request, 'adminapp/user_update.html', context=context)
 
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
@@ -54,13 +74,6 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'adminapp/user_delete.html'
     success_url = reverse_lazy('_admin:users')
     context_object_name = 'user_to_delete'
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.is_active = False
-        self.object.save()
-
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -71,21 +84,16 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
-    form_class = CategoryEditForm
+    form_class = CategoryRegisterForm
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('_admin:categories')
 
 
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
-    form_class = CategoryEditForm
+    form_class = CategoryRegisterForm
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('_admin:categories')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'категории/редактирование'
-        return context
 
 
 class CategoryDeleteView(LoginRequiredMixin, DeleteView):
@@ -94,9 +102,28 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('_admin:categories')
     context_object_name = 'category_to_delete'
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.is_deleted = True
-        self.object.save()
 
-        return HttpResponseRedirect(self.get_success_url())
+class ArticlesListView(LoginRequiredMixin, ListView):
+    model = Article
+    template_name = 'adminapp/articles.html'
+    context_object_name = 'objects'
+
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = Article
+    form_class = ArticleRegisterForm
+    template_name = 'adminapp/article_update.html'
+    success_url = reverse_lazy('_admin:articles')
+
+
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+    model = Article
+    form_class = ArticleRegisterForm
+    template_name = 'adminapp/article_update.html'
+    success_url = reverse_lazy('_admin:articles')
+
+
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+    model = Article
+    template_name = 'adminapp/article_delete.html'
+    context_object_name = 'article_to_delete'

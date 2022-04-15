@@ -29,6 +29,7 @@
                                             <th class="border-top-0">Имя</th>
                                             <th class="border-top-0">Фамилия</th>
                                             <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Роль </th>
                                             <th class="border-top-0">Активный</th>
                                             <th class="border-top-0">Удалить</th>
                                         </tr>
@@ -40,6 +41,7 @@
                                             <th class="border-top-0">Имя</th>
                                             <th class="border-top-0">Фамилия</th>
                                             <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Роль </th>
                                             <th class="border-top-0">Активный</th>
                                             <th class="border-top-0">Удалить</th>
                                         </tr>
@@ -54,9 +56,7 @@
                                             <td>{{ user.first_name }}</td>
                                             <td>{{ user.last_name }}</td>
                                             <td>{{ user.email }}</td>
-                                            <!--                                            <td>-->
-                                            <!--                                                {{user.role}}-->
-                                            <!--                                            </td>-->
+                                            <td>{{user.role}}</td>
                                             <td>
                                                 {% if user.is_active %}
                                                 да

@@ -31,12 +31,12 @@ class HabrUser(AbstractUser):
         return True
 
     def __str__(self):
-        return f'{self.first_name if self.first_name else ""}{ ", "+ self.last_name if self.last_name else ""} ' \
-               f'({self.username})'
+        return f'{self.first_name if self.first_name else ""} {self.last_name if self.last_name else ""}'
 
     def delete(self, using=None, keep_parents=False):
         """ Переопределение метода delete"""
         self.is_active = False
+
 
 class HabrProfile(models.Model):
 
