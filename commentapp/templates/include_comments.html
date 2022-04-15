@@ -1,13 +1,13 @@
 <div>
-    <h3>Комментарии:({{ article.comments_articles.all.count }})</h3>
+    <h4>Комментарии ({{ article.comments_articles.all.count }})</h4>
 
     <ul>
         {% for item in article.comments_articles.all %}
         <li>
-            Создан: {{ item.comment_create }}<br>
-            Автор комментария: {{ item.comment_author }}<br>
-            Статус комментария: {{ item.comment_moderation }}<br>
-            {{ item.comment_text }}<br><br>
+            "{{ item.comment_text }}"<br>
+            Автор комментария: {{ item.comment_author }}.
+            Дата написания: {{ item.comment_create }}<br>
+            Модерация комментария: {{ item.comment_moderation }}<br><br>
         </li>
         {% endfor %}
     </ul>

@@ -3,11 +3,6 @@ from authapp.models import HabrUser
 from articleapp.models import Article
 
 
-# class FilterComments(models.Manager):
-#     def get_queryset(self):
-#         return super().get_queryset().filter(comment_moderation=False)
-
-
 class Comments(models.Model):
     """
     класс - Комментарии
@@ -31,7 +26,6 @@ class Comments(models.Model):
     comment_create = models.DateTimeField('Дата создания', auto_now_add=True)
     comment_update = models.DateTimeField('Дата обновления', auto_now=True)
     comment_moderation = models.BooleanField('Модерация', default=False)
-    # objects = FilterComments()
 
     def __str__(self):
         """
