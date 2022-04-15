@@ -6,89 +6,44 @@
 {% endblock css %}
 
 {% block content %}
-<div class="wrapper">
-    <div class="content">
-        <div class="page-wrapper">
-            <div class="card-footer">
-                        <a href="{% url '_admin:article_create' %}">
-                        <button class="btn btn-outline-secon dary">Создать статью</button>
-                        </a>
-                    </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Категории</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-hover ">
-                                        <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Название статьи</th>
-                                            <th class="border-top-0">Автор</th>
-                                            <th class="border-top-0">Категория</th>
-                                            <th class="border-top-0">Статус</th>
-                                            <th></th>
-                                            <th class="border-top-0"></th>
+<div class="container items-wrapper shadow-sm">
+    {% for article in objects %}
+        <div class="item-block shadow row {% if article.is_deleted %} is-deleted {% endif %}">
+            <div class="col-10 row">
+                <div class="col-1">{{ forloop.counter }}</div>
+                <div class="col-9">
+                    {{ article.title }}
+                </div>
+                <div class="col-2">
+                    <a href="{% url 'article:detail' article.pk %}" target="_blank"
+                       class="btn btn-outline-secondary">к статье</a>
+                </div>
+                <div class="w-100 d-none d-md-block"></div>
 
-                                        </tr>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">Название статьи</th>
-                                            <th class="border-top-0">Автор</th>
-                                            <th class="border-top-0">Категория</th>
-                                            <th class="border-top-0">Статус
-                                            <th></th>
-                                            <th class="border-top-0"></th>
-                                        </tr>
-                                        </tfoot>
-
-                                        <tbody>
-                                        {% for article in objects %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-
-                                            <td>
-                                                <a href="{% url 'article:detail' article.pk %}"
-                                                   style="color: dodgerblue">{{ article.title }}</a>
-                                            </td>
-
-                                            <td><a href="{% url '_admin:user_update' article.author.pk %}"
-                                                   style="color: dodgerblue">{{ article.author }}</a></td>
-                                            </td>
-                                            <td>
-                                                {{ article.category }}
-                                            </td>
-                                            <td>
-                                                {{ article.get_status_display }}
-                                            </td>
-                                            <td>
-                                                <a href="{% url '_admin:article_update' article.pk %}">редактировать</a>
-                                            </td>
-                                            <td class="center">
-                                                <a href="{% url '_admin:article_delete' article.pk %}">Удалить</a>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="w-100 d-none d-md-block"></div>
+                <div class="col-4">Категория:&nbsp;&nbsp;{{ article.category }}</div>
+                <div class="col-3">
+                    автор:&nbsp;&nbsp;
+                    <a href="{% url '_admin:user_update' article.author.pk %}" target="_blank"
+                       style="color: dodgerblue" class="">{{ article.author }}</a>
+                </div>
+                <div class="col-3">статус:&nbsp;&nbsp;{{ article.get_status_display }}</div>
+                <div class="col-2">active: {% if article.is_deleted %}нет{% else %}да{% endif %}</div>
+            </div>
+            <div class="col-2 row-cols-2">
+                <div class="col-12 mar-b-5">
+                    <a href="{% url '_admin:article_update' article.pk %}"
+                       class="btn btn-outline-secondary btn-block align-items-start d-b">редактировать</a>
+                </div>
+                <div class="col-12">
+                    <a href="{% url '_admin:article_delete' article.pk %}"
+                       class="btn btn-outline-secondary btn-block align-items-end d-b">удалить</a>
                 </div>
             </div>
         </div>
-
-    </div>
-    {% block footer %}
-    {% include 'mainapp/includes/inc_footer.html' %}
-    <!-- Блок подвала -->
-    {% endblock footer %}
+    {% endfor %}
 </div>
-
-
+{% block footer %}
+{% include 'mainapp/includes/inc_footer.html' %}
+{% endblock footer %}
 {% endblock content %}

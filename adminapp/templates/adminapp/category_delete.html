@@ -7,30 +7,25 @@
 {% endblock css %}
 
 {% block content %}
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class=" col-xlg-9 col-md-7">
-                <div class="card">
-                    <div class="card-body">
-                        Вы точно хотите удалить категорию "{{ category_to_delete.name }}" ?
-                     </div>
-                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="submit" class="btn btn-outline-danger" value="Удалить">
-                    </form>
-                    <button class="btn btn-outline-secondary">
-                        <a href="{% url '_admin:categories' %}">
-                            к списку категорий
-                        </a>
-                    </button>
-                </div>
-            </div>
+<div class="container items-wrapper shadow-sm">
+    <div class="item-block shadow row justify-content-center">
+        <div class="col-4 align-self-center">
+            Вы точно хотите удалить категорию "{{ category_to_delete.name }}" ?
+        </div>
+        <div class="col-1 align-self-center">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-outline-secondary" value="удалить">
+            </form>
+        </div>
+        <div class="col-3 align-self-center">
+            <a href="{% url '_admin:categories' %}" class="btn btn-outline-secondary">
+                к списку категорий
+            </a>
         </div>
     </div>
 </div>
 {% block footer %}
 {% include 'mainapp/includes/inc_footer.html' %}
 {% endblock footer %}
-</div>
 {% endblock content %}

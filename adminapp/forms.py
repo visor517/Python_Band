@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
 from authapp.models import HabrUser, HabrProfile
 from authapp.forms import UserEditForm, UserProfileEditForm
 from articleapp.models import Category, Article
@@ -17,10 +19,21 @@ def add_class_html(fields):
             field.help_text = ''
 
 
-class UserRegisterForm(UserEditForm):
+class UserUpdateForm(UserEditForm):
     class Meta:
         model = HabrUser
         fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'role')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class UserRegisterForm(UserCreationForm):
+    class Meta:
+        model = HabrUser
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1',
+                  'password2')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

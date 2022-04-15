@@ -3,12 +3,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render, get_object_or_404
 
 from articleapp.models import Category, Article
-from authapp.models import HabrUser, HabrProfile
-from adminapp.forms import UserRegisterForm, CategoryRegisterForm, ProfileRegisterForm, ArticleRegisterForm
+from authapp.models import HabrUser
+from adminapp.forms import UserRegisterForm, CategoryRegisterForm, ProfileRegisterForm, ArticleRegisterForm, \
+    UserUpdateForm
 
 
 def main(request):
@@ -22,7 +23,7 @@ def main(request):
 
 class UserListView(LoginRequiredMixin, ListView):
     model = HabrUser
-    template_name = 'adminapp/users2.html'
+    template_name = 'adminapp/users.html'
     context_object_name = 'objects'
 
 
@@ -48,14 +49,14 @@ def user_update(request, pk):
     edit_user = get_object_or_404(HabrUser, pk=pk)
 
     if request.method == 'POST':
-        edit_form = UserRegisterForm(request.POST, request.FILES, instance=edit_user)
+        edit_form = UserUpdateForm(request.POST, request.FILES, instance=edit_user)
         profile_form = ProfileRegisterForm(request.POST, instance=edit_user.habrprofile)
         if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()
             profile_form.save()
             return HttpResponseRedirect(reverse('_admin:users'))
     else:
-        edit_form = UserRegisterForm(instance=edit_user)
+        edit_form = UserUpdateForm(instance=edit_user)
         profile_form = ProfileRegisterForm(
             instance=edit_user.habrprofile
         )
@@ -127,3 +128,4 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = 'adminapp/article_delete.html'
     context_object_name = 'article_to_delete'
+    success_url = reverse_lazy('_admin:articles')

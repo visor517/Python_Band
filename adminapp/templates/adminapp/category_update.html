@@ -7,25 +7,25 @@
 {% endblock css %}
 
 {% block content %}
-<div class="wrapper">
-    <div class="content">
-
-        <div class="page-wrapper">
+<div class="container items-wrapper shadow-sm">
+    <div class="item-block shadow row">
+        <div class="col-3">
+            <a href="{% url '_admin:categories' %}" class="btn btn-outline-secondary">
+                к списку категорий
+            </a>
+        </div>
+        <div class="col-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input class="form-control" type="submit" value="сохранить">
+                <input class="form-control" type="submit" value="сохранить" class="btn btn-outline-secondary">
             </form>
-            <button class="btn btn-round form-control last">
-                <a href="{% url '_admin:categories' %}">
-                    к списку категорий
-                </a>
-            </button>
         </div>
+        <div class="col-3"></div>
     </div>
 </div>
+
 {% block footer %}
 {% include 'mainapp/includes/inc_footer.html' %}
 {% endblock footer %}
-</div>
 {% endblock content %}
