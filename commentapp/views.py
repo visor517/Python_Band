@@ -1,4 +1,7 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from .models import Comments
+from django.http import HttpResponseRedirect
 
 
 class CommentView:
@@ -40,3 +43,15 @@ class CommentView:
         self.object.comment_author = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+def comment_like_view(request, pk):
+    """
+    :param request:
+    :return:
+    """
+    comments = get_object_or_404(Comments,
+                                 id=request.POST.get('comments_id'))
+    comments.likes.add(request.user)
+    return HttpResponseRedirect(reverse('articleapp:detail',
+                                        args=[str(pk)]))

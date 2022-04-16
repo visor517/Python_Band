@@ -27,6 +27,8 @@ class Comments(models.Model):
     comment_create = models.DateTimeField('Дата создания', auto_now_add=True)
     comment_update = models.DateTimeField('Дата обновления', auto_now=True)
     comment_moderation = models.BooleanField('Модерация', default=False)
+    likes = models.ManyToManyField(HabrUser, related_name='comments_likes')
+
 
     def __str__(self):
         """

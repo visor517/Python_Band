@@ -7,18 +7,39 @@
             "{{ item.comment_text }}"<br>
             Автор комментария: {{ item.comment_author }}.
             Дата написания: {{ item.comment_create }}<br>
-            Модерация комментария: {{ item.comment_moderation }}<br><br>
+            Модерация комментария: {{ item.comment_moderation }}<br>
         </li>
+        {% if user.is_authenticated %}
+            <form action=""
+                  method="POST">
+                {% csrf_token %}
+                <button type="submit",
+                        name="comments_id",
+                        value="{{ comments.id }}",
+                        class="btn btn-primary btn-sm">
+                    Like
+                </button>
+            </form>
+        {% endif %}<br>
         {% endfor %}
+
+        <br><hr>
+
     </ul>
 
     <p>Добавить комментарий</p>
+
     <div class="col-5">
         <form action="" id="add_form" method="post">
             {% csrf_token %}
             {{ form.as_p }}
         </form>
-        <input form="add_form" type="submit" value="Добавить"/>
+        {% if user.is_authenticated %}
+            <input form="add_form" type="submit" value="Добавить"/>
+        {% else %}
+            <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
+        {% endif %}
     </div>
+
     <br>
 </div>

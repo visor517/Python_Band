@@ -11,6 +11,16 @@
     </div>
     <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
     <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+    {% if user.is_authenticated %}
+        <form action=""
+              method="POST">
+            {% csrf_token %}
+            <button type="submit",
+                    name="article_id",
+                    value="{{ article.id }}",
+                    class="btn btn-primary btn-sm">Like</button>
+        </form>
+    {% endif %}
     <hr>
     {% include "include_comments.html" %}
 {% endblock content %}
