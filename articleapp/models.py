@@ -35,7 +35,6 @@ class Article(models.Model):
     image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128)
     is_deleted = models.BooleanField(default=False, null=False)
-    likes = models.ManyToManyField(HabrUser, related_name='article_likes')
 
     def __str__(self):
         return self.title
