@@ -16,8 +16,8 @@
         <div class="col-sm-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ edit_form.as_p }}
-                {{ profile_form.as_p }}
+                {{ form.as_p }}
+                {{ form2.as_p }}
                 <input class="form-control" type="submit" value="сохранить" class="btn btn-outline-secondary">
             </form>
         </div>

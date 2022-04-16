@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from authapp.models import HabrUser, HabrProfile
 from authapp.forms import UserEditForm, UserProfileEditForm

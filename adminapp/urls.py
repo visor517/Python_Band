@@ -7,7 +7,7 @@ urlpatterns = [
     path('', adminapp.MainView.as_view(), name='main_admin'),
     path('users/', adminapp.UserListView.as_view(), name='users'),
     path('users/create/', adminapp.UserCreateView.as_view(), name='user_create'),
-    path('users/update/<int:pk>/', adminapp.user_update, name='user_update'),
+    path('users/update/<int:pk>/', adminapp.UserUpdateView.as_view(), name='user_update'),
     path('users/delete/<int:pk>/', adminapp.UserDeleteView.as_view(), name='user_delete'),
 
     path('categories/create/', adminapp.CategoryCreateView.as_view(), name='category_create'),

@@ -1,9 +1,7 @@
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import redirect
 
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
@@ -29,10 +27,6 @@ class UserIsPersonalMixin(UserPassesTestMixin):
         return redirect('/')
 
 
-def is_admin_chek(user):
-    return user.role == 'A'
-
-
 class MainView(LoginRequiredMixin, UserIsPersonalMixin, TemplateView):
     template_name = 'adminapp/admin.html'
 
@@ -50,33 +44,26 @@ class UserCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     success_url = reverse_lazy('_admin:users')
 
 
-@login_required()
-@user_passes_test(is_admin_chek)
-def user_update(request, pk):
-    title = 'редактирование'
+class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+    model = HabrUser
+    template_name = 'adminapp/user_update.html'
+    success_url = reverse_lazy('_admin:users')
+    form_class = UserUpdateForm
+    second_form_class = ProfileRegisterForm
 
-    edit_user = get_object_or_404(HabrUser, pk=pk)
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(instance=self.object)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(instance=self.object.habrprofile)
+        return context
 
-    if request.method == 'POST':
-        edit_form = UserUpdateForm(request.POST, request.FILES, instance=edit_user)
-        profile_form = ProfileRegisterForm(request.POST, instance=edit_user.habrprofile)
-        if edit_form.is_valid() and profile_form.is_valid():
-            edit_form.save()
-            profile_form.save()
-            return HttpResponseRedirect(reverse('_admin:users'))
-    else:
-        edit_form = UserUpdateForm(instance=edit_user)
-        profile_form = ProfileRegisterForm(
-            instance=edit_user.habrprofile
-        )
-
-    context = {
-        'title': title,
-        'edit_form': edit_form,
-        'profile_form': profile_form
-    }
-
-    return render(request, 'adminapp/user_update.html', context=context)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form2 = self.second_form_class(request.POST, instance=self.object.habrprofile)
+        form2.save()
+        return super().post(request, *args, **kwargs)
 
 
 class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
