@@ -6,18 +6,18 @@
 {% endblock css %}
 
 {% block content %}
-<div class="container items-wrapper shadow-sm">
+<div class="container items-wrapper shadow-sm overflow-auto h-auto">
     <div class="item-block shadow row justify-content-center">
-        <div class="col-4 align-self-center">
+        <div class="col-sm-4 align-self-center">
             Вы точно хотите удалить пользователя {{ user_to_delete.username }} ?
         </div>
-        <div class="col-1 align-self-center">
+        <div class="col-sm-1 align-self-center">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="submit" class="btn btn-outline-secondary" value="удалить">
             </form>
         </div>
-        <div class="col-3 align-self-center">
+        <div class="col-sm-3 align-self-center">
             <a href="{% url '_admin:users' %}" class="btn btn-outline-secondary">
                 к списку пользователей
             </a>

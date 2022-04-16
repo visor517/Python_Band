@@ -6,15 +6,14 @@
 {% endblock css %}
 
 {% block content %}
-<div class="container items-wrapper shadow-sm">
-
+<div class="container items-wrapper shadow-sm overflow-auto h-auto">
     <div class="item-block shadow row">
-        <div class="col-3">
+        <div class="col-sm-3">
             <a href="{% url '_admin:users' %}" class="btn btn-outline-secondary">
                 к списку пользователей
             </a>
         </div>
-        <div class="col-6">
+        <div class="col-sm-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ edit_form.as_p }}
@@ -22,7 +21,7 @@
                 <input class="form-control" type="submit" value="сохранить" class="btn btn-outline-secondary">
             </form>
         </div>
-        <div class="col-3"></div>
+        <div class="col-sm-3"></div>
     </div>
 </div>
 

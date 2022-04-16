@@ -6,25 +6,25 @@
 {% endblock css %}
 
 {% block content %}
-<div class="container items-wrapper shadow-sm">
+<div class="container items-wrapper shadow-sm overflow-auto h-auto">
     {% for category in objects %}
         <div class="item-block shadow row {% if category.is_deleted %} is-deleted {% endif %}">
-            <div class="col-1">{{ forloop.counter }}</div>
-            <div class="col-9 row">
-                <div class="col-4">name:&nbsp;&nbsp;{{ category.name }}</div>
+            <div class="col-sm-1">{{ forloop.counter }}</div>
+            <div class="col-sm-9 row">
+                <div class="col-sm-4"><span>name: {{ category.name }}</span></div>
                 <div class="w-100 d-none d-md-block"></div>
-                <div class="col-4">
-                    <p>is_deleted:&nbsp;&nbsp;{% if category.is_deleted %}да{% else %}нет{% endif %}</p>
+                <div class="col-sm-4">
+                    <span>is_deleted: {% if category.is_deleted %}да{% else %}нет{% endif %}</span>
                 </div>
-                <div class="col-6"></div>
-                <div class="col-2"></div>
+                <div class="col-sm-6"></div>
+                <div class="col-sm-2"></div>
             </div>
-            <div class="col-2 row-cols-2">
-                <div class="col-12 mar-b-5">
+            <div class="col-sm-2 row-cols-2">
+                <div class="col-sm-12 mar-b-5">
                     <a href="{% url '_admin:category_update' category.pk %}"
                        class="btn btn-outline-secondary btn-block align-items-start d-b">редактировать</a>
                 </div>
-                <div class="col-12">
+                <div class="col-sm-12">
                     <a href="{% url '_admin:category_delete' category.pk %}"
                        class="btn btn-outline-secondary btn-block align-items-end d-b">удалить</a>
                 </div>
