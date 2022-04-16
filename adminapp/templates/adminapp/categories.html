@@ -20,10 +20,12 @@
                 <div class="col-sm-2"></div>
             </div>
             <div class="col-sm-2 row-cols-2">
-                <div class="col-sm-12 mar-b-5">
-                    <a href="{% url '_admin:category_update' category.pk %}"
-                       class="btn btn-outline-secondary btn-block align-items-start d-b">edit</a>
-                </div>
+                {% if request.user.role == 'A' %}
+                    <div class="col-sm-12 mar-b-5">
+                        <a href="{% url '_admin:category_update' category.pk %}"
+                            class="btn btn-outline-secondary btn-block align-items-start d-b">edit</a>
+                    </div>
+                {% endif %}
                 <div class="col-sm-12">
                     <a href="{% url '_admin:category_delete' category.pk %}"
                        class="btn btn-outline-secondary btn-block align-items-end d-b">del</a>

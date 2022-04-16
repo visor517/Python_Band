@@ -1,10 +1,9 @@
-# Настроить права доступа!!!
-
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.shortcuts import render, get_object_or_404, redirect
 
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
@@ -12,37 +11,47 @@ from adminapp.forms import UserRegisterForm, CategoryRegisterForm, ProfileRegist
     UserUpdateForm
 
 
-def main(request):
-    title = 'Админка'
+class UserIsAdminMixin(UserPassesTestMixin):
+    """ Предоставляет право доступа пользователю у которого роль Администратор """
+    def test_func(self):
+        return self.request.user.role == 'A'
 
-    context = {
-        'title': title,
-    }
-    return render(request, 'adminapp/admin.html', context=context)
+    def handle_no_permission(self):
+        return redirect('/')
 
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserIsPersonalMixin(UserPassesTestMixin):
+    """ Предоставляет право доступа пользователю у которого роль Администратор или Модератор"""
+    def test_func(self):
+        return self.request.user.role != 'U'
+
+    def handle_no_permission(self):
+        return redirect('/')
+
+
+def is_admin_chek(user):
+    return user.role == 'A'
+
+
+class MainView(LoginRequiredMixin, UserIsPersonalMixin, TemplateView):
+    template_name = 'adminapp/admin.html'
+
+
+class UserListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = HabrUser
     template_name = 'adminapp/users.html'
     context_object_name = 'objects'
 
 
-# class UserListView(UserPassesTestMixin, ListView):
-#     model = HabrUser
-#     template_name = 'adminapp/users.html'
-#     context_object_name = 'objects'
-#
-#     def test_func(self):
-#         return self.request.user.role('Администратор')
-
-
-class UserCreateView(LoginRequiredMixin, CreateView):
+class UserCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     model = HabrUser
     form_class = UserRegisterForm
     template_name = 'adminapp/user_create.html'
     success_url = reverse_lazy('_admin:users')
 
 
+@login_required()
+@user_passes_test(is_admin_chek)
 def user_update(request, pk):
     title = 'редактирование'
 
@@ -70,61 +79,61 @@ def user_update(request, pk):
     return render(request, 'adminapp/user_update.html', context=context)
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
+class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
     model = HabrUser
     template_name = 'adminapp/user_delete.html'
     success_url = reverse_lazy('_admin:users')
     context_object_name = 'user_to_delete'
 
 
-class CategoryListView(LoginRequiredMixin, ListView):
+class CategoryListView(LoginRequiredMixin, UserIsAdminMixin, ListView):
     model = Category
     template_name = 'adminapp/categories.html'
     context_object_name = 'objects'
 
 
-class CategoryCreateView(LoginRequiredMixin, CreateView):
+class CategoryCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     model = Category
     form_class = CategoryRegisterForm
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('_admin:categories')
 
 
-class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = Category
     form_class = CategoryRegisterForm
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('_admin:categories')
 
 
-class CategoryDeleteView(LoginRequiredMixin, DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
     model = Category
     template_name = 'adminapp/category_delete.html'
     success_url = reverse_lazy('_admin:categories')
     context_object_name = 'category_to_delete'
 
 
-class ArticlesListView(LoginRequiredMixin, ListView):
+class ArticlesListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = Article
     template_name = 'adminapp/articles.html'
     context_object_name = 'objects'
 
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
+class ArticleCreateView(LoginRequiredMixin, UserIsPersonalMixin, CreateView):
     model = Article
     form_class = ArticleRegisterForm
     template_name = 'adminapp/article_update.html'
     success_url = reverse_lazy('_admin:articles')
 
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = Article
     form_class = ArticleRegisterForm
     template_name = 'adminapp/article_update.html'
     success_url = reverse_lazy('_admin:articles')
 
 
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
     model = Article
     template_name = 'adminapp/article_delete.html'
     context_object_name = 'article_to_delete'

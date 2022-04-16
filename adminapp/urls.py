@@ -4,7 +4,7 @@ import adminapp.views as adminapp
 app_name = 'adminapp'
 
 urlpatterns = [
-    path('', adminapp.main, name='main_admin'),
+    path('', adminapp.MainView.as_view(), name='main_admin'),
     path('users/', adminapp.UserListView.as_view(), name='users'),
     path('users/create/', adminapp.UserCreateView.as_view(), name='user_create'),
     path('users/update/<int:pk>/', adminapp.user_update, name='user_update'),
