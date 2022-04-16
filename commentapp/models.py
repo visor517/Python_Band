@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import HabrProfile, HabrUser
+from authapp.models import HabrUser
 from articleapp.models import Article
 
 
@@ -17,7 +17,6 @@ class Comments(models.Model):
         verbose_name_plural = "Комментарии"
 
     comment_author = models.ForeignKey(HabrUser,
-                                       # to_field='user',
                                        verbose_name='Автор комментария',
                                        on_delete=models.CASCADE)
     comment_article = models.ForeignKey(Article,
