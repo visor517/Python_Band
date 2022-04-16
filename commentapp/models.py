@@ -1,5 +1,5 @@
 from django.db import models
-from authapp.models import HabrUser
+from authapp.models import HabrProfile, HabrUser
 from articleapp.models import Article
 
 
@@ -17,6 +17,7 @@ class Comments(models.Model):
         verbose_name_plural = "Комментарии"
 
     comment_author = models.ForeignKey(HabrUser,
+                                       # to_field='user',
                                        verbose_name='Автор комментария',
                                        on_delete=models.CASCADE)
     comment_article = models.ForeignKey(Article,
@@ -27,8 +28,6 @@ class Comments(models.Model):
     comment_create = models.DateTimeField('Дата создания', auto_now_add=True)
     comment_update = models.DateTimeField('Дата обновления', auto_now=True)
     comment_moderation = models.BooleanField('Модерация', default=False)
-    likes = models.ManyToManyField(HabrUser, related_name='comments_likes')
-
 
     def __str__(self):
         """

@@ -1,15 +1,16 @@
 <div>
     <h4>Комментарии ({{ article.comments_articles.all.count }})</h4>
 
-    <ul>
+    <div>
+        <ul>
         {% for item in article.comments_articles.all %}
-        <li>
+        <li class="border">
             "{{ item.comment_text }}"<br>
-            Автор комментария: {{ item.comment_author }}.
             Дата написания: {{ item.comment_create }}<br>
-            Модерация комментария: {{ item.comment_moderation }}<br>
-        </li>
+
         {% if user.is_authenticated %}
+            Автор комментария: {{ item.comment_author }}<br>
+            Модерация комментария: {{ item.comment_moderation }}<br>
             <form action=""
                   method="POST">
                 {% csrf_token %}
@@ -20,13 +21,12 @@
                     Like
                 </button>
             </form>
-        {% endif %}<br>
+        {% endif %}
+        </li><br>
         {% endfor %}
-
-        <br><hr>
-
-    </ul>
-
+        </ul>
+    </div>
+    <hr>
     <p>Добавить комментарий</p>
 
     <div class="col-5">
@@ -40,6 +40,5 @@
             <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
         {% endif %}
     </div>
-
     <br>
 </div>
