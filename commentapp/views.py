@@ -2,12 +2,39 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from .models import Comments
 from django.template import Context, Template
+from django.contrib import messages
 
 
-class CommentView:
+class SuccessMessage:
+    """
+    класс - Оповещение
+    """
+    def success_msg(self):
+        """
+        :return:
+        """
+        return False
+
+    def form_valid(self, form):
+        """
+        :param form:
+        :return:
+        """
+        messages.success(self.request, self.success_msg)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        """
+        :return:
+        """
+        return '%s?id=%s' % (self.success_url, self.object.id)
+
+
+class CommentView(SuccessMessage):
     """
     класс - CommentView
     """
+    success_msg = 'Комментарий создан и отправлен на модерацию.'
 
     def get_success_url(self, **kwargs):
         """

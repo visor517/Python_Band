@@ -16,6 +16,14 @@
     <hr>
     <p>Добавить комментарий</p>
 
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="col-5">
         <form action="" id="add_form" method="post">
             {% csrf_token %}
