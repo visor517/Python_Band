@@ -3,6 +3,7 @@ from django.urls import path
 from articleapp.views import ArticleListView, ArticleDetailView, \
     ArticleCreateView, ArticleUpdateView, ArticleDeleteView
 from mainapp.views import main
+from commentapp.views import update_comment_moderation
 
 app_name = 'articleapp'
 
