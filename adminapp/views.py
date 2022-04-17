@@ -57,6 +57,7 @@ class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
             context['form'] = self.form_class(instance=self.object)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(instance=self.object.habrprofile)
+        context['avatar'] = self.object.avatar
         return context
 
     def post(self, request, *args, **kwargs):

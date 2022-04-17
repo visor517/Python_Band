@@ -8,11 +8,13 @@
 {% block content %}
 <div class="container items-wrapper shadow-sm overflow-auto h-auto">
     <div class="item-block shadow row">
-        <div class="col-sm-3">
+        <div class="col-sm-12">
             <a href="{% url '_admin:users' %}" class="btn btn-outline-secondary">
                 к списку пользователей
             </a>
         </div>
+        <div class="w-100"></div>
+        <div class="col-sm-1"></div>
         <div class="col-sm-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -21,7 +23,14 @@
                 <input class="form-control" type="submit" value="сохранить" class="btn btn-outline-secondary">
             </form>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="col-sm-5 row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 ">
+                <img src="{% if avatar %}{{ avatar.url}}{% else %}/media/users_avatars/default.png{% endif %}"
+                     alt="avatar" class="center-block" width="200">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
     </div>
 </div>
 

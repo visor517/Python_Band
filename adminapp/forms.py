@@ -22,7 +22,7 @@ def add_class_html(fields):
 class UserUpdateForm(UserEditForm):
     class Meta:
         model = HabrUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'role')
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'role', 'avatar')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,7 +40,7 @@ class UserRegisterForm(UserCreationForm):
         add_class_html(self.fields)
 
 
-class ProfileRegisterForm(UserProfileEditForm):
+class ProfileRegisterForm(forms.ModelForm):
     class Meta:
         model = HabrProfile
         fields = ('tagline', 'gender', 'birthday', 'zone')

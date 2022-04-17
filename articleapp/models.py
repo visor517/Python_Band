@@ -35,7 +35,7 @@ class Article(models.Model):
                                  verbose_name="Категория")
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
-    image = models.ImageField(upload_to='media/article_photos/', blank=True, null=True, verbose_name='Изображение')
+    image = models.ImageField(upload_to='article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128, default='DF')
     is_deleted = models.BooleanField(default=False, null=False)
 
