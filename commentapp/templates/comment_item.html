@@ -1,0 +1,34 @@
+"{{ item.comment_text }}"<br>
+
+Дата написания: {{ item.comment_create }}<br>
+
+{% if user.is_authenticated %}
+
+    Автор комментария: {{ item.comment_author }}<br>
+
+    {% if item.comment_article.author == request.user %}
+
+        Модерация комментария: {{ item.comment_moderation }}
+
+        <a class="update_status"
+           data-url="{% url 'article:update_comment_moderation'
+                item.id 'public' %}" href="#">Опубликовать</a>
+        /
+        <a class="update_status"
+           data-url="{% url 'article:update_comment_moderation'
+                item.id 'delete' %}" href="#">Удалить</a>
+
+    {% endif %}
+    <br>
+    <form action=""
+          method="POST">
+        {% csrf_token %}
+        <button type="submit",
+                name="comments_id",
+                value="{{ comments.id }}",
+                class="btn btn-primary btn-sm">
+            Like
+        </button>
+    </form>
+
+{% endif %}

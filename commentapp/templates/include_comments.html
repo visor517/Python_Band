@@ -3,27 +3,14 @@
 
     <div>
         <ul>
-        {% for item in article.comments_articles.all %}
-        <li class="border">
-            "{{ item.comment_text }}"<br>
-            Дата написания: {{ item.comment_create }}<br>
+            {% for item in article.comments_articles.all %}
 
-        {% if user.is_authenticated %}
-            Автор комментария: {{ item.comment_author }}<br>
-            Модерация комментария: {{ item.comment_moderation }}<br>
-            <form action=""
-                  method="POST">
-                {% csrf_token %}
-                <button type="submit",
-                        name="comments_id",
-                        value="{{ comments.id }}",
-                        class="btn btn-primary btn-sm">
-                    Like
-                </button>
-            </form>
-        {% endif %}
-        </li><br>
-        {% endfor %}
+            <li class="border" style="list-style-type: none">
+
+                {% include 'comment_item.html' %}
+
+            </li><br>
+            {% endfor %}
         </ul>
     </div>
     <hr>
@@ -34,6 +21,7 @@
             {% csrf_token %}
             {{ form.as_p }}
         </form>
+
         {% if user.is_authenticated %}
             <input form="add_form" type="submit" value="Добавить"/>
         {% else %}
@@ -42,3 +30,27 @@
     </div>
     <br>
 </div>
+
+
+{%block js%}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    $('body').on('click', '.update_status', function(event){
+        event.preventDefault();
+        if (confirm('Вы уверены?')) {
+            let url = $(this). attr('data-url')
+            let tag_li = $(this).parent()
+            console.log(url)
+
+            $.ajax({
+                url:url,
+                type: 'GET',
+                success: function(response) {
+                    tag_li.html(response)
+                    console.log(response)
+                }
+            })
+        }
+    })
+</script>
+{%endblock%}

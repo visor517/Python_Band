@@ -13,4 +13,6 @@ urlpatterns = [
     path('article/<uuid:pk>/', ArticleDetailView.as_view(), name='detail'),
     path('article/<uuid:pk>/edit/', ArticleUpdateView.as_view(), name='edit'),
     path('article/<uuid:pk>/delete/', ArticleDeleteView.as_view(), name='delete'),
+    path('update_comment_moderation/<int:pk>/<slug:type>',
+             update_comment_moderation, name='update_comment_moderation'),
 ]
