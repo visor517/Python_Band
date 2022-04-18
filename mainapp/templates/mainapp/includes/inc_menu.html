@@ -21,7 +21,7 @@
                     </a>
                     <ul>
                         {% if user.is_authenticated %}
-                            {% if not user.role == 'U' %}
+                            {% if not user.role == 'U' or user.is_superuser %}
                                 <li><a href="{% url '_admin:main_admin' %}">Админка</a></li>
                             {% endif %}
                             <li><a href="#">Редактировать</a></li>
