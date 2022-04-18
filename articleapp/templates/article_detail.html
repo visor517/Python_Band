@@ -9,9 +9,10 @@
                     <h2>{{ article.title }}</h2>
                     <p>{{ article.author }}</p>
                     <p>{{ article.category }}</p>
-                    <p>{{ article.content }}</p>
+                    <p>{{ article.content | safe }}</p>
                     <p>{{ article.image }}</p>
                 </div>
+
                 <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
                 <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
             </div>

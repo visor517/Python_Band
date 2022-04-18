@@ -3,7 +3,7 @@ from uuid import uuid4
 from django.db import models
 from django.urls import reverse
 from authapp.models import HabrUser
-
+from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -28,7 +28,8 @@ class Article(models.Model):
     )
     uid = models.UUIDField(verbose_name='Ид', primary_key=True, default=uuid4)
     title = models.CharField(max_length=200, verbose_name='Заголовок')
-    content = models.TextField(verbose_name='Текст')
+    content = RichTextField(blank=True, null=True)
+    #content = models.TextField(verbose_name='Текст')
     author = models.ForeignKey(HabrUser, on_delete=models.DO_NOTHING,
                                verbose_name="Автор")
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING,
@@ -44,6 +45,8 @@ class Article(models.Model):
 
     class Meta:
         ordering = ('-created',)
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
 
     def get_absolute_url(self):
         return reverse('article:detail', args=[self.uid])
