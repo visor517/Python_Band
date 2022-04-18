@@ -12,14 +12,26 @@
     <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
     <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
     {% if user.is_authenticated %}
-        <form action=""
-              method="POST">
-            {% csrf_token %}
-            <button type="submit",
-                    name="article_id",
-                    value="{{ article.id }}",
-                    class="btn btn-primary btn-sm">Like</button>
+
+    <div class="d-flex flex-row">
+        <form method="POST" action="{% url 'article:like' article.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
+                type="submit"><span>{{ article.likes.all.count }}</span>
+            Like
+        </button>
         </form>
+        <form method="POST" action="{% url 'article:dislike' article.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button class="btn btn-primary btn-sm"
+                type="submit"><span>{{ article.dislikes.all.count }}</span>
+            Dislike
+        </button>
+        </form>
+    </div>
+
     {% endif %}
     <hr>
     {% include "include_comments.html" %}

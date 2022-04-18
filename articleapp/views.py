@@ -3,7 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.generic.edit import FormMixin
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
-
+from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from articleapp.models import Article
 from mainapp.views import main
 
@@ -42,3 +44,83 @@ class ArticleDeleteView(DeleteView):
 from django.shortcuts import render
 
 # Create your views here.
+
+
+class AddLike(LoginRequiredMixin, View):
+    """
+    класс - Поставить лайк
+    """
+    def article(self, request, pk, *args, **kwargs):
+        """
+        :param request:
+        :param pk:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        article = Article.objects.get(pk=pk)
+
+        is_dislike = False
+
+        for dislike in article.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            article.dislikes.remove(request.user)
+
+        is_like = False
+
+        for like in article.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            article.likes.add(request.user)
+        if is_like:
+            article.likes.remove(request.user)
+
+        next = request.POST.get('next', 'article_detail.html')
+        return HttpResponseRedirect(next)
+
+
+class Dislike(LoginRequiredMixin, View):
+    """
+    класс - Поставить дизлайк
+    """
+    def article(self, request, pk, *args, **kwargs):
+        """
+        :param request:
+        :param pk:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        article = Article.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in article.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            article.likes.remove(request.user)
+
+        is_dislike = False
+
+        for dislike in article.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            article.dislikes.add(request.user)
+        if is_dislike:
+            article.dislikes.remove(request.user)
+
+        next = request.POST.get('next', 'article_detail.html')
+        return HttpResponseRedirect(next)
