@@ -70,28 +70,3 @@ class CommentView(SuccessMessage):
         self.object.comment_author = self.request.user
         self.object.save()
         return super().form_valid(form)
-
-
-def update_comment_moderation(request, pk, type):
-    """
-    :param request:
-    :param pk:
-    :param type:
-    :return:
-    """
-    item = Comments.objects.get(pk=pk)
-    if type == 'public':
-        item.comment_moderation = True
-        item.save()
-        template = Template('''
-            {% include 'comment_item.html' %}
-        ''')
-        context = Context({'item': item})
-        return HttpResponse(template.render(context))
-    elif type == 'delete':
-        item.delete()
-        return HttpResponse('''
-            <div class="alert alert-success">
-            Комментарий удалён
-            </div>
-        ''')
