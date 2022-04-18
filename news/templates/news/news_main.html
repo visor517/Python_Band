@@ -5,10 +5,39 @@
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="{% static 'assets/css/authapp_style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/news.css' %}" rel="stylesheet">
 {% endblock css %}
 
 
  {% block content %}
-     <h1>Новости</h1>
+     <h1 align="center">Новости</h1>
+     <br>
+     {% for data in news %}
+          <div class="blog-card">
+            <div class="meta">
+                <div class="photo" style="background-image: url({{ data.image.url }})"></div>
+                  <ul class="details">
+                    <li class="author"><a href="#">{{ data.author }}</a></li>
+                    <li class="date">{{ data.date }}</li>
+    {#                    <li class="tags">#}
+    {#                      <ul>#}
+    {#                        <li><a href="#">Learn</a></li>#}
+    {#                        <li><a href="#">Code</a></li>#}
+    {#                        <li><a href="#">HTML</a></li>#}
+    {#                        <li><a href="#">CSS</a></li>#}
+    {#                      </ul>#}
+    {#                    </li>#}
+                  </ul>
+                </div>
+                <div class="description">
+                  <h1>{{ data.title }}</h1>
+                  <h2>Новостной блок</h2>
+                  <p> {{ data.anons }}</p>
+                  <p class="read-more">
+                    <a href="#">Читать далее</a>
+                  </p>
+                </div>
+            </div>
+          </div>
+     {% endfor %}
  {% endblock content %}

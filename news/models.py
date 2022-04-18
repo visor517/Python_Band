@@ -9,6 +9,7 @@ class News(models.Model):
     anons = models.CharField(verbose_name="Анонс", max_length=250)
     full_text = models.TextField(verbose_name='Статья')
     date = models.DateTimeField(verbose_name="Дата публикации", auto_now=True)
+    image = models.ImageField(upload_to='media/news_photos/', blank=True, null=True, verbose_name='Новостное изображение')
 
     def __str__(self) -> str:
         return self.title
