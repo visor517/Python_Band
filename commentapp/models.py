@@ -16,8 +16,12 @@ class FilterComments(models.Manager):
         user = get_current_user()
         if not user.is_authenticated:
             return super().get_queryset().filter(comment_moderation=True)
+        elif user.is_staff:
+            return super().get_queryset().filter(
+                models.Q(comment_moderation=True) |
+                models.Q(comment_moderation=False))
         return super().get_queryset().filter(
-            models.Q(comment_moderation=False,
+            models.Q(comment_moderation=True,
                      comment_author=get_current_user()) |
             models.Q(comment_moderation=False,
                      comment_article__author=get_current_user()) |
