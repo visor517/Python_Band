@@ -19,7 +19,11 @@ class HabrUser(AbstractUser):
         (MODERATOR, 'Модератор'),
         (ADMINISTRATOR, 'Администратор'),
     }
-
+    avatar = models.ImageField(
+        upload_to='users_avatars',
+        blank=True,
+        default='users_avatars/default.png'
+    )
     activation_key = models.CharField(max_length=128, blank=True, null=True)
     activation_key_expires = models.DateTimeField(
         default=(now() + timedelta(hours=48)))
@@ -31,12 +35,13 @@ class HabrUser(AbstractUser):
         return True
 
     def __str__(self):
-        return f'{self.first_name if self.first_name else ""}{ ", "+ self.last_name if self.last_name else ""} ' \
-               f'({self.username})'
+        return f'{self.first_name if self.first_name else ""} {self.last_name if self.last_name else ""}'
 
     def delete(self, using=None, keep_parents=False):
         """ Переопределение метода delete"""
         self.is_active = False
+        self.save()
+
 
 class HabrProfile(models.Model):
 
@@ -55,7 +60,7 @@ class HabrProfile(models.Model):
     user = models.OneToOneField(
         HabrUser, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
     nik = models.CharField(blank=True, max_length=50, verbose_name='ник')
-    avatar = models.ImageField(upload_to='users_avatars', blank=True)
+    # avatar = models.ImageField(upload_to='users_avatars', blank=True)
     birthday = models.DateField(verbose_name='дата рождения', null=True)
     gender = models.CharField(blank=True, max_length=1,
                               choices=GENDER_CHOICES, verbose_name='пол')

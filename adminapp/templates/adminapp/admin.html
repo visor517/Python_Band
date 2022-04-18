@@ -6,14 +6,12 @@
 {% endblock css %}
 
 {% block content %}
-<div class="wrapper">
-    <div class="content">
+<div class="container items-wrapper shadow-sm overflow-auto h-auto">
 
-    </div>
-    <div class="footer">
-        {% block footer %}
-        {% include 'mainapp/includes/inc_footer.html' %}
-    {% endblock footer %}
-    </div>
+
+
 </div>
+{% block footer %}
+    {% include 'mainapp/includes/inc_footer.html' %}
+{% endblock footer %}
 {% endblock content %}

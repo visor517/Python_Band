@@ -12,6 +12,7 @@ INSTALLED_APPS:
   - mainapp
   - authapp
   - articleapp
+  - adminapp
   - ckeditor
 TEMPLATES:
   -
