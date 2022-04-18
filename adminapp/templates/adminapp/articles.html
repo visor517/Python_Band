@@ -29,7 +29,7 @@
                 <div class="col-sm-2"><span>active: {% if article.is_deleted %}нет{% else %}да{% endif %}</span></div>
             </div>
             <div class="col-sm-2 row-cols-2">
-                {% if request.user.role == 'A' %}
+                {% if request.user.role == 'A' or request.user.is_superuser %}
                     <div class="col-sm-12 mar-b-5">
                         <a href="{% url '_admin:article_update' article.pk %}"
                             class="btn btn-outline-secondary btn-block align-items-start d-b">edit</a>
