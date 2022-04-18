@@ -44,3 +44,8 @@ MIDDLEWARE:
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: '' # Google Consumer Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET:  '' # Google Consumer Secret
 SECRET_KEY: "1"
+CKEDITOR_CONFIGS:
+  'default':
+    'toolbar': 'full'
+    'height': '300px'
+    'width': 'auto'
