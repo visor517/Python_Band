@@ -82,7 +82,7 @@ class AddLike(LoginRequiredMixin, View):
         if is_like:
             article.likes.remove(request.user)
 
-        next = request.POST.get('next', 'article_detail.html')
+        next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
 
@@ -122,5 +122,5 @@ class Dislike(LoginRequiredMixin, View):
         if is_dislike:
             article.dislikes.remove(request.user)
 
-        next = request.POST.get('next', 'article_detail.html')
+        next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
