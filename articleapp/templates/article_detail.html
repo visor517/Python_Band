@@ -14,7 +14,7 @@
     {% if user.is_authenticated %}
 
     <div class="d-flex flex-row">
-        <form >
+        <form method="POST" action='{% url 'article:like' article.pk %}'>
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
         <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
@@ -22,7 +22,7 @@
             Like
         </button>
         </form>
-        <form >
+        <form method="POST" action='{% url 'article:dislike' article.pk %}'>
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
         <button class="btn btn-primary btn-sm"
