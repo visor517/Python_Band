@@ -38,6 +38,7 @@ class HabrUser(AbstractUser):
         """ Переопределение метода delete"""
         self.is_active = False
 
+
 class HabrProfile(models.Model):
 
     class Meta:
@@ -62,7 +63,6 @@ class HabrProfile(models.Model):
     tagline = models.CharField(blank=True, max_length=255, verbose_name='тэги')
     zone = models.IntegerField(verbose_name='часовая зона', default=0)
     is_active = models.BooleanField(verbose_name='Статус активности', default=True)
-
 
     def __str__(self):
         return f'{self.user.username}{" - " if self.user.first_name or self.user.last_name else ""} {self.user.first_name} {self.user.last_name}'

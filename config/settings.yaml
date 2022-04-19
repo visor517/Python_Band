@@ -1,6 +1,6 @@
 ALLOWED_HOSTS:
   - '*'
-DEBUG: false
+DEBUG: true
 INSTALLED_APPS:
   - django.contrib.admin
   - django.contrib.auth
