@@ -6,7 +6,7 @@ from commentapp.views import CommentView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-from articleapp.models import Article
+from .models import Article
 from mainapp.views import main
 
 
