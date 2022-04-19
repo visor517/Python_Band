@@ -26,7 +26,6 @@
     "fields": {
       "user": 1,
       "nik": "",
-      "avatar": "",
       "birthday": null,
       "gender": "",
       "tagline": "",
