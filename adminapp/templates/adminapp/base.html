@@ -41,12 +41,14 @@
 
     {% block header %}
         {% include 'mainapp/includes/inc_topbar.html' %}
-        {% include 'mainapp/includes/inc_menu.html' %}
+        {% include 'adminapp/includes/inc_menu.html' %}
     {% endblock header %}
 
 
-    {% block content %}
-    {% endblock content %}
+    <main id="main" >
+        {% block content %}
+        {% endblock content %}
+    </main>
 
 
 
