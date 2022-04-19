@@ -1,0 +1,32 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="{% static 'assets/css/news.css' %}" rel="stylesheet">
+{% endblock css %}
+
+
+ {% block content %}
+     <h1 align="center">Создание новости</h1>
+     <br>
+
+     <form method="post" enctype="multipart/form-data">
+         {%  csrf_token %}
+         <h4>Название статьи</h4>
+         {{ form.title }}<br>
+         <h4>Аннос статьи</h4>
+         {{ form.anons }}<br>
+         <h4>Текст статьи</h4>
+         {{ form.full_text }}<br>
+         <h4>Выберите изображение</h4>
+         {{ form.image }}<br>
+         <span>{{ error }}</span>
+         {{ form.author }}
+         <button class="btn btn-success" type="submit" >Добавить новость</button>
+         <br>
+     </form>
+        <br>
+ {% endblock content %}
