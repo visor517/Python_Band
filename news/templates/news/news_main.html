@@ -35,7 +35,7 @@
                       <h2>Новостной блок</h2>
                       <p> {{ data.anons }}</p>
                       <p class="read-more">
-                        <a href="#">Читать далее</a>
+                        <a href="{% url 'news:news_detail' data.id %}">Читать далее</a>
                       </p>
                     </div>
                 </div>

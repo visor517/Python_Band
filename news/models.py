@@ -5,7 +5,7 @@ from authapp.models import HabrUser
 class News(models.Model):
     author = models.ForeignKey(HabrUser, on_delete=models.DO_NOTHING,
                                verbose_name="Автор")
-    title = models.CharField(verbose_name="Название", max_length=50)
+    title = models.CharField(verbose_name="Название", max_length=100)
     anons = models.CharField(verbose_name="Анонс", max_length=250)
     full_text = models.TextField(verbose_name='Статья')
     date = models.DateTimeField(verbose_name="Дата публикации", auto_now=True)
@@ -13,6 +13,9 @@ class News(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self):
+        return f'/news/{self.id}'
 
     class Meta:
         verbose_name = 'Новость'
