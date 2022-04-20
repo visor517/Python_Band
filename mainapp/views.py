@@ -7,3 +7,4 @@ def main(request):
     content = {"title": title}
 
     return render(request, "mainapp/index.html", content)
+
