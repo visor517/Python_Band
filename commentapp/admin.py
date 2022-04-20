@@ -14,6 +14,19 @@ class CommentAdmin(admin.ModelAdmin):
         'comment_update',
         'comment_moderation'
     )
+    list_filter = (
+        'comment_moderation',
+        'comment_create'
+    )
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        """
+        :param request:
+        :param queryset:
+        :return:
+        """
+        queryset.update(comment_moderation=False)
 
 
 admin.site.register(Comments, CommentAdmin)

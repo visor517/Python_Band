@@ -51,7 +51,7 @@ class Comments(models.Model):
     comment_text = models.TextField('Комментарий')
     comment_create = models.DateTimeField('Дата создания', auto_now_add=True)
     comment_update = models.DateTimeField('Дата обновления', auto_now=True)
-    comment_moderation = models.BooleanField('Модерация', default=False)
+    comment_moderation = models.BooleanField('Модерация', default=True)
     objects = FilterComments()
 
     def __str__(self):
