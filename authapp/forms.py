@@ -9,7 +9,6 @@ import random
 import hashlib
 
 
-
 class UserLoginForm(AuthenticationForm):
     class Meta:
         model = HabrUser

@@ -1,12 +1,15 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 from django.views.generic.edit import FormMixin
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-from .models import Article
+from articleapp.forms import ArticleForm
+from articleapp.models import Article
 from mainapp.views import main
 
 
@@ -22,12 +25,23 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
     form_class = CommentsForm
     template_name = 'article_detail.html'
+    form_class = ArticleForm
 
 
 class ArticleCreateView(CreateView):
     model = Article
     template_name = 'article_new.html'
-    fields = ['title', 'author', 'category', 'content', 'image']
+    form_class = ArticleForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.author = request.user
+            self.object = article.save()
+            return redirect(article)
+
+        return self.form_invalid(form)
 
 
 class ArticleUpdateView(UpdateView):
@@ -40,9 +54,6 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
-
-
-from django.shortcuts import render
 
 # Create your views here.
 

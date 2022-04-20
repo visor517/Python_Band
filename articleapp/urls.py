@@ -5,6 +5,7 @@ from articleapp.views import ArticleListView, ArticleDetailView, \
 from mainapp.views import main
 
 
+
 app_name = 'articleapp'
 
 urlpatterns = [

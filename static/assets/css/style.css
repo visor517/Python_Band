@@ -1492,6 +1492,50 @@ section {
   font-style: italic;
   color: #b7b7b7;
 }
+
+.blog .article-edit-form {
+  margin-top: 30px;
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.blog .article-edit-form h4 {
+  font-weight: bold;
+  font-size: 22px;
+}
+.blog .article-edit-form p {
+  font-size: 14px;
+}
+.blog .article-edit-form input {
+  border-radius: 4px;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+.blog .article-edit-form input:focus {
+  box-shadow: none;
+  border-color: #f5bab0;
+}
+.blog .article-edit-form textarea {
+  border-radius: 4px;
+  padding: 10px 10px;
+  font-size: 14px;
+}
+.blog .article-edit-form textarea:focus {
+  box-shadow: none;
+  border-color: #f5bab0;
+}
+.blog .article-edit-form .form-group {
+  margin-bottom: 25px;
+}
+.blog .article-edit-form .btn-primary {
+  border-radius: 4px;
+  padding: 10px 20px;
+  border: 0;
+  background-color: #545454;
+}
+.blog .article-edit-form .btn-primary:hover {
+  background-color: #616161;
+}
+
 .blog .blog-comments {
   margin-bottom: 30px;
 }
