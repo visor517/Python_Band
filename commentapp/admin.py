@@ -19,6 +19,7 @@ class CommentAdmin(admin.ModelAdmin):
         'comment_create'
     )
     actions = ['approve_comments']
+    list_per_page = 15
 
     def approve_comments(self, request, queryset):
         """

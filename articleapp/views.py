@@ -13,6 +13,7 @@ from mainapp.views import main
 # Отображение содержимого из модели Article
 class ArticleListView(ListView):
     model = Article
+    paginate_by = 3
     template_name = 'mainapp/index.html'
 
 
