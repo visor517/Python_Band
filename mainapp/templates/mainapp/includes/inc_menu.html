@@ -5,13 +5,17 @@
         <div class="logo">
             <h1><a href="{% url 'article:main' %}">Habr</a></h1>
         </div>
-        <form class="form-inline my-2 my-lg-0 d-flex align-items-center">
+        <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
+              method="POST"
+              action="{% url 'article:search' %}">
+            {% csrf_token %}
           <input class="form-control mr-sm-2"
                  type="search"
-                 placeholder="Search"
+                 placeholder="Поиск"
                  aria-label="Search"
+                 name="searched"
                  style="width: 150px;">
-          <button class="btn btn-outline-success my-2 my-sm-0"
+          <button class="btn btn-outline-secondary my-2 my-sm-0"
                   type="submit">Search</button>
         </form>
         <nav id="navbar" class="navbar">

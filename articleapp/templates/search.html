@@ -1,0 +1,21 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <center>
+    {% if searched %}
+
+        <h2>Вы искали: "{{ searched }}"</h2><br/>
+
+        {% for result in results %}
+
+            {{ result }}<br>
+
+        {% endfor %}
+
+    {% else %}
+        <h3>Введите в строку поиска, то, что вы хотите найти.</h3>
+    {% endif %}
+
+    </center>
+{% endblock content %}
