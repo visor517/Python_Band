@@ -35,7 +35,7 @@ class CommentView(SuccessMessage):
     """
     класс - CommentView
     """
-    success_msg = 'Комментарий создан и отправлен на модерацию.'
+    success_msg = 'Комментарий успешно создан.'
 
     def get_success_url(self, **kwargs):
         """
