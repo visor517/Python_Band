@@ -12,6 +12,7 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('', include('articleapp.urls', namespace='article')),
     path('', include('social_django.urls', namespace='social')),
+    path('', include('searchapp.urls', namespace='search')),
 ]
 
 if settings.DEBUG:
