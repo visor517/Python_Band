@@ -4,6 +4,8 @@ from articleapp.views import ArticleListView, ArticleDetailView, \
     ArticleCreateView, ArticleUpdateView, ArticleDeleteView, AddLike, Dislike
 from mainapp.views import main
 
+
+
 app_name = 'articleapp'
 
 urlpatterns = [

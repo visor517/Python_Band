@@ -22,20 +22,20 @@
 
                 <div class="d-flex flex-row">
                     <form >
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
-                            type="submit"><span>{{ article.likes.all.count }}</span>
-                        Like
-                    </button>
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
+                                type="submit"><span>{{ article.likes.all.count }}</span>
+                            Like
+                        </button>
                     </form>
                     <form >
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="btn btn-primary btn-sm"
-                            type="submit"><span>{{ article.dislikes.all.count }}</span>
-                        Dislike
-                    </button>
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn btn-primary btn-sm"
+                                type="submit"><span>{{ article.dislikes.all.count }}</span>
+                            Dislike
+                        </button>
                     </form>
                 </div>
           
