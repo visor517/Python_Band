@@ -9,14 +9,9 @@
               method="POST"
               action="{% url 'search:search' %}">
             {% csrf_token %}
-          <input class="form-control mr-sm-2"
-                 type="search"
-                 placeholder="Поиск"
-                 aria-label="Search"
-                 name="searched"
-                 style="width: 150px;">
-          <button class="btn btn-outline-secondary my-2 my-sm-0"
-                  type="submit">Search</button>
+
+          <button class="btn btn-outline-secondary my-2 my-sm-0" name="searched"
+                  type="submit"><span class="fa fa-search form-control-feedback"></span></button>
         </form>
         <nav id="navbar" class="navbar">
             <ul>
