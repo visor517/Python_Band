@@ -52,6 +52,8 @@ class Comments(models.Model):
     comment_create = models.DateTimeField('Дата создания', auto_now_add=True)
     comment_update = models.DateTimeField('Дата обновления', auto_now=True)
     comment_moderation = models.BooleanField('Модерация', default=True)
+    is_active = models.BooleanField(verbose_name='Статус активности',
+                                    default=True)
     objects = FilterComments()
 
     def __str__(self):
@@ -59,3 +61,14 @@ class Comments(models.Model):
         :return:
         """
         return "{}".format(self.comment_author)
+    
+    def delete(self, using=None, keep_parents=False):
+        """
+        Переопределение метода delete
+        :param using:
+        :param keep_parents:
+        :return:
+        """
+        self.is_active = False
+        self.comment_author.is_active = False
+        
