@@ -30,13 +30,13 @@
     </div>
     {% endif %}
     {% for category in objects %}
-        <div class="item-block shadow row {% if category.is_deleted %} is-deleted {% endif %}">
+        <div class="item-block shadow row {% if not category.is_active %} is-deleted {% endif %}">
             <div class="col-sm-1">{{ forloop.counter }}</div>
             <div class="col-sm-9 row">
                 <div class="col-sm-4"><span>{{ category.name }}</span></div>
                 <div class="w-100 d-none d-md-block"></div>
                 <div class="col-sm-4">
-                    <span>is_deleted: {% if category.is_deleted %}да{% else %}нет{% endif %}</span>
+                    <span>Активная: {% if category.is_active %}да{% else %}нет{% endif %}</span>
                 </div>
                 <div class="col-sm-6"></div>
                 <div class="col-sm-2"></div>
