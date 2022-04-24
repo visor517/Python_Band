@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
+
 from authapp.models import HabrUser, HabrProfile
 from authapp.forms import UserEditForm, UserProfileEditForm
 from articleapp.models import Category, Article
@@ -44,7 +45,11 @@ class ProfileRegisterForm(forms.ModelForm):
     class Meta:
         model = HabrProfile
         fields = ('tagline', 'gender', 'birthday', 'zone')
-        # fields = '__all__'
+
+    birthday = forms.DateField(label='Дата рождения',
+                               required=True,
+                               widget=forms.SelectDateWidget(years=range(1950, 2010)),
+                               )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -63,8 +63,13 @@ class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form2 = self.second_form_class(request.POST, instance=self.object.habrprofile)
-        form2.save()
-        return super().post(request, *args, **kwargs)
+        form = self.form_class(request.POST, instance=self.object)
+        if form.is_valid() and form2.is_valid():
+            form2.save()
+            return super().post(request, *args, **kwargs)
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, form2=form2))
 
 
 class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
