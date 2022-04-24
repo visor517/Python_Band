@@ -5,12 +5,17 @@ from django.urls import reverse
 from authapp.models import HabrUser
 from ckeditor.fields import RichTextField
 
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     is_deleted = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
     def delete(self, using=None, keep_parents=False):
         self.is_deleted = True
