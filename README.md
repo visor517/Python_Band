@@ -5,15 +5,14 @@
 python manage.py makemigrations
 
 python manage.py migrate
+
+python manage.py createsuperuser
 ```
 
 ### Fixtures
 
-Для загрузки фикстур после миграций применить
+Перед загрузкойц фикстур должен быть создан superuser, тк статьи заводятся на него
 ```
 python manage.py loaddata fixtures/fixtures.json
 ```
-В фикстурах добавляется администратор, 4 категории и 12 статей.
-
-Логин администратора admin
-Пароль администратора admin
+В фикстурах добавляется 4 категории и 12 статей.

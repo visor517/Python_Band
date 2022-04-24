@@ -1,7 +1,6 @@
 from datetime import timedelta
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.fields import CharField
 from django.utils.timezone import now
 
 from django.db.models.signals import post_save
@@ -41,7 +40,6 @@ class HabrUser(AbstractUser):
         """ Переопределение метода delete"""
         self.is_active = False
         self.save()
-
 
 
 class HabrProfile(models.Model):
