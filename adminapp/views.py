@@ -5,8 +5,8 @@ from django.shortcuts import redirect
 
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
-from adminapp.forms import UserRegisterForm, CategoryRegisterForm, ProfileRegisterForm, ArticleRegisterForm, \
-    UserUpdateForm
+from adminapp.forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
+    ArticleUpdateForm
 
 
 class UserIsAdminMixin(UserPassesTestMixin):
@@ -39,7 +39,7 @@ class UserListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
 
 class UserCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     model = HabrUser
-    form_class = UserRegisterForm
+    form_class = UserCreateForm
     template_name = 'adminapp/user_create.html'
     success_url = reverse_lazy('_admin:users')
 
@@ -49,7 +49,7 @@ class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     template_name = 'adminapp/user_update.html'
     success_url = reverse_lazy('_admin:users')
     form_class = UserUpdateForm
-    second_form_class = ProfileRegisterForm
+    second_form_class = ProfileUpdateForm
 
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
@@ -79,7 +79,7 @@ class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
     context_object_name = 'user_to_delete'
 
 
-class CategoryListView(LoginRequiredMixin, UserIsAdminMixin, ListView):
+class CategoryListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = Category
     template_name = 'adminapp/categories.html'
     context_object_name = 'objects'
@@ -87,14 +87,14 @@ class CategoryListView(LoginRequiredMixin, UserIsAdminMixin, ListView):
 
 class CategoryCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     model = Category
-    form_class = CategoryRegisterForm
-    template_name = 'adminapp/category_update.html'
+    form_class = CategoryCreateForm
+    template_name = 'adminapp/category_create.html'
     success_url = reverse_lazy('_admin:categories')
 
 
 class CategoryUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = Category
-    form_class = CategoryRegisterForm
+    form_class = CategoryCreateForm
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('_admin:categories')
 
@@ -114,14 +114,14 @@ class ArticlesListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
 
 class ArticleCreateView(LoginRequiredMixin, UserIsPersonalMixin, CreateView):
     model = Article
-    form_class = ArticleRegisterForm
-    template_name = 'adminapp/article_update.html'
+    form_class = ArticleCreateForm
+    template_name = 'adminapp/article_create.html'
     success_url = reverse_lazy('_admin:articles')
 
 
 class ArticleUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = Article
-    form_class = ArticleRegisterForm
+    form_class = ArticleUpdateForm
     template_name = 'adminapp/article_update.html'
     success_url = reverse_lazy('_admin:articles')
 
