@@ -4,34 +4,40 @@
 {% block content %}
     <center>
         <br>
-        <div class="input-group mb-3" style="width: 50%;">
-          <input type="text" class="form-control"
-                 placeholder="Поисковая строка"
-                 aria-label="Recipient's username"
-                 aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <span class="input-group-text" id="basic-addon2">
-                Поиск
-            </span>
-          </div>
-        </div>
+            <div class="div_input_search">
+                <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
+                      method="POST"
+                      action="{% url 'search:search' %}">
+                    {% csrf_token %}
+                  <input class="form-control mr-sm-2 search_in"
+                         type="search"
+                         placeholder="Поиск"
+                         aria-label="Search"
+                         name="searched">
+                  <button class="btn btn-outline-secondary my-2 my-sm-0"
+                          type="submit">Search</button>
+                </form>
+            </div>
         <br>
-    {% if searched %}
+        <br>
+    <div class="search_res">
+        {% if searched %}
 
-        <h2>Вы искали: "{{ searched }}"</h2><br/>
+            <h2>Вы искали: "{{ searched }}"</h2><br/>
 
-        {% for result in results %}
+            {% for result in results %}
 
-            <p>"{{ searched }}" находится в этой статье:
-            <a href="{% url 'article:detail' result.pk %}">
-                {{ result }}
-            </a></p>
+                <p>"{{ searched }}" находится в этой статье:
+                <a href="{% url 'article:detail' result.pk %}">
+                    {{ result }}
+                </a></p>
 
-        {% endfor %}
+            {% endfor %}
 
-    {% else %}
-        <h3>Введите в строку поиска, то, что вы хотите найти.</h3>
-    {% endif %}
+        {% else %}
+            <h3>Введите в строку поиска, то, что вы хотите найти.</h3>
+        {% endif %}
+    </div>
 
     </center>
 {% endblock content %}

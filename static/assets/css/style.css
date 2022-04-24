@@ -1926,3 +1926,22 @@ section {
   font-size: 13px;
   color: #fff;
 }
+/*--------------------------------------------------------------
+# Search
+--------------------------------------------------------------*/
+.search_res {
+    width: 50%;
+    min-height: 5vh;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.div_input_search {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+.search_in {
+    width: 880px;
+}

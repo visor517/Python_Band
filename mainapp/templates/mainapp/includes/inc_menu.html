@@ -5,14 +5,6 @@
         <div class="logo">
             <h1><a href="{% url 'article:main' %}">Habr</a></h1>
         </div>
-        <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
-              method="POST"
-              action="{% url 'search:search' %}">
-            {% csrf_token %}
-
-          <button class="btn btn-outline-secondary my-2 my-sm-0" name="searched"
-                  type="submit"><span class="fa fa-search form-control-feedback"></span></button>
-        </form>
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="active" href="#">Новости</a></li>
@@ -20,9 +12,24 @@
                 <li><a href="#">Веб-разработка</a></li>
                 <li><a href="#">Мобильная разработка</a></li>
                 <li><a href="#">Маркетинг</a></li>
-                <li><a href="#">О Сервисе</a></li>
-                <li><a href="#">Команда</a></li>
-                <li><a href="#">Популярные блоги</a></li>
+<!--                <li><a href="#">О Сервисе</a></li>-->
+<!--                <li><a href="#">Команда</a></li>-->
+<!--                <li><a href="#">Популярные блоги</a></li>-->
+
+                <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
+                      method="POST"
+                      style="margin-left: 30px;"
+                      action="{% url 'search:search' %}">
+
+                    {% csrf_token %}
+
+                  <button class="btn  my-2 my-sm-0"
+                          name="searched"
+                          style="color: #6c757d;">
+                      <span class="fa fa-search form-control-feedback"></span>
+                  </button>
+                </form>
+
                 <li class="dropdown">
                     <a href="#">
                         {{ user.first_name|default:'Пользователь' }}

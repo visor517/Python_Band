@@ -2,7 +2,13 @@ from django.shortcuts import render
 from articleapp.models import Article
 from django.db.models import Q
 
+
 def search(request):
+    """
+    Поиск по сайту
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         searched = request.POST['searched']
         results = Article.objects.filter(
