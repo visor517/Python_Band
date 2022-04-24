@@ -35,6 +35,8 @@ class UserListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = HabrUser
     template_name = 'adminapp/users.html'
     context_object_name = 'objects'
+    paginate_by = 5
+    ordering = ['role']
 
 
 class UserCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
@@ -83,6 +85,7 @@ class CategoryListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = Category
     template_name = 'adminapp/categories.html'
     context_object_name = 'objects'
+    paginate_by = 5
 
 
 class CategoryCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
@@ -110,6 +113,7 @@ class ArticlesListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = Article
     template_name = 'adminapp/articles.html'
     context_object_name = 'objects'
+    paginate_by = 5
 
 
 class ArticleCreateView(LoginRequiredMixin, UserIsPersonalMixin, CreateView):
