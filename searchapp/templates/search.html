@@ -23,7 +23,8 @@
     <div class="search_res">
         {% if searched %}
 
-            <h2>Вы искали: "{{ searched }}"</h2><br/>
+            <h2>Вы искали: "{{ searched }}"</h2>
+            <p>Результат вашего запроса : {{ results|length }} шт.</p><br/>
 
             {% for result in results %}
 
