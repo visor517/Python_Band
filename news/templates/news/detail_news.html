@@ -10,9 +10,10 @@
 
 
  {% block content %}
-          <h1 align="center">{{ detail_view.title}}</h1>
-          <br>
-          <img src="{{ detail_view.image.url }}" alt="">
-          <p>{{ detail_view.full_text  }}</p>
-
+            <div align="center">
+                <h1 align="center">{{ detail_view.title}}</h1>
+                <br>
+                <img src="{{ detail_view.image.url }}" alt="" >
+                <p>{{ detail_view.full_text  }}</p>
+            </div>
  {% endblock content %}
