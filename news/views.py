@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import News
 from .forms import NewsForm
-from django.views.generic import DetailView, UpdateView, DeleteView
+from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 
 
-def news_main(request):
-    news = News.objects.order_by('-date')
-    return render(request, "news/news_main.html", {'news': news})
-
+#
+# def news_main(request):
+#     news = News.objects.order_by('-date')
+#     return render(request, "news/news_main.html", {'news': news})
 
 def create_news(request):
     error = ''
@@ -24,6 +24,13 @@ def create_news(request):
         'error': error
     }
     return render(request, "news/create_news.html", data)
+
+
+class NewsListView(ListView):
+    model = News
+    queryset = News.objects.order_by('-date')
+    template_name = 'news/news_main.html'
+    context_object_name = 'news'
 
 
 class NewsDetailView(DetailView):
