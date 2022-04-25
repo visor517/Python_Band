@@ -1,0 +1,31 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+<div class="container items-wrapper shadow-sm overflow-auto h-auto">
+    <div class="item-block shadow row justify-content-center">
+        <div class="col-sm-4 align-self-center">
+            Вы точно хотите удалить категорию "{{ category_to_delete.name }}" ?
+        </div>
+        <div class="col-sm-1 align-self-center">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-outline-secondary" value="удалить">
+            </form>
+        </div>
+        <div class="col-sm-3 align-self-center">
+            <a href="{% url '_admin:categories' %}" class="btn btn-outline-secondary">
+                к списку категорий
+            </a>
+        </div>
+    </div>
+</div>
+{% block footer %}
+{% include 'mainapp/includes/inc_footer.html' %}
+{% endblock footer %}
+{% endblock content %}

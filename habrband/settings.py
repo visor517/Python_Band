@@ -21,30 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = settings.development.SECRET_KEY
+SECRET_KEY = settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = settings.development.DEBUG
+DEBUG = settings.DEBUG
 
-ALLOWED_HOSTS = settings.default.ALLOWED_HOSTS
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 # Application definition
 
-INSTALLED_APPS = settings.default.INSTALLED_APPS
+INSTALLED_APPS = settings.INSTALLED_APPS
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+MIDDLEWARE = settings.MIDDLEWARE
 
 ROOT_URLCONF = 'habrband.urls'
 
-TEMPLATES = settings.default.TEMPLATES
+TEMPLATES = settings.TEMPLATES
 
 WSGI_APPLICATION = 'habrband.wsgi.application'
 
@@ -79,9 +71,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = settings.default.LANGUAGE_CODE
+LANGUAGE_CODE = settings.LANGUAGE_CODE
 
-TIME_ZONE = settings.default.TIME_ZONE
+TIME_ZONE = settings.TIME_ZONE
 
 USE_I18N = True
 
@@ -107,7 +99,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'users.User'
 
-AUTH_USER_MODEL = settings.default.AUTH_USER_MODEL
+AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
 """
 Локальная отправка почты
@@ -125,3 +117,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/email-messages/'
 
 LOGIN_ERROR_URL = '/'
+
+AUTHENTICATION_BACKENDS = settings.AUTHENTICATION_BACKENDS
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+CKEDITOR_CONFIGS = settings.CKEDITOR_CONFIGS

@@ -2,14 +2,48 @@
 {% load static %}
 
 {% block content %}
-    <div class="post-entry">
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.author }}</p>
-        <p>{{ article.category }}</p>
-        <p>{{ article.content }}</p>
-        <p>{{ article.image }}</p>
-    </div>
-    <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
-    <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
-{% endblock content %}
 
+<section id="blog" class="blog">
+    <div class="container">
+        <div class="article-edit-form">   
+          
+            <div class="post-entry">
+                <h2>{{ article.title }}</h2>
+                <p>{{ article.author }}</p>
+                <p>{{ article.category }}</p>
+                <p>{{ article.content | safe }}</p>
+                <p>{{ article.image }}</p>
+            </div>
+
+                <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
+                <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+          
+                {% if user.is_authenticated %}
+
+                <div class="d-flex flex-row">
+                    <form >
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
+                            type="submit"><span>{{ article.likes.all.count }}</span>
+                        Like
+                    </button>
+                    </form>
+                    <form >
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class="btn btn-primary btn-sm"
+                            type="submit"><span>{{ article.dislikes.all.count }}</span>
+                        Dislike
+                    </button>
+                    </form>
+                </div>
+          
+                {% endif %}
+                <hr>
+                {% include "include_comments.html" %}
+          
+        </div>
+    </div>
+</section>
+{% endblock content %}          

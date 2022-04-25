@@ -1,0 +1,54 @@
+<div>
+    <h4>Комментарии ({{ article.comments_articles.all.count }})</h4>
+
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <ul>
+            {% for item in article.comments_articles.all %}
+
+            <li class="border" style="list-style-type: none">
+
+                "{{ item.comment_text }}"<br>
+
+                Дата написания: {{ item.comment_create }}<br>
+
+                {% if user.is_authenticated %}
+
+                    Автор комментария: {{ item.comment_author }}<br>
+
+                    {% if item.comment_article.author == request.user %}
+
+                    Модерация комментария: {{ item.comment_moderation }}
+
+                    {% endif %}
+                    <br>
+                {% endif %}
+
+            </li><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+    <p>Добавить комментарий</p>
+
+    <div class="col-5">
+        <form action="" id="add_form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+
+        {% if user.is_authenticated %}
+            <input form="add_form" type="submit" value="Добавить"/>
+        {% else %}
+            <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
+        {% endif %}
+    </div>
+    <br>
+</div>
