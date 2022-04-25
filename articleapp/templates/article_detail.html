@@ -12,7 +12,7 @@
                 <p>{{ article.author }}</p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
-                <p>{{ article.image }}</p>
+                {#<p>{{ article.image }}</p>#}
             </div>
 
                 <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>

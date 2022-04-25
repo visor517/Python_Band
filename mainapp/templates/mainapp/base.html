@@ -53,24 +53,24 @@
         {% endblock content %}
     </main>
 
+    <!-- Блок подвала -->
     {% block footer %}
         {% include 'mainapp/includes/inc_footer.html' %}
-    <!-- Блок подвала -->
     {% endblock footer %}
 
-    {% block js %}
-          <!-- Vendor JS Files -->
-          <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
-          <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-          <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
-          <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-          <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
-          <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
-          <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
-          <!-- Template Main JS File -->
-          <script src="{% static 'assets/js/main.js' %}"></script>
-    {% endblock js %}
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
 </body>
 
 </html>
