@@ -1,7 +1,6 @@
 from datetime import timedelta
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models.fields import CharField
 from django.utils.timezone import now
 
 from django.db.models.signals import post_save
@@ -67,7 +66,6 @@ class HabrProfile(models.Model):
     tagline = models.CharField(blank=True, max_length=255, verbose_name='тэги')
     zone = models.IntegerField(verbose_name='часовая зона', default=0)
     is_active = models.BooleanField(verbose_name='Статус активности', default=True)
-
 
     def __str__(self):
         return f'{self.user.username}{" - " if self.user.first_name or self.user.last_name else ""} {self.user.first_name} {self.user.last_name}'

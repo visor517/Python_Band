@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
+
 from authapp.models import HabrUser, HabrProfile
 from authapp.forms import UserEditForm, UserProfileEditForm
 from articleapp.models import Category, Article
@@ -29,7 +30,7 @@ class UserUpdateForm(UserEditForm):
         add_class_html(self.fields)
 
 
-class UserRegisterForm(UserCreationForm):
+class UserCreateForm(UserCreationForm):
     class Meta:
         model = HabrUser
         fields = ('username', 'email', 'first_name', 'last_name', 'password1',
@@ -40,18 +41,22 @@ class UserRegisterForm(UserCreationForm):
         add_class_html(self.fields)
 
 
-class ProfileRegisterForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = HabrProfile
         fields = ('tagline', 'gender', 'birthday', 'zone')
-        # fields = '__all__'
+
+    birthday = forms.DateField(label='Дата рождения',
+                               required=True,
+                               widget=forms.SelectDateWidget(years=range(1950, 2010)),
+                               )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         add_class_html(self.fields)
 
 
-class CategoryRegisterForm(forms.ModelForm):
+class CategoryCreateForm(forms.ModelForm):
     class Meta:
         model = Category
         exclude = ()
@@ -61,10 +66,21 @@ class CategoryRegisterForm(forms.ModelForm):
         add_class_html(self.fields)
 
 
-class ArticleRegisterForm(forms.ModelForm):
+class ArticleCreateForm(forms.ModelForm):
     class Meta:
         model = Article
-        exclude = ()
+        fields = ('title', 'category', 'content', 'author', 'image', 'status')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class ArticleUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        # fields = ('title', 'category', 'content', 'author', 'image', 'status')
+        exclude = ['uid', 'likes', 'dislikes']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

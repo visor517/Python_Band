@@ -71,3 +71,4 @@ class Comments(models.Model):
         """
         self.is_active = False
         self.comment_author.is_active = False
+

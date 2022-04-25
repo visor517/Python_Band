@@ -1,10 +1,3 @@
-/**
-* Template Name: Eterna - v4.7.0
-* Template URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -92,6 +85,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 #topbar .social-links a:hover {
   color: white;
+}
+
+#topbar .search-form form {
+  display: flex;
+}
+#topbar .search-form .search-input-wrapper {
+  padding: 3px 10px;
+  background: #fff;
+}
+#topbar .search-form form input[type=text] {
+  border: 0;
+  padding: 4px;
+  border-radius: 4px;
+}
+#topbar .search-form form button {
+  border: 0;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: -1px;
+  background: #e96b56;
+  color: #fff;
+  transition: 0.3s;
+  border-radius: 0 10px 10px 0;
+  line-height: 0;
+}
+#topbar .search-form form button i {
+  line-height: 0;
+}
+#topbar .search-form form button:hover {
+  background: #eb7b68;
 }
 
 /*--------------------------------------------------------------
@@ -182,7 +205,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar .dropdown ul {
   display: block;
   position: absolute;
-  left: 24px;
+  right: -24px;
   top: calc(100% + 30px);
   margin: 0;
   padding: 10px 0;
@@ -328,7 +351,7 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 70vh;
+  height: 50vh;
   background-color: rgba(59, 59, 59, 0.8);
   overflow: hidden;
   padding: 0;
@@ -338,7 +361,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 #hero .carousel-item {
   width: 100%;
-  height: 70vh;
+  height: 50vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -362,7 +385,7 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
-  padding-bottom: 120px;
+  padding-bottom: 50px;
 }
 #hero .carousel-content {
   text-align: center;
@@ -424,7 +447,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 12px;
   height: 12px;
   border-radius: 50px;
-  margin-bottom: 180px;
+  margin-bottom: 50px;
   opacity: 0.2;
 }
 #hero .carousel-indicators li.active {
@@ -1668,40 +1691,7 @@ section {
 .blog .sidebar .sidebar-item {
   margin-bottom: 30px;
 }
-.blog .sidebar .search-form form {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 3px 10px;
-  position: relative;
-}
-.blog .sidebar .search-form form input[type=text] {
-  border: 0;
-  padding: 4px;
-  border-radius: 4px;
-  width: calc(100% - 40px);
-}
-.blog .sidebar .search-form form button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  border: 0;
-  background: none;
-  font-size: 16px;
-  padding: 0 15px;
-  margin: -1px;
-  background: #e96b56;
-  color: #fff;
-  transition: 0.3s;
-  border-radius: 0 4px 4px 0;
-  line-height: 0;
-}
-.blog .sidebar .search-form form button i {
-  line-height: 0;
-}
-.blog .sidebar .search-form form button:hover {
-  background: #eb7b68;
-}
+
 .blog .sidebar .categories ul {
   list-style: none;
   padding: 0;

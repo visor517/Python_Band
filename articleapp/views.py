@@ -25,7 +25,7 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
     form_class = CommentsForm
     template_name = 'article_detail.html'
-    # form_class = ArticleForm
+
 
 
 class ArticleCreateView(CreateView):
