@@ -5,15 +5,22 @@
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="{% static 'assets/css/news.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 {% endblock css %}
-
 
  {% block content %}
             <div class="container">
-                <h1 align="center">{{ detail_view.title}}</h1>
-                <br>
-                <img src="{{ detail_view.image.url }}" alt="" >
-                <p>{{ detail_view.full_text  }}</p>
+                <div class="row">
+                    <div class="news-item">
+                        <div class="news-item__title col-lg-12">
+                            <h1 class="news-item__title-news">{{ detail_view.title}}</h1>
+                        </div>
+
+                        <div class="description col-lg-12 col-md-6 col-sm-3">
+                            <img style='float: left; margin: 0px 20px 20px 0px' class='description__img' src="{{ detail_view.image.url }}" alt="" height="500px" width="500px">
+                            <p class="description__text">{{ detail_view.full_text  }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
  {% endblock content %}
