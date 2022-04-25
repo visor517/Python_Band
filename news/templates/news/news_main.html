@@ -10,38 +10,42 @@
 
 
  {% block content %}
+
      <h1 align="center">Новости</h1>
-     <br>
-     {% if news %}
-         {% for data in news %}
-              <div class="blog-card">
-                <div class="meta">
-                    <div class="photo" style="background-image: url({{ data.image.url }})"></div>
-                      <ul class="details">
-                        <li class="author"><a href="#">{{ data.author }}</a></li>
-                        <li class="date">{{ data.date }}</li>
-        {#                    <li class="tags">#}
-        {#                      <ul>#}
-        {#                        <li><a href="#">Learn</a></li>#}
-        {#                        <li><a href="#">Code</a></li>#}
-        {#                        <li><a href="#">HTML</a></li>#}
-        {#                        <li><a href="#">CSS</a></li>#}
-        {#                      </ul>#}
-        {#                    </li>#}
-                      </ul>
+         <br>
+     <div class="container">
+         {% if news %}
+             {% for data in news %}
+                  <div class="blog-card">
+                    <div class="meta">
+                        <div class="photo" style="background-image: url({{ data.image.url }})"></div>
+                          <ul class="details">
+                            <li class="author"><a href="#">{{ data.author }}</a></li>
+                            <li class="date">{{ data.date }}</li>
+            {#                    <li class="tags">#}
+            {#                      <ul>#}
+            {#                        <li><a href="#">Learn</a></li>#}
+            {#                        <li><a href="#">Code</a></li>#}
+            {#                        <li><a href="#">HTML</a></li>#}
+            {#                        <li><a href="#">CSS</a></li>#}
+            {#                      </ul>#}
+            {#                    </li>#}
+                          </ul>
+                        </div>
+                        <div class="description">
+                          <h1>{{ data.title }}</h1>
+                          <h2>Новостной блок</h2>
+                          <p> {{ data.anons }}</p>
+                          <p class="read-more">
+                            <a href="{% url 'news:news_detail' data.id %}">Читать далее</a>
+                          </p>
+                        </div>
                     </div>
-                    <div class="description">
-                      <h1>{{ data.title }}</h1>
-                      <h2>Новостной блок</h2>
-                      <p> {{ data.anons }}</p>
-                      <p class="read-more">
-                        <a href="{% url 'news:news_detail' data.id %}">Читать далее</a>
-                      </p>
-                    </div>
-                </div>
-              </div>
-         {% endfor %}
-     {% else %}
-        <p align="center">Новостной блок пуст</p>
-     {% endif %}
+                  </div>
+             {% endfor %}
+         {% else %}
+            <p align="center">Новостной блок пуст</p>
+         {% endif %}
+     </div>
+
  {% endblock content %}
