@@ -16,6 +16,8 @@ INSTALLED_APPS:
   - adminapp
   - ckeditor
   - news
+  - searchapp
+
 
 TEMPLATES:
   -

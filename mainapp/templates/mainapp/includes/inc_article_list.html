@@ -1,25 +1,29 @@
 <!-- ======= Featured Section ======= -->
 <section id="featured" class="featured">
-{% block content %}
-    {% for article in object_list %}
-        {% if forloop.counter0|divisibleby:"3" %}
-        <div class="row">
-        {% endif %}
-            <div class="col-lg-4">
-                <div class="icon-box">
-                    <i class="bi bi-card-checklist"></i>
-                    <h3>
-                        <a href="{% url 'article:detail' article.pk %}">
-                            {{ article.title }}
-                        </a>
-                    </h3>
+    <div class="container">
+
+    {% block content %}
+        {% for article in object_list %}
+            {% if forloop.counter0|divisibleby:"3" %}
+            <div class="row">
+            {% endif %}
+                <div class="col-lg-4">
+                    <div class="icon-box">
+                        <i class="bi bi-card-checklist"></i>
+                        <h3>
+                            <a href="{% url 'article:detail' article.pk %}">
+                                {{ article.title }}
+                            </a>
+                        </h3>
+                    </div>
                 </div>
+            {% if forloop.counter|divisibleby:"3" %}
             </div>
-        {% if forloop.counter|divisibleby:"3" %}
-        </div>
-            {% include "paginator.html" %}
-        {% endif %}
-    {% endfor %}
-{% endblock content %}
+                {% include "paginator.html" %}
+            {% endif %}
+        {% endfor %}
+    {% endblock content %}
+
+    </div>
 </section><!-- End Featured Section -->
 

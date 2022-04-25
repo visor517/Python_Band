@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -25,7 +25,7 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
     form_class = CommentsForm
     template_name = 'article_detail.html'
-#     form_class = ArticleForm
+
 
 
 class ArticleCreateView(CreateView):

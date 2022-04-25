@@ -61,7 +61,7 @@ class Comments(models.Model):
         :return:
         """
         return "{}".format(self.comment_author)
-    
+
     def delete(self, using=None, keep_parents=False):
         """
         Переопределение метода delete
@@ -71,4 +71,4 @@ class Comments(models.Model):
         """
         self.is_active = False
         self.comment_author.is_active = False
-        
+

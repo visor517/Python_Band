@@ -1,0 +1,41 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <center>
+        <br>
+            <div class="div_input_search">
+                <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
+                      method="POST"
+                      action="{% url 'search:search' %}">
+                    {% csrf_token %}
+                  <input class="form-control mr-sm-2 search_in"
+                         type="search"
+                         placeholder="Поиск"
+                         aria-label="Search"
+                         name="searched">
+                  <button class="btn btn-outline-secondary my-2 my-sm-0"
+                          type="submit">Search</button>
+                </form>
+            </div>
+        <br>
+        <br>
+    <div class="search_res">
+        {% if searched %}
+
+            <h2>Вы искали: "{{ searched }}"</h2>
+            <p>Результат вашего запроса : {{ results|length }} шт.</p><br/>
+
+            {% for result in results %}
+
+                {% include "includes/inc_search.html" %}
+
+            {% endfor %}
+
+        {% else %}
+            <h3>Введите в строку поиска, то, что вы хотите найти.</h3>
+        {% endif %}
+    </div>
+
+    </center>
+{% endblock content %}

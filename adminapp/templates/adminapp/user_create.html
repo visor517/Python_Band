@@ -6,27 +6,39 @@
 {% endblock css %}
 
 {% block content %}
-<div class="container items-wrapper shadow overflow-auto h-auto">
-    <div class="item-block shadow row">
-        <div class="col-sm-3">
-            <a href="{% url '_admin:users' %}" class="btn btn-outline-secondary">
+<section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="/">Главная</a></li>
+          <li><a href="{% url '_admin:main_admin' %}">Админка</a></li>
+          <li><a href="{% url '_admin:users' %}">Пользователи</a></li>
+            <li>Создание</li>
+        </ol>
+        <h2>Создание</h2>
+
+      </div>
+</section>
+
+<div class="container items-wrapper overflow-auto h-auto">
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-end ">
+            <a href="{% url '_admin:users' %}" class="btn btn-outline-secondary m-b20-r10">
                 к списку пользователей
             </a>
         </div>
+    </div>
+    <div class="item-block shadow row">
+        <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="сохранить" class="btn btn-outline-secondary">
+                <input type="submit" value="создать" class="btn btn-outline-secondary">
             </form>
         </div>
         <div class="col-sm-3"></div>
     </div>
 </div>
-
-{% block footer %}
-{% include 'mainapp/includes/inc_footer.html' %}
-{% endblock footer %}
-
 {% endblock content %}
 
