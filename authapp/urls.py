@@ -9,6 +9,6 @@ urlpatterns = [
     path('login/', LoginUserView.as_view(), name='login'),
     path('logout/', LogoutUserView.as_view(), name='logout'),
     path('register/', RegisterUserView.as_view(), name='register'),
-    path('edit/<uuid:pk>/', ProfileEditView.as_view(), name='edit'),
+    path('edit/<int:pk>/', ProfileEditView.as_view(), name='edit'),
     path('verify/<email>/<activation_key>', VerifyView.as_view(), name="verify"),
 ]

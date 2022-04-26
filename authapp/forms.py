@@ -76,15 +76,29 @@ class UserEditForm(UserChangeForm):
         add_class_html(self.fields)
 
 
-class UserProfileEditForm(forms.ModelForm):
+class UserEditForm(forms.ModelForm):
+    """ Форма редактирование пользователя """
     class Meta:
-        model = HabrProfile
-        # fields = ('tagline', 'about_me', 'gender', 'avatar', 'url')
-        fields = '__all__'
+        model = HabrUser
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'avatar')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-            if field_name == 'avatar':
-                field.widget = forms.HiddenInput()
+        add_class_html(self.fields)
+
+
+class ProfileEditForm(forms.ModelForm):
+    """ Форма редактирование профиля """
+
+    class Meta:
+        model = HabrProfile
+        fields = ('tagline', 'gender', 'birthday', 'zone')
+
+    birthday = forms.DateField(label='Дата рождения',
+                               required=True,
+                               widget=forms.SelectDateWidget(years=range(1950, 2010)),
+                               )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)

@@ -1,23 +1,29 @@
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, HttpResponseRedirect
-
-from adminapp.forms import ProfileUpdateForm, UserUpdateForm
-from authapp.forms import UserLoginForm, UserProfileEditForm, UserRegisterForm, UserEditForm
+# from django.conf.urls import url
 from django.contrib import auth
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
-from authapp.models import HabrUser
+# from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+from adminapp.views import UserUpdateView
+from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm
+
+
+from authapp.models import HabrUser
 
 from django.utils.timezone import now
 
-from django.conf.urls import url
+
+
+
 
 class SendVerifyMail:
     """ Отправка сообщения пользователю """
@@ -86,17 +92,23 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
             return HttpResponseRedirect(reverse('auth:login'))
 
 
+class UserIsUserMixin(UserPassesTestMixin):
+    """ Предоставляет право доступа пользователю у которого роль Администратор """
+
+    def test_func(self):
+        return True
+
+
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     """ Редактирование профиля """
-
     model = HabrUser
-    template_name = 'adminapp/user_update.html'
-    success_url = reverse_lazy('_admin:users')
-    form_class = UserUpdateForm
-    second_form_class = ProfileUpdateForm
+    template_name = 'authapp/edit.html'
+    success_url = reverse_lazy('main')
+    form_class = UserEditForm
+    second_form_class = ProfileEditForm
 
     def get_context_data(self, **kwargs):
-        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context = super(ProfileEditView, self).get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class(instance=self.object)
         if 'form2' not in context:
@@ -117,23 +129,3 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
 
 
-# def edit(request):
-#     title = 'редактирование'
-#
-#     if request.method == 'POST':
-#         edit_form = UserEditForm(
-#             request.POST, request.FILES, instance=request.user)
-#         profile_form = UserProfileEditForm(
-#             request.POST, instance=request.user.userprofile)
-#         if edit_form.is_valid() and profile_form.is_valid():
-#             edit_form.save()
-#             return HttpResponseRedirect(reverse('auth:edit'))
-#     else:
-#         edit_form = UserEditForm(instance=request.user)
-#         profile_form = UserProfileEditForm(
-#             instance=request.user.shopuserprofile)
-#
-#     content = {'title': title, 'edit_form': edit_form,
-#                'profile_form': profile_form}
-#
-#     return render(request, 'authapp/edit.html', content)
