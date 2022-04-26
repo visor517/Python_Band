@@ -1,6 +1,8 @@
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, HttpResponseRedirect
+
+from adminapp.forms import ProfileUpdateForm, UserUpdateForm
 from authapp.forms import UserLoginForm, UserProfileEditForm, UserRegisterForm, UserEditForm
 from django.contrib import auth
 from django.urls import reverse
@@ -8,9 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from authapp.models import HabrUser
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.utils.timezone import now
 
@@ -81,6 +84,37 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
             user = register_form.save()
             SendVerifyMail(user)
             return HttpResponseRedirect(reverse('auth:login'))
+
+
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    """ Редактирование профиля """
+
+    model = HabrUser
+    template_name = 'adminapp/user_update.html'
+    success_url = reverse_lazy('_admin:users')
+    form_class = UserUpdateForm
+    second_form_class = ProfileUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(instance=self.object)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(instance=self.object.habrprofile)
+        context['avatar'] = self.object.avatar
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form2 = self.second_form_class(request.POST, instance=self.object.habrprofile)
+        form = self.form_class(request.POST, instance=self.object)
+        if form.is_valid() and form2.is_valid():
+            form2.save()
+            return super().post(request, *args, **kwargs)
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, form2=form2))
+
 
 
 # def edit(request):

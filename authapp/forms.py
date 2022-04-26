@@ -8,6 +8,18 @@ from django.contrib.auth.forms import UserChangeForm
 import random
 import hashlib
 
+CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted']
+
+def add_class_html(fields):
+    for field_name, field in fields.items():
+        if field_name in CHECK_LIST:
+            field.widget.attrs['class'] = 'form-chek'
+            field.help_text = ''
+            continue
+        else:
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
 
 class UserLoginForm(AuthenticationForm):
     class Meta:
@@ -60,6 +72,8 @@ class UserEditForm(UserChangeForm):
             field.help_text = ''
             if field_name == 'password':
                 field.widget = forms.HiddenInput()
+
+        add_class_html(self.fields)
 
 
 class UserProfileEditForm(forms.ModelForm):

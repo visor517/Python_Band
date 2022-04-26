@@ -1,24 +1,28 @@
-{% extends 'mainapp/base.html' %}
+{% extends 'adminapp/base.html' %}
 {% load static %}
 
+{% block css %}
+<link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+{% endblock css %}
 
 {% block content %}
-<form class="form-horizontal" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ edit_form.as_p }}
-    {{ profile_form.as_p }}
-    <input class="form-control" type="submit" value="сохранить">
-</form>
-<button class="btn btn-round form-control last">
-    <a href="{% url 'main' %}" class="">
-        на главную
-    </a>
-</button>
-<!-- <div class="user_avatar"><img src="/media/{{ user.avatar }} | {{ profile_form.initial.avatar }}"></div> -->
-{% if profile_form.initial.avatar %}
-<div class="user_avatar"><img src="{{ profile_form.initial.avatar }}"></div>
-{% else %}
-<div class="user_avatar"><img src="/media/{{ user.avatar }}"></div>
-{% endif %}
-
-{% endblock %}
+<div class="container items-wrapper overflow-auto h-auto">
+    <div class="item-block row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {{ form2.as_p }}
+                <input class="btn btn-outline-secondary" type="submit" value="сохранить">
+            </form>
+        </div>
+        <div class="col-sm-5 row">
+            <div class="col-sm-12 d-flex align-items-start pt-5 justify-content-center">
+                <img src="{% if avatar %}{{ avatar.url}}{% else %}/media/users_avatars/default.png{% endif %}"
+                     alt="avatar" class="rounded-circle" width="300">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
