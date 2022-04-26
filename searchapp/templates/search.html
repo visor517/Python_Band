@@ -26,11 +26,17 @@
             <h2>Вы искали: "{{ searched }}"</h2>
             <p>Результат вашего запроса : {{ results|length }} шт.</p><br/>
 
-            {% for result in results %}
+            <div class="s_art">
+                {% for result in results %}
 
-                {% include "includes/inc_search.html" %}
+<!--                        {% include "includes/inc_search.html" %}-->
+                    <p>"{{ searched }}" находится в этой статье:
+                    <a href="{% url 'article:detail' result.pk %}">
+                        {{ result }}
+                    </a></p>
 
-            {% endfor %}
+                {% endfor %}
+            </div>
 
         {% else %}
             <h3>Введите в строку поиска, то, что вы хотите найти.</h3>
