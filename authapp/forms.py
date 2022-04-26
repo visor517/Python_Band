@@ -58,22 +58,23 @@ class UserRegisterForm(UserCreationForm):
         return user
 
 
-class UserEditForm(UserChangeForm):
-    class Meta:
-        model = HabrUser
-        # fields = ('username', 'first_name', 'password1',
-        #           'password2', 'email', 'birthday', 'avatar')
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(UserEditForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''
-            if field_name == 'password':
-                field.widget = forms.HiddenInput()
-
-        add_class_html(self.fields)
+# class UserEditForm(UserChangeForm):
+#     class Meta:
+#         model = HabrUser
+#         # fields = ('username', 'first_name', 'password1',
+#         #           'password2', 'email', 'birthday', 'avatar')
+#         # fields = '__all__'
+#         fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'avatar')
+#
+#     def __init__(self, *args, **kwargs):
+#         super(UserEditForm, self).__init__(*args, **kwargs)
+#         for field_name, field in self.fields.items():
+#             field.widget.attrs['class'] = 'form-control'
+#             field.help_text = ''
+#             if field_name == 'password':
+#                 field.widget = forms.HiddenInput()
+#
+#         add_class_html(self.fields)
 
 
 class UserEditForm(forms.ModelForm):
