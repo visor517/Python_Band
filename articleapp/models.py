@@ -18,7 +18,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
     def delete(self, using=None, keep_parents=False):
-        self.is_active = False
+        self.is_active = False if self.is_active else True
         self.save()
 
 
@@ -58,5 +58,5 @@ class Article(models.Model):
         return reverse('article:detail', args=[self.uid])
 
     def delete(self, using=None, keep_parents=False):
-        self.status = 'DT'
+        self.status = 'DT' if self.status != 'DT' else 'DF'
         self.save()

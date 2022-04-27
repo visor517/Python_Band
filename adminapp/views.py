@@ -83,7 +83,6 @@ class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
 
 class CategoryListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
     model = Category
-    paginate_by = 10
     template_name = 'adminapp/categories.html'
     context_object_name = 'objects'
     paginate_by = 5

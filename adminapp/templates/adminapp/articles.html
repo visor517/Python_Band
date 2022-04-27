@@ -54,8 +54,14 @@
                     </div>
                 {% endif %}
                 <div class="col-sm-12">
-                    <a href="{% url '_admin:article_delete' article.pk %}"
-                       class="btn btn-outline-secondary btn-block align-items-end d-b">del</a>
+<!--                    <a href="{% url '_admin:article_delete' article.pk %}"-->
+<!--                       class="btn btn-outline-secondary btn-block align-items-end d-b">-->
+<!--                        {% if article.status != 'DT' %} del {% else %} restore {% endif %}</a>-->
+                    <form method="POST" action="{% url '_admin:article_delete' article.pk %}">
+                        {% csrf_token %}
+                        <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
+                               type="submit" value="{% if article.status != 'DT' %} del {% else %} restore {% endif %}">
+                    </form>
                 </div>
             </div>
         </div>
