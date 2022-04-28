@@ -61,17 +61,29 @@ class Article(models.Model):
 
     @property
     def num_likes(self):
+        """
+        :return:
+        """
         return self.liked.all().count()
+
 
 LIKE_CHOICES = (
     ('Like', 'Like'),
     ('Dislike', 'Dislike')
 )
 
+
 class Like(models.Model):
+    """
+    класс - Лайки
+    """
     user = models.ForeignKey(HabrUser, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     value = models.CharField(choices=LIKE_CHOICES, default='Like',
                              max_length=8)
+
     def __str__(self):
+        """
+        :return:
+        """
         return str(self.article)

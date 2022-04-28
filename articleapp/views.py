@@ -55,9 +55,13 @@ class ArticleDeleteView(DeleteView):
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
 
-# Create your views here.
 
 def like_art(request, pk):
+    """
+    :param request:
+    :param pk:
+    :return:
+    """
     user = request.user
     if request.method == 'POST':
         article_id = request.POST.get('article_id')
