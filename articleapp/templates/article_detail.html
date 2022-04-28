@@ -17,49 +17,39 @@
 
                 <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
                 <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
-          
+                <br>
                 {% if user.is_authenticated %}
 
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row "
+                     style="margin-top: 10px; margin-bottom: 10px;">
                     <form action="{% url 'article:like-art' article.pk %}"
-                          method="POST"
-                          class="ui form">
+                          method="POST">
                         {% csrf_token %}
                         <input type="hidden"
                                name="article_id"
                                value="{{article.pk}}">
                         {% if user not in article.liked.all %}
-                            <button class="ui button positive"
+                            <button class="btn btn-success btn-sm"
                                     type="submit"
-                                    style="margin-right: 10px;"> Like
+                                    style="margin-right: 10px;">
+                                Нравится
                             </button>
                         {% else %}
-                            <button class="ui button negative"
+                            <button class="btn btn-danger btn-sm"
                                     type="submit"
-                                    style="margin-right: 10px;"> Dislike
+                                    style="margin-right: 10px;">
+                                Не нравится
                             </button>
                         {% endif %}
                     </form>
-                    <strong>{{ article.liked.all.count }} likes</strong>
-<!--                    <form >-->
-<!--                        {% csrf_token %}-->
-<!--                        <input type="hidden" name="next" value="{{ request.path }}">-->
-<!--                        <button class="btn btn-primary btn-sm" style="margin-right: 10px;"-->
-<!--                                type="submit"><span>{{ article.likes.all.count }}</span>-->
-<!--                            Like-->
-<!--                        </button>-->
-<!--                    </form>-->
-<!--                    <form >-->
-<!--                        {% csrf_token %}-->
-<!--                        <input type="hidden" name="next" value="{{ request.path }}">-->
-<!--                        <button class="btn btn-primary btn-sm"-->
-<!--                                type="submit"><span>{{ article.dislikes.all.count }}</span>-->
-<!--                            Dislike-->
-<!--                        </button>-->
-<!--                    </form>-->
+
                 </div>
           
                 {% endif %}
+
+                    <strong class="fa fa-thumbs-up"
+                            style="font-size: 21px; margin-top: 5px;">
+                        {{ article.liked.all.count }}</strong>
                 <hr>
                 {% include "include_comments.html" %}
           
