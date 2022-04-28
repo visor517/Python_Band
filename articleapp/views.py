@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
+from django.http import JsonResponse
 from django.views.generic.edit import FormMixin
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
@@ -78,5 +78,10 @@ def like_art(request, pk):
                 like.value = 'Dislike'
             else:
                 like.value = 'Like'
-        like.save()
+        else:
+            like.value = 'Like'
+
+            article_obj.save()
+            like.save()
+
     return redirect('article:detail', pk=pk)
