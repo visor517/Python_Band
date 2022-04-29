@@ -84,4 +84,10 @@ def like_art(request, pk):
             article_obj.save()
             like.save()
 
+        data = {
+            'value': like.value,
+            'likes': article_obj.liked.all().count()
+        }
+        return JsonResponse(data, safe=False)
+
     return redirect('article:detail', pk=pk)

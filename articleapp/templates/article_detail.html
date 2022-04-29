@@ -1,6 +1,10 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
+{%block js%}
+<script src="{% static 'assets/js/like.js' %}"></script>
+{%endblock%}
+
 {% block content %}
 
 <section id="blog" class="blog">
@@ -20,40 +24,43 @@
                 <br>
                 {% if user.is_authenticated %}
 
-                <div class="d-flex flex-row "
+                <div class="d-flex flex-row div_like"
                      style="margin-top: 10px; margin-bottom: 10px;">
                     <form action="{% url 'article:like-art' article.pk %}"
-                          method="POST">
+                          method="POST"
+                          class="like-form"
+                          id="{{article.pk}}">
                         {% csrf_token %}
                         <input type="hidden"
                                name="article_id"
                                value="{{article.pk}}">
-                        {% if user not in article.liked.all %}
-                            <button class="btn btn-success btn-sm"
-                                    type="submit"
-                                    style="margin-right: 10px;">
+
+                            <button class="btn
+                                            btn-success
+                                            btn-sm
+                                            like-btn{{article.pk}}"
+                                    type="submit">
+                                {% if user not in article.liked.all %}
                                 Нравится
-                            </button>
-                        {% else %}
-                            <button class="btn btn-danger btn-sm"
-                                    type="submit"
-                                    style="margin-right: 10px;">
-                                Не нравится
-                            </button>
+                                {% else %}
+                                Ненравится
+                                {% endif %}
+                            </button><br>
                         {% endif %}
+
+                            <div class="fa fa-thumbs-up
+                                        like-count{{article.pk}}"
+                                style="font-size: 21px; margin-top: 5px;">
+                            {{ article.liked.all.count }}
+                            </div>
+
                     </form>
 
                 </div>
-          
-                {% endif %}
-
-                    <strong class="fa fa-thumbs-up"
-                            style="font-size: 21px; margin-top: 5px;">
-                        {{ article.liked.all.count }}</strong>
                 <hr>
                 {% include "include_comments.html" %}
           
         </div>
     </div>
 </section>
-{% endblock content %}          
+{% endblock content %}
