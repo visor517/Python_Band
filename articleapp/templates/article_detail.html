@@ -1,10 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
-{%block js%}
-<script src="{% static 'assets/js/like.js' %}"></script>
-{%endblock%}
-
 {% block content %}
 
 <section id="blog" class="blog">
@@ -34,7 +30,6 @@
                         <input type="hidden"
                                name="article_id"
                                value="{{article.pk}}">
-
                             <button class="btn
                                             btn-success
                                             btn-sm
@@ -46,14 +41,12 @@
                                 Ненравится
                                 {% endif %}
                             </button><br>
-                        {% endif %}
-
-                            <div class="fa fa-thumbs-up
-                                        like-count{{article.pk}}"
-                                style="font-size: 21px; margin-top: 5px;">
-                            {{ article.liked.all.count }}
-                            </div>
-
+                {% endif %}
+                        <div class="fa fa-thumbs-up
+                                    like-count{{article.pk}}"
+                            style="font-size: 21px; margin-top: 5px;">
+                        {{ article.liked.all.count }}
+                        </div>
                     </form>
 
                 </div>
@@ -64,3 +57,7 @@
     </div>
 </section>
 {% endblock content %}
+
+{%block js%}
+<script src="{% static 'assets/js/like.js' %}"></script>
+{%endblock%}
