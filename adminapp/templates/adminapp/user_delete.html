@@ -22,12 +22,15 @@
 <div class="container items-wrapper overflow-auto h-auto">
     <div class="item-block shadow row justify-content-center">
         <div class="col-sm-4 align-self-center">
-            Вы точно хотите удалить пользователя {{ user_to_delete.username }} ?
+            Вы точно хотите
+            {% if user_to_delete.is_active %}удалить {% else %} восстановить {% endif %}
+            пользователя {{ user_to_delete.username }} ?
         </div>
         <div class="col-sm-1 align-self-center">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="submit" class="btn btn-outline-secondary" value="удалить">
+                <input type="submit" class="btn btn-outline-secondary"
+                       value="{% if user_to_delete.is_active %} удалить {% else %} восстановить {% endif %}">
             </form>
         </div>
         <div class="col-sm-3 align-self-center">
@@ -36,6 +39,5 @@
             </a>
         </div>
     </div>
-
 </div>
 {% endblock content %}

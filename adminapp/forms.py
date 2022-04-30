@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 
 from authapp.models import HabrUser, HabrProfile
-from authapp.forms import UserEditForm, UserProfileEditForm
 from articleapp.models import Category, Article
 
 CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted']
@@ -20,7 +19,7 @@ def add_class_html(fields):
             field.help_text = ''
 
 
-class UserUpdateForm(UserEditForm):
+class UserUpdateForm(UserChangeForm):
     class Meta:
         model = HabrUser
         fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'role', 'avatar')

@@ -31,7 +31,8 @@ TEMPLATES:
         - django.template.context_processors.request
         - django.contrib.auth.context_processors.auth
         - django.contrib.messages.context_processors.messages
-#              - authapp.context_processor.authapp_manu_context
+        - mainapp.context_processor.menu_category_context
+
 AUTHENTICATION_BACKENDS:
   - social_core.backends.google.GoogleOAuth2
   - django.contrib.auth.backends.ModelBackend
