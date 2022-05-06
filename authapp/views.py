@@ -16,20 +16,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from adminapp.views import UserUpdateView
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm
 
-
 from authapp.models import HabrUser
 
 from django.utils.timezone import now
-
-
-
 
 
 class SendVerifyMail:
     """ Отправка сообщения пользователю """
 
     def __init__(self, user):
-
         verify_link = reverse('auth:verify', args=[
             user.email, user.activation_key])  # Генерация ссылки
 
@@ -60,6 +55,7 @@ class VerifyView(TemplateView):
                 return render(request, 'authapp/verification.html')
         except Exception as ex:
             return HttpResponseRedirect(reverse('main'))
+
 
 # @csrf_exempt
 class LoginUserView(LoginView):
@@ -126,6 +122,3 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, form2=form2))
-
-
-
