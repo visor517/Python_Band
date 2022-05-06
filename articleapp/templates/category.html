@@ -16,8 +16,8 @@
 </section>
 <div class="container items-wrapper overflow-auto h-auto">
     {% for article in article_list %}
-
-        <div class="item-block shadow row {% if article.status == 'DT' %} is-deleted {% endif %}">
+      {% if article.status == 'PB' %}
+        <div class="item-block shadow row">
             <div class="col-sm-10 row">
                 <div class="col-sm-1">{{ forloop.counter }}</div>
                 <div class="col-sm-9">
@@ -36,7 +36,7 @@
 
             </div>
         </div>
-
+      {% endif %}
     {% endfor %}
     {% include 'adminapp/includes/pagination.html' %}
 </div>
