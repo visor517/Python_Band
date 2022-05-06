@@ -8,9 +8,10 @@
 {% block content %}
 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
-
-        <h2>Статьи из категории: {{ category.name }}</h2>
-
+        <h4>
+            В категории: {{ category.name }} - {{ article_list|length }}
+            статьи.
+        </h4>
       </div>
 </section>
 <div class="container items-wrapper overflow-auto h-auto">
