@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from articleapp.forms import ArticleForm
-from articleapp.models import Article, Like
+from articleapp.models import Article, Like, Category
 from mainapp.views import main
 
 
@@ -91,3 +91,28 @@ def like_art(request, pk):
         return JsonResponse(data, safe=False)
 
     return redirect('article:detail', pk=pk)
+
+
+class CategoryArticleView(ListView):
+    """
+    класс - Сортировка статей по категориям
+    """
+    model = Article
+    template_name = 'category.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        """
+        :return:
+        """
+        self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        return Article.objects.filter(category=self.category)
+
+    def get_context_data(self, **kwargs):
+        """
+        :param kwargs:
+        :return:
+        """
+        context = super(CategoryArticleView, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
