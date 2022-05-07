@@ -1,0 +1,43 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <h4>
+            В категории: {{ category.name }} - {{ article_list|length }}
+            статьи.
+        </h4>
+      </div>
+</section>
+<div class="container items-wrapper overflow-auto h-auto">
+    {% for article in article_list %}
+      {% if article.status == 'PB' %}
+        <div class="item-block shadow row">
+            <div class="col-sm-10 row">
+                <div class="col-sm-1">{{ forloop.counter }}</div>
+                <div class="col-sm-9">
+                    <a href="{% url 'article:detail' article.pk %}">
+                        {{ article.title }}
+                    </a>
+                </div>
+                <div class="w-100 d-none d-md-block"></div>
+                <div class="col-sm-4"><span>Категория: {{ article.category }}</span></div>
+                <div class="col-sm-3">
+                    <span>
+                        автор: <a href="{% url '_admin:user_update' article.author.pk %}" target="_blank"
+                            style="color: dodgerblue" class="">{{ article.author }}</a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% include 'adminapp/includes/pagination.html' %}
+</div>
+{% endblock content %}
