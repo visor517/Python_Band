@@ -40,7 +40,7 @@
 
                     <div class="entry-content">
                         <p>
-                            {{ article.content | safe | slice:":500" }}...
+                            {{ article.content | safe | truncatechars_html:500 }}
                         </p>
                         <div class="read-more">
                             <a href="{% url 'article:detail' article.pk %}">Дальше</a>
@@ -50,10 +50,8 @@
                 </article>
                 <!-- End blog entry -->
             {% endfor %}
-                {% include "paginator.html" %}
+            {% include "paginator.html" %}
 
         </div>
-
-
     </section><!-- End Blog Section -->
 {% endblock content %}
