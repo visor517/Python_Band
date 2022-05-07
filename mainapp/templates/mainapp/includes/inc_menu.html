@@ -8,7 +8,7 @@
         </div>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a class="active" href="#">Новости</a></li>
+                <li><a class="active" href="/news">Новости</a></li>
                 {% for category in categories %}
                 <li>
                     <a href="{% url 'article:article_category' category.pk %}">

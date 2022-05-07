@@ -15,7 +15,9 @@ INSTALLED_APPS:
   - commentapp
   - adminapp
   - ckeditor
+  - news
   - searchapp
+
 
 TEMPLATES:
   -
