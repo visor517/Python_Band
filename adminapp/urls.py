@@ -19,4 +19,9 @@ urlpatterns = [
     path('articles/', adminapp.ArticlesListView.as_view(), name='articles'),
     path('articles/update/<uuid:pk>/', adminapp.ArticleUpdateView.as_view(), name='article_update'),
     path('articles/delete/<uuid:pk>/', adminapp.ArticleDeleteView.as_view(), name='article_delete'),
+
+    path('comments/create/', adminapp.CommentCreateView.as_view(), name='comment_create'),
+    path('comments/', adminapp.CommnetsListView.as_view(), name='comments'),
+    path('comments/update/<int:pk>/', adminapp.CommentUpdateView.as_view(), name='comment_update'),
+    path('comments/delete/<int:pk>/', adminapp.CommentDeleteView.as_view(), name='comment_delete'),
 ]

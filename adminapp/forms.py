@@ -4,8 +4,9 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from authapp.models import HabrUser, HabrProfile
 from articleapp.models import Category, Article
+from commentapp.models import Comments
 
-CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted']
+CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted', 'comment_moderation']
 
 
 def add_class_html(fields):
@@ -80,6 +81,26 @@ class ArticleUpdateForm(forms.ModelForm):
         model = Article
         # fields = ('title', 'category', 'content', 'author', 'image', 'status')
         exclude = ['uid', 'likes', 'dislikes']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        exclude = ['comment_moderation', 'is_active']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class CommentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        exclude = ()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
