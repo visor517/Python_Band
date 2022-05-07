@@ -8,19 +8,55 @@
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 {% endblock css %}
 
- {% block content %}
-            <div class="container">
-                <div class="row">
-                    <div class="news-item">
-                        <div class="news-item__title col-lg-12">
-                            <h1 class="news-item__title-news">{{ detail_view.title}}</h1>
-                        </div>
 
-                        <div class="description col-lg-12 col-md-6 col-sm-3">
-                            <img style='float: left; margin: 0px 20px 20px 0px' class='description__img' src="{{ detail_view.image.url }}" alt="" height="500px" width="500px">
-                            <p class="description__text">{{ detail_view.full_text  }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
+ {% block content %}
+           <!-- ======= Blog Single Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-12 entries">
+
+            <article class="entry entry-single">
+
+              <div class="entry-img">
+                <img src="{{ detail_view.image.url }}" alt="" class="img-fluid" width="100%">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="blog-single.html"> {{ detail_view.title}}</a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{ detail_view.author }}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#">{{ detail_view.date }}</a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                  <blockquote>
+                  <p>
+                    {{ detail_view.anons }}
+                  </p>
+                  </blockquote>
+                  <p>
+                      {{ detail_view.full_text }}
+                  </p>
+
+              </div>
+
+              <div class="entry-footer">
+                  <i class="bi bi-bookmark-check"></i>
+                    <ul class="cats">
+                      <li><a href="/index">Product in Python band</a></li>
+                    </ul>
+              </div>
+
+            </article><!-- End blog entry -->
+
+
  {% endblock content %}

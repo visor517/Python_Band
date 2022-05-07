@@ -12,8 +12,6 @@
 
 
 {% block content %}
-    <h1 align="center">Новости</h1>
-    <br>
     {% if news %}
         <div id="blog" class="blog">
                 <div class="container" data-aos="fade-up">
@@ -23,7 +21,7 @@
                         {% for data in news %}
                             <article class="entry">
                                     <div class="entry-img">
-                                        <img src="{{ data.image.url }}" alt="" class="img-fluid">
+                                        <img src="{{ data.image.url }}" alt="" class="img-fluid" width="100%">
                                     </div>
 
                                     <h2 class="entry-title">
@@ -36,8 +34,8 @@
                                                     href="{% url 'news:news_detail' data.id %}">{{ data.author }}</a></li>
                                             <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                                     href="{% url 'news:news_detail' data.id %}">{{ data.date }}</a></li>
-                                            <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
-                                                    href="{% url 'news:news_detail' data.id %}">12 Comments</a></li>
+{#                                            <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a#}
+{#                                                    href="{% url 'news:news_detail' data.id %}">12 Comments</a></li>#}
                                         </ul>
                                     </div>
 
