@@ -17,33 +17,47 @@
 
                 <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
                 <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
-          
+                <br>
                 {% if user.is_authenticated %}
 
-                <div class="d-flex flex-row">
-                    <form >
+                <div class="d-flex flex-row div_like"
+                     style="margin-top: 10px; margin-bottom: 10px;">
+                    <form action="{% url 'article:like-art' article.pk %}"
+                          method="POST"
+                          class="like-form"
+                          id="{{article.pk}}">
                         {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button class="btn btn-primary btn-sm" style="margin-right: 10px;"
-                                type="submit"><span>{{ article.likes.all.count }}</span>
-                            Like
-                        </button>
-                    </form>
-                    <form >
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button class="btn btn-primary btn-sm"
-                                type="submit"><span>{{ article.dislikes.all.count }}</span>
-                            Dislike
-                        </button>
-                    </form>
-                </div>
-          
+                        <input type="hidden"
+                               name="article_id"
+                               value="{{article.pk}}">
+                            <button class="btn
+                                            btn-success
+                                            btn-sm
+                                            like-btn{{article.pk}}"
+                                    type="submit">
+                                {% if user not in article.liked.all %}
+                                Нравится
+                                {% else %}
+                                Ненравится
+                                {% endif %}
+                            </button><br>
                 {% endif %}
+                        <div class="fa fa-thumbs-up
+                                    like-count{{article.pk}}"
+                            style="font-size: 21px; margin-top: 5px;">
+                        {{ article.liked.all.count }}
+                        </div>
+                    </form>
+
+                </div>
                 <hr>
                 {% include "include_comments.html" %}
           
         </div>
     </div>
 </section>
-{% endblock content %}          
+{% endblock content %}
+
+{%block js%}
+<script src="{% static 'assets/js/like.js' %}"></script>
+{%endblock%}

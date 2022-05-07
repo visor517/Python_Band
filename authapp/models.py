@@ -38,7 +38,7 @@ class HabrUser(AbstractUser):
 
     def delete(self, using=None, keep_parents=False):
         """ Переопределение метода delete"""
-        self.is_active = False
+        self.is_active = False if self.is_active else True
         self.save()
 
 

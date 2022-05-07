@@ -1,15 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.http import JsonResponse
 from django.views.generic.edit import FormMixin
 
 from articleapp.forms import ArticleForm
-from articleapp.models import Article
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
+from articleapp.models import Article, Like, Category
 from mainapp.views import main
 
 
@@ -64,87 +65,63 @@ class ArticleDeleteView(DeleteView):
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
 
-
-# Create your views here.
-
-
-class AddLike(LoginRequiredMixin, View):
+def like_art(request, pk):
     """
-    класс - Поставить лайк
+    :param request:
+    :param pk:
+    :return:
     """
+    user = request.user
+    if request.method == 'POST':
+        article_id = request.POST.get('article_id')
+        article_obj = Article.objects.get(pk=article_id)
 
-    def article(self, request, pk, *args, **kwargs):
+        if user in article_obj.liked.all():
+            article_obj.liked.remove(user)
+        else:
+            article_obj.liked.add(user)
+        like, created = Like.objects.get_or_create(user=user,
+                                                   article_id=article_id)
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Dislike'
+            else:
+                like.value = 'Like'
+        else:
+            like.value = 'Like'
+
+            article_obj.save()
+            like.save()
+
+        data = {
+            'value': like.value,
+            'likes': article_obj.liked.all().count()
+        }
+        return JsonResponse(data, safe=False)
+
+    return redirect('article:detail', pk=pk)
+
+
+class CategoryArticleView(ListView):
+    """
+    класс - Сортировка статей по категориям
+    """
+    model = Article
+    template_name = 'category.html'
+    paginate_by = 6
+
+    def get_queryset(self):
         """
-        :param request:
-        :param pk:
-        :param args:
+        :return:
+        """
+        self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        return Article.objects.filter(category=self.category)
+
+    def get_context_data(self, **kwargs):
+        """
         :param kwargs:
         :return:
         """
-        article = Article.objects.get(pk=pk)
-
-        is_dislike = False
-
-        for dislike in article.dislikes.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-
-        if is_dislike:
-            article.dislikes.remove(request.user)
-
-        is_like = False
-
-        for like in article.likes.all():
-            if like == request.user:
-                is_like = True
-                break
-
-        if not is_like:
-            article.likes.add(request.user)
-        if is_like:
-            article.likes.remove(request.user)
-
-        next = request.POST.get('next', '/')
-        return HttpResponseRedirect(next)
-
-
-class Dislike(LoginRequiredMixin, View):
-    """
-    класс - Поставить дизлайк
-    """
-
-    def article(self, request, pk, *args, **kwargs):
-        """
-        :param request:
-        :param pk:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        article = Article.objects.get(pk=pk)
-
-        is_like = False
-
-        for like in article.likes.all():
-            if like == request.user:
-                is_like = True
-                break
-
-        if is_like:
-            article.likes.remove(request.user)
-
-        is_dislike = False
-
-        for dislike in article.dislikes.all():
-            if dislike == request.user:
-                is_dislike = True
-                break
-
-        if not is_dislike:
-            article.dislikes.add(request.user)
-        if is_dislike:
-            article.dislikes.remove(request.user)
-
-        next = request.POST.get('next', '/')
-        return HttpResponseRedirect(next)
+        context = super(CategoryArticleView, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        return context

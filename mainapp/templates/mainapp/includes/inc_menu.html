@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <header id="header" class="d-flex align-items-center">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="logo">
@@ -9,7 +10,9 @@
             <ul>
                 <li><a class="active" href="#">Новости</a></li>
                 {% for category in categories %}
-                <li><a href="#">{{ category }}</a></li>
+                <li>
+                    <a href="{% url 'article:article_category' category.pk %}">
+                    {{ category }}</a></li>
                 {% endfor %}
                 <form class="form-inline my-2 my-lg-0 d-flex align-items-center"
                       method="POST"

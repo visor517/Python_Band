@@ -18,7 +18,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
     def delete(self, using=None, keep_parents=False):
-        self.is_active = False
+        self.is_active = False if self.is_active else True
         self.save()
 
 
@@ -42,9 +42,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     image = models.ImageField(upload_to='article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128, default='DF')
-    likes = models.ManyToManyField(HabrUser, blank=True, related_name='likes')
-    dislikes = models.ManyToManyField(HabrUser, blank=True,
-                                      related_name='dislikes')
+    liked = models.ManyToManyField(HabrUser, blank=True, related_name='likes')
 
     def __str__(self):
         return self.title
@@ -58,5 +56,34 @@ class Article(models.Model):
         return reverse('article:detail', args=[self.uid])
 
     def delete(self, using=None, keep_parents=False):
-        self.status = 'DT'
+        self.status = 'DT' if self.status != 'DT' else 'DF'
         self.save()
+
+    @property
+    def num_likes(self):
+        """
+        :return:
+        """
+        return self.liked.all().count()
+
+
+LIKE_CHOICES = (
+    ('Like', 'Like'),
+    ('Dislike', 'Dislike')
+)
+
+
+class Like(models.Model):
+    """
+    класс - Лайки
+    """
+    user = models.ForeignKey(HabrUser, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default='Like',
+                             max_length=8)
+
+    def __str__(self):
+        """
+        :return:
+        """
+        return str(self.article)

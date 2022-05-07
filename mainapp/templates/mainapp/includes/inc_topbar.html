@@ -7,9 +7,14 @@
             <i class="bi bi-phone d-flex align-items-center ms-4"><span>+7 912 345 67 89</span></i>
         </div>
         <div class="search-form">
-            <form action>
+            <form method="POST" action="{% url 'search:search' %}">
+                {% csrf_token %}
                 <div class="search-input-wrapper">
-                    <input type="text" placeholder="Найти..." aria-label="Search">
+                    <input type="search"
+                           placeholder="Найти..."
+                           aria-label="Search"
+                           name="searched"
+			   style="border: 0px;">
                 </div>
                 <button type="submit">
                     <i class="bi bi-search"></i>
