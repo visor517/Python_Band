@@ -2,8 +2,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from commentapp.models import Comments
+from news.models import News
 from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
-    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm
+    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm
 from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
@@ -149,3 +150,32 @@ class CommentDeleteView(UserIsPersonalMixin, DeleteView):
     template_name = 'adminapp/comment/comment_delete.html'
     context_object_name = 'comment_to_delete'
     success_url = reverse_lazy('_admin:comments')
+
+
+# контроллеры для новостей
+class NewsListView(UserIsPersonalMixin, ListView):
+    model = News
+    template_name = 'adminapp/news/news.html'
+    context_object_name = 'objects'
+    paginate_by = 10
+
+
+class NewsCreateView(UserIsPersonalMixin, CreateView):
+    model = News
+    form_class = NewsCreateForm
+    template_name = 'adminapp/news/news_create.html'
+    success_url = reverse_lazy('_admin:news')
+
+
+class NewsUpdateView(UserIsPersonalMixin, UpdateView):
+    model = News
+    form_class = NewsUpdateForm
+    template_name = 'adminapp/news/news_update.html'
+    success_url = reverse_lazy('_admin:news')
+
+
+class NewsDeleteView(UserIsPersonalMixin, DeleteView):
+    model = News
+    template_name = 'adminapp/news/news_delete.html'
+    context_object_name = 'news_to_delete'
+    success_url = reverse_lazy('_admin:news')
