@@ -1,23 +1,31 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.http import JsonResponse
 from django.views.generic.edit import FormMixin
-from commentapp.forms import CommentsForm
-from commentapp.views import CommentView
-from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
+
 from articleapp.forms import ArticleForm
 from articleapp.models import Article, Like, Category
+from commentapp.forms import CommentsForm
+from commentapp.views import CommentView
 from mainapp.views import main
 
 
 # Отображение содержимого из модели Article
-class ArticleListView(ListView):
+class IndexView(ListView):
     model = Article
     paginate_by = 3
     template_name = 'mainapp/index.html'
+
+
+# Отображение списка статей
+class ArticleListView(ListView):
+    model = Article
+    paginate_by = 5
+    template_name = 'articles_list.html'
+
+    def get_queryset(self):
+        return Article.objects.filter(author=self.request.user)
 
 
 # Отображение содержимого
@@ -25,7 +33,6 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
     form_class = CommentsForm
     template_name = 'article_detail.html'
-
 
 
 class ArticleCreateView(CreateView):
@@ -54,7 +61,6 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
-
 
 def like_art(request, pk):
     """
