@@ -15,8 +15,7 @@ urlpatterns = [
     path('article/<uuid:pk>/edit/', ArticleUpdateView.as_view(), name='edit'),
     path('article/<uuid:pk>/delete/', ArticleDeleteView.as_view(),
          name='delete'),
-    path('article/<uuid:pk>/like/', like_art, name='like-art'),
-    # path('<int:pk>', CategoryArticleView.as_view(), name='articles_cat'),
+    path('article/<uuid:pk>/like/', like_art, name='like-art'),    
     path('article/category/<int:pk>', CategoryArticleView.as_view(),
          name='article_category'),
 ]
