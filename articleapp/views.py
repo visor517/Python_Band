@@ -112,7 +112,8 @@ class CategoryArticleView(ListView):
         :return:
         """
         self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
-        return Article.objects.filter(category=self.category)
+        return Article.objects.filter(category=self.category)\
+            .filter(status='PB')
 
     def get_context_data(self, **kwargs):
         """
