@@ -1,54 +1,37 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from django.shortcuts import redirect
 
+from commentapp.models import Comments
+from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
+    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm
+from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
-from adminapp.forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
-    ArticleUpdateForm
 
 
-class UserIsAdminMixin(UserPassesTestMixin):
-    """ Предоставляет право доступа пользователю у которого роль Администратор """
-    def test_func(self):
-        return self.request.user.role == 'A' or self.request.user.is_superuser
-
-    def handle_no_permission(self):
-        return redirect('/')
+# главная страница админки
+class MainView(UserIsPersonalMixin, TemplateView):
+    template_name = 'adminapp/main_admin.html'
 
 
-class UserIsPersonalMixin(UserPassesTestMixin):
-    """ Предоставляет право доступа пользователю у которого роль Администратор или Модератор"""
-    def test_func(self):
-        return self.request.user.role != 'U' or self.request.user.is_superuser
-
-    def handle_no_permission(self):
-        return redirect('/')
-
-
-class MainView(LoginRequiredMixin, UserIsPersonalMixin, TemplateView):
-    template_name = 'adminapp/admin.html'
-
-
-class UserListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
+class UserListView(UserIsPersonalMixin, ListView):
     model = HabrUser
-    template_name = 'adminapp/users.html'
+    template_name = 'adminapp/users/users.html'
     context_object_name = 'objects'
-    paginate_by = 5
+    paginate_by = 10
     ordering = ['role']
 
 
-class UserCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
+class UserCreateView(UserIsAdminMixin, CreateView):
     model = HabrUser
     form_class = UserCreateForm
-    template_name = 'adminapp/user_create.html'
+    template_name = 'adminapp/users/user_create.html'
     success_url = reverse_lazy('_admin:users')
 
 
-class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+class UserUpdateView(UserIsAdminMixin, UpdateView):
     model = HabrUser
-    template_name = 'adminapp/user_update.html'
+    template_name = 'adminapp/users/user_update.html'
     success_url = reverse_lazy('_admin:users')
     form_class = UserUpdateForm
     second_form_class = ProfileUpdateForm
@@ -74,64 +57,95 @@ class UserUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
                 self.get_context_data(form=form, form2=form2))
 
 
-class UserDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
+class UserDeleteView(UserIsPersonalMixin, DeleteView):
     model = HabrUser
-    template_name = 'adminapp/user_delete.html'
+    template_name = 'adminapp/users/user_delete.html'
     success_url = reverse_lazy('_admin:users')
     context_object_name = 'user_to_delete'
 
 
-class CategoryListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
+# контроллеры для категорий
+class CategoryListView(UserIsPersonalMixin, ListView):
     model = Category
-    template_name = 'adminapp/categories.html'
+    template_name = 'adminapp/categories/categories.html'
     context_object_name = 'objects'
-    paginate_by = 5
+    paginate_by = 10
 
 
-class CategoryCreateView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
+class CategoryCreateView(UserIsAdminMixin, CreateView):
     model = Category
     form_class = CategoryCreateForm
-    template_name = 'adminapp/category_create.html'
+    template_name = 'adminapp/categories/category_create.html'
     success_url = reverse_lazy('_admin:categories')
 
 
-class CategoryUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+class CategoryUpdateView(UserIsAdminMixin, UpdateView):
     model = Category
     form_class = CategoryCreateForm
-    template_name = 'adminapp/category_update.html'
+    template_name = 'adminapp/categories/category_update.html'
     success_url = reverse_lazy('_admin:categories')
 
 
-class CategoryDeleteView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
+class CategoryDeleteView(UserIsAdminMixin, DeleteView):
     model = Category
-    template_name = 'adminapp/category_delete.html'
+    template_name = 'adminapp/categories/category_delete.html'
     success_url = reverse_lazy('_admin:categories')
     context_object_name = 'category_to_delete'
 
 
-class ArticlesListView(LoginRequiredMixin, UserIsPersonalMixin, ListView):
+# контроллеры для статей
+class ArticlesListView(UserIsPersonalMixin, ListView):
     model = Article
-    template_name = 'adminapp/articles.html'
+    template_name = 'adminapp/articles/articles.html'
     context_object_name = 'objects'
-    paginate_by = 5
+    paginate_by = 10
 
 
-class ArticleCreateView(LoginRequiredMixin, UserIsPersonalMixin, CreateView):
+class ArticleCreateView(UserIsPersonalMixin, CreateView):
     model = Article
     form_class = ArticleCreateForm
-    template_name = 'adminapp/article_create.html'
+    template_name = 'adminapp/articles/article_create.html'
     success_url = reverse_lazy('_admin:articles')
 
 
-class ArticleUpdateView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+class ArticleUpdateView(UserIsAdminMixin, UpdateView):
     model = Article
     form_class = ArticleUpdateForm
-    template_name = 'adminapp/article_update.html'
+    template_name = 'adminapp/articles/article_update.html'
     success_url = reverse_lazy('_admin:articles')
 
 
-class ArticleDeleteView(LoginRequiredMixin, UserIsPersonalMixin, DeleteView):
+class ArticleDeleteView(UserIsPersonalMixin, DeleteView):
     model = Article
-    template_name = 'adminapp/article_delete.html'
+    template_name = 'adminapp/articles/article_delete.html'
     context_object_name = 'article_to_delete'
     success_url = reverse_lazy('_admin:articles')
+
+
+# контроллеры для комментов
+class CommnetsListView(UserIsPersonalMixin, ListView):
+    model = Comments
+    template_name = 'adminapp/comments/comments.html'
+    context_object_name = 'objects'
+    paginate_by = 10
+
+
+class CommentCreateView(UserIsPersonalMixin, CreateView):
+    model = Comments
+    form_class = CommentCreateForm
+    template_name = 'adminapp/comments/comment_create.html'
+    success_url = reverse_lazy('_admin:comments')
+
+
+class CommentUpdateView(UserIsAdminMixin, UpdateView):
+    model = Comments
+    form_class = CommentUpdateForm
+    template_name = 'adminapp/comments/comment_update.html'
+    success_url = reverse_lazy('_admin:comments')
+
+
+class CommentDeleteView(UserIsPersonalMixin, DeleteView):
+    model = Comments
+    template_name = 'adminapp/comment/comment_delete.html'
+    context_object_name = 'comment_to_delete'
+    success_url = reverse_lazy('_admin:comments')

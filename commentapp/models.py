@@ -37,6 +37,7 @@ class Comments(models.Model):
         """
         класс - Мета
         """
+        ordering = ('-pk',)
         db_table = "comments"
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
@@ -69,6 +70,5 @@ class Comments(models.Model):
         :param keep_parents:
         :return:
         """
-        self.is_active = False
-        self.comment_author.is_active = False
-
+        self.is_active = False if self.is_active else True
+        self.save()

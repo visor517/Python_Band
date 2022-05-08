@@ -1,8 +1,3 @@
-{% for article in page_obj %}
-    {# Each "article" is a Article model object. #}
-    {{ article.full_name|upper }}<br>
-{% endfor %}
-
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
