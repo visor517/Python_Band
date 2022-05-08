@@ -1,8 +1,11 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
 
 {% block css %}
 <link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
 {% endblock css %}
 
 {% block content %}
@@ -26,3 +29,13 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+    <script>
+      $(function() {
+            $(".glyphicon-calendar" ).datepicker();
+            $( "#datepicker" ).datepicker();
+        }
+      );
+    </script>
+{% endblock js %}

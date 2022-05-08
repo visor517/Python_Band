@@ -1,10 +1,24 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 
-{% block css %}
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="{% static 'assets/css/authapp_style.css' %}" rel="stylesheet">
-{% endblock css %}
+{#{% block css %}#}
+{#    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">#}
+{#    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>#}
+{#    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>#}
+{#    <link href="{% static 'assets/css/authapp_style.css' %}" rel="stylesheet">#}
+{#    <script src="https://code.jquery.com/jquery-3.5.1.js"#}
+{#            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="#}
+{#            crossorigin="anonymous">#}
+{#    </script>#}
+{#{% endblock css %}#}
+
+{% block js %}
+    <script>
+      $(function() {
+            $(".glyphicon-calendar" ).datepicker();
+            $( "#datepicker" ).datepicker();
+        }
+      );
+    </script>
+{% endblock js %}
 

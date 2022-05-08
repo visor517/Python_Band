@@ -4,6 +4,7 @@ from django.forms import fields
 from .models import HabrUser, HabrProfile
 
 from django.contrib.auth.forms import UserChangeForm
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 import random
 import hashlib
@@ -16,6 +17,9 @@ def add_class_html(fields):
             field.widget.attrs['class'] = 'form-chek'
             field.help_text = ''
             continue
+        if field_name == 'birthday':
+            field.widget = DatePickerInput(format='%d.%m.%Y')
+            field.widget.attrs['id'] = 'birthday'
         else:
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
