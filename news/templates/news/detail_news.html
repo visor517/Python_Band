@@ -13,6 +13,7 @@
 
  {% block content %}
            <!-- ======= Blog Single Section ======= -->
+    {% autoescape off %}
     <section id="blog" class="blog">
       <div class="container" data-aos="fade-up">
 
@@ -23,7 +24,8 @@
             <article class="entry entry-single">
 
               <div class="entry-img">
-                <img src="{{ detail_view.image.url }}" alt="" class="img-fluid" width="100%">
+                <img src="{{ detail_view.image.url }}" alt=""
+                     class="img-fluid" width="100%">
               </div>
 
               <h2 class="entry-title">
@@ -32,8 +34,14 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{ detail_view.author }}</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#">{{ detail_view.date }}</a></li>
+                  <li class="d-flex align-items-center">
+                      <i class="bi bi-person"></i>
+                      <a href="#">{{ detail_view.author }}</a>
+                  </li>
+                  <li class="d-flex align-items-center">
+                      <i class="bi bi-clock"></i>
+                      <a href="#">{{ detail_view.date }}</a>
+                  </li>
                 </ul>
               </div>
 
@@ -57,6 +65,9 @@
               </div>
 
             </article><!-- End blog entry -->
-
-
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endautoescape %}
  {% endblock content %}
