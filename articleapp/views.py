@@ -46,7 +46,7 @@ class ArticleCreateView(CreateView):
             article = form.save(commit=False)
             article.author = request.user
             self.object = article.save()
-            return redirect(article)
+            return redirect('article:list')
 
         return self.form_invalid(form)
 
@@ -61,6 +61,7 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
+
 
 def like_art(request, pk):
     """

@@ -1,9 +1,31 @@
 from uuid import uuid4
-
 from django.db import models
 from django.urls import reverse
 from authapp.models import HabrUser
 from ckeditor.fields import RichTextField
+from commentapp.middleware import get_current_user
+
+
+class FilterArticle(models.Manager):
+    """
+    класс - Фильтр статей
+    """
+
+    def get_queryset(self):
+        """
+        :return:
+        """
+        user = get_current_user()
+        if user is not None and not user.is_authenticated:
+            return super().get_queryset().filter(approve=True)
+        elif user is not None and user.is_staff:
+            return super().get_queryset().filter(
+                models.Q(approve=True) |
+                models.Q(approve=False))
+        return super().get_queryset().filter(
+            models.Q(approve=True,
+                     author=get_current_user()) |
+            models.Q(approve=True))
 
 
 class Category(models.Model):
@@ -43,6 +65,8 @@ class Article(models.Model):
     image = models.ImageField(upload_to='article_photos/', blank=True, null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128, default='DF')
     liked = models.ManyToManyField(HabrUser, blank=True, related_name='likes')
+    approve = models.BooleanField('Модерация', default=False)
+    objects = FilterArticle()
 
     def __str__(self):
         return self.title

@@ -35,10 +35,12 @@
                     </a>
                     <ul>
                         {% if user.is_authenticated %}
+                            <li><a>{{ user.first_name|default:'Пользователь' }}</a></li>
                             {% if not user.role == 'U' or user.is_superuser %}
                                 <li><a href="{% url '_admin:main_admin' %}">Админка</a></li>
                             {% endif %}
-                            <li><a href="{% url 'auth:edit' user.pk %}">Редактировать</a></li>
+                            <li><a
+                                    href="{% url 'auth:edit' user.pk %}">Редактировать профиль</a></li>
                             <li><a href="{% url 'article:list' %}">Мои статьи</a></li>
                             <li><a href="{% url 'article:add' %}">Добавить статью</a></li>
                             <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
