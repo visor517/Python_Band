@@ -9,73 +9,62 @@
 {% endblock css %}
 
 {% block content %}
-<!-- ======= Blog Single Section ======= -->
-<section id="blog" class="blog">
-
+         <!-- ======= Blog Single Section ======= -->
+  {% autoescape off %}
+  <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
 
-        <div class="row">
+      <div class="row">
 
-            <div class="col-lg-12 entries">
+        <div class="col-lg-12 entries">
 
-                <article class="entry entry-single">
+          <article class="entry entry-single">
 
-                    <div class="entry-img">
-                        <img src="{{ detail_view.image.url }}" alt="" class="img-fluid" width="100%">
-                    </div>
-
-                    <h2 class="entry-title">
-                        <a href="#"> {{ detail_view.title }} </a>
-                    </h2>
-
-                    <div class="entry-meta">
-                        <ul>
-                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">
-                                {{ detail_view.author }}</a></li>
-                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#">
-                                {{ detail_view.date }}</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="entry-content">
-                        <blockquote>
-                            <p>
-                                {{ detail_view.anons }}
-                            </p>
-                        </blockquote>
-                        <p>
-                            {{ detail_view.full_text | safe }}
-                        </p>
-
-                    </div>
-
-                    <div class="entry-footer">
-                        <i class="bi bi-bookmark-check"></i>
-                        <ul class="cats">
-                            <li><a href="/index">Product in Python band</a></li>
-
-                        </ul>
-                    </div>
-
-                    {% if request.user.is_authentificated and request.user.role != 'U' %}
-                    <div class="row">
-
-                        <div class="col-sm-2">Для администрации:</div>
-                        <div class="w-100 d-none d-md-block"></div>
-                        <div class="col-sm-2"><a class="btn btn-secondary btn-block"
-                                                 href="{% url 'news:news_update' detail_view.pk %}">редактировать</a>
-                        </div>
-
-                        <div class="col-sm-2"><a class="btn btn-secondary btn-block"
-                                                 href="{% url 'news:news_delete' detail_view.pk %}">удалить</a></div>
-                        <div class="w-100 d-none d-md-block"></div>
-
-                    </div>
-                    {% endif %}
-                </article><!-- End blog entry -->
+            <div class="entry-img">
+              <img src="{{ detail_view.image.url }}" alt=""
+                   class="img-fluid" width="100%">
             </div>
 
+            <h2 class="entry-title">
+              <a href="#"> {{ detail_view.title}}</a>
+            </h2>
+
+            <div class="entry-meta">
+              <ul>
+                <li class="d-flex align-items-center">
+                    <i class="bi bi-person"></i>
+                    <a href="#">{{ detail_view.author }}</a>
+                </li>
+                <li class="d-flex align-items-center">
+                    <i class="bi bi-clock"></i>
+                    <a href="#">{{ detail_view.date }}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="entry-content">
+                <blockquote>
+                <p>
+                  {{ detail_view.anons }}
+                </p>
+                </blockquote>
+                <p>
+                    {{ detail_view.full_text }}
+                </p>
+
+            </div>
+
+            <div class="entry-footer">
+                <i class="bi bi-bookmark-check"></i>
+                  <ul class="cats">
+                    <li><a href="/index">Product in Python band</a></li>
+                  </ul>
+            </div>
+
+          </article><!-- End blog entry -->
         </div>
+      </div>
     </div>
-</section>
+  </section>
+  {% endautoescape %}
 {% endblock content %}

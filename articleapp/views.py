@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 
-from articleapp.forms import ArticleForm
+from articleapp.forms import ArticleForm, ArticleApprove
 from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
@@ -32,7 +32,26 @@ class ArticleListView(ListView):
 class ArticleDetailView(CommentView, FormMixin, DetailView):
     model = Article
     form_class = CommentsForm
+    second_form_class = ArticleApprove
     template_name = 'article_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        if 'form' not in context:
+            context['form'] = self.form_class(instance=self.object.comments)
+        if 'form2' not in context:
+            context['form2'] = self.second_form_class(instance=self.object)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form2 = self.second_form_class(request.POST, instance=self.object)
+        if form2.is_valid():
+            form2.save()
+            return super().post(request, *args, **kwargs)
+        else:
+            return self.render_to_response(
+                self.get_context_data(form2=form2))
 
 
 class ArticleCreateView(CreateView):
@@ -41,12 +60,18 @@ class ArticleCreateView(CreateView):
     form_class = ArticleForm
 
     def post(self, request, *args, **kwargs):
+        """
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         form = self.get_form()
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
             self.object = article.save()
-            return redirect(article)
+            return redirect('article:list')
 
         return self.form_invalid(form)
 
@@ -61,6 +86,7 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
+
 
 def like_art(request, pk):
     """
