@@ -1,10 +1,11 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from commentapp.models import Comments
 from news.models import News
 from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
-    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm
+    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm, ApproveForm
 from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
@@ -38,7 +39,7 @@ class UserUpdateView(UserIsAdminMixin, UpdateView):
     second_form_class = ProfileUpdateForm
 
     def get_context_data(self, **kwargs):
-        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class(instance=self.object)
         if 'form2' not in context:
@@ -179,3 +180,29 @@ class NewsDeleteView(UserIsPersonalMixin, DeleteView):
     template_name = 'adminapp/news/news_delete.html'
     context_object_name = 'news_to_delete'
     success_url = reverse_lazy('_admin:news')
+
+
+# контролеры для модерации
+class ModerListView(UserIsPersonalMixin, TemplateView):
+    template_name = 'adminapp/moder/moder.html'
+    # context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Article.objects.all().filter(approve=False, status='PB')
+        context['comments'] = Comments.objects.all().filter(comment_text__startswith='@moder')
+
+        return context
+
+
+class ApproveArticle(UserIsPersonalMixin, UpdateView):
+    model = Article
+    template_name = 'adminapp/moder/article_approve.html'
+    success_url = reverse_lazy('_admin:moder')
+    form_class = ApproveForm
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.approve = True
+        self.object.save()
+        return super().post(request, *args, **kwargs)
