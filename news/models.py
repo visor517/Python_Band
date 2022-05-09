@@ -21,14 +21,17 @@ class News(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создана')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновленна')
     status = models.CharField(verbose_name="Статус новости", choices=STATUSES, max_length=128, default='DF')
-    image = models.ImageField(verbose_name='Новостное изображение', upload_to='media/news_photos/', blank=True,
-                              null=True)
+    image = models.ImageField(verbose_name='Новостное изображение', upload_to='media/news_photos/')
 
     def __str__(self) -> str:
         return self.title
 
     def get_absolute_url(self):
         return f'/news/{self.id}'
+
+    def delete(self, using=None, keep_parents=False):
+        self.status = 'DT' if self.status != 'DT' else 'DF'
+        self.save()
 
     class Meta:
         verbose_name = 'Новость'
