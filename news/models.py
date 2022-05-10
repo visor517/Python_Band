@@ -35,5 +35,6 @@ class News(models.Model):
         self.save()
 
     class Meta:
+        ordering = ('-created',)
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
