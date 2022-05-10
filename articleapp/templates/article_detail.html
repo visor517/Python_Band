@@ -8,15 +8,6 @@
         <div class="article-edit-form">   
           
             <div class="post-entry">
-                {% if request.user.role == 'A' or request.user.role == 'M' %}
-                <div class="col-sm-6">
-                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form2.as_p }}
-                        <input class="btn btn-outline-secondary" type="submit" value="сохранить">
-                    </form>
-                </div>
-                {% endif %}
                 <h2>{{ article.title }}</h2>
                 <p>{{ article.author }}</p>
                 <p>{{ article.category }}</p>
@@ -24,8 +15,8 @@
                 {#<p>{{ article.image }}</p>#}
             </div>
 
-                <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
-                <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+                <a href="{% url 'article:edit' article.pk %}">Редактировать</a>
+                <a href="{% url 'article:delete' article.pk %}">Удалить</a>
                 <br>
                 {% if user.is_authenticated %}
 
