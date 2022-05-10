@@ -81,7 +81,7 @@ class UserEditForm(forms.ModelForm):
     """ Форма редактирование пользователя """
     class Meta:
         model = HabrUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'avatar')
+        fields = ('username', 'first_name', 'last_name', 'email', 'avatar')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

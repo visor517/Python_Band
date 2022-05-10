@@ -1,0 +1,59 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+
+<div class="container items-wrapper overflow-auto h-auto">
+
+    <div class="row d-flex d-flex justify-content-around">
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch shadow">
+            <div class="member">
+              <section>
+              {% if user.avatar %}
+              <div class="d-flex justify-content-center"><img src="{{ user.avatar.url }}" class="mx-auto" height="350" alt="avatar"></div>
+              {% endif %}
+              <div class="d-flex justify-content-center"><h4>{{ user }}</h4></div>
+              <div class="d-flex justify-content-center"><span>{{ user.get_role_display }}</span></div>
+              <div class="d-flex justify-content-center overflo-hidden">
+                <p>{{user.habrprofile.tagline}}</p>
+              </div>
+              </section>
+                  {% if request.user == user %}
+              <section>
+                <div class="d-flex justify-content-center">
+                    <h5><a href="{% url 'auth:edit' user.pk %}">редактировать профиль</a></h5>
+                </div>
+              </section>
+              {% endif %}
+              <div class="row border border-2">
+                        <div class="col-sm-12 d-flex justify-content-center"><p>Для администраторов:</p></div>
+                        <div class="col-sm-12  d-flex justify-content-center"><a href="{% url '_admin:user_update' user.pk %}">
+                            редактировать</a></div>
+                        <div class="col-sm-12 d-flex justify-content-center"><a href="#">блокировать</a></div>
+                        <div class="col-sm-12  d-flex justify-content-center"><a href="{% url '_admin:user_delete' user.pk %}">
+                            удалить</a></div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-sm-7 shadow">
+            <div class="row">
+                <span>Мои статьи:</span>
+                <span>Черновики: {{articles_draft.all.count}}</span>
+                <div>На модерации: {{articles_moder.all.count}}</div>
+                <div>Опубликованные: {{articles_public.all.count}}</div>
+
+
+               <div>Уведомления:</div>
+            </div>
+        </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
