@@ -5,7 +5,8 @@ from django.utils import timezone
 from commentapp.models import Comments
 from news.models import News
 from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
-    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm, ApproveForm
+    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm, \
+    ApproveArticleForm, ApproveNewsForm
 from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
@@ -199,12 +200,26 @@ class ApproveArticle(UserIsPersonalMixin, UpdateView):
     model = Article
     template_name = 'adminapp/moder/article_approve.html'
     success_url = reverse_lazy('_admin:moder')
-    form_class = ApproveForm
+    form_class = ApproveArticleForm
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.approve = True
         self.object.publication_date = timezone.now()
+        self.object.save()
+        return super().post(request, *args, **kwargs)
+
+
+class ApproveNews(UserIsPersonalMixin, UpdateView):
+    model = News
+    template_name = 'adminapp/moder/news_approve.html'
+    success_url = reverse_lazy('_admin:moder')
+    form_class = ApproveNewsForm
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.status = 'PB'
+        self.object.date = timezone.now()
         self.object.save()
         return super().post(request, *args, **kwargs)
 

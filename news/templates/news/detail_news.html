@@ -21,8 +21,9 @@
           <article class="entry entry-single">
 
             <div class="entry-img">
-              <img src="{{ detail_view.image.url }}" alt=""
-                   class="img-fluid" width="100%">
+                {% if detail_view.image %}
+                    <img src="{{ detail_view.image.url }}" alt="" class="img-fluid" width="100%">
+                {% endif %}
             </div>
 
             <h2 class="entry-title">

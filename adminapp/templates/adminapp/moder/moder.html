@@ -32,22 +32,22 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     {% if notifications %}
-                        {% for item in notifications %}
+                        {% for object in notifications %}
                         <div class="item-block shadow row">
                             <div class="col-sm-10 row">
-                                <div class="col-sm-3">{{item.created}}</div>
-                                <div class="col-sm-3"><span><a href="{% url '_admin:user_update' item.from_user.pk %}">
-                                    {{item.from_user}}</a></span></div>
+                                <div class="col-sm-3">{{object.created}}</div>
+                                <div class="col-sm-3"><span><a href="{% url '_admin:user_update' object.from_user.pk %}">
+                                    {{object.from_user}}</a></span></div>
                                 <div class="w-100 d-none d-md-block"></div>
-                                <div class="col-sm-12 overflow-auto">{{item.message}}</div>
+                                <div class="col-sm-12 overflow-auto">{{object.message}}</div>
                             </div>
                             <div class="col-sm-2 row">
                                 <div class="col-sm-12">
                                     <a class="btn btn-outline-secondary btn-block align-items-start d-b"
-                                       href="{% url 'article:detail' item.article_id %}" target="_blank">
+                                       href="{% url 'article:detail' object.article_id %}" target="_blank">
                                         к статье</a></div>
                                 <div class="col-sm-12">
-                                    <form method="POST" action="{% url '_admin:notify_delete' item.pk %}">
+                                    <form method="POST" action="{% url '_admin:notify_delete' object.pk %}">
                                         {% csrf_token %}
                                         <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
                                             type="submit" value="прочитано">
@@ -74,57 +74,64 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                    {% for article in articles %}
+                    {% for object in articles %}
                     <div class="item-block shadow row">
-                        <div class="col-sm-10 row">
-                            <div class="col-sm-10"><span>{{ article.title }}</span></div>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-10"><span>{{ object.title }}</span></div>
                             <div class="col-sm-2">
                                 <a class="btn btn-outline-secondary btn-block align-items-start d-b"
-                                   href="{% url '_admin:approve' article.pk %}">Модерировать</a>
+                                   href="{% url '_admin:approve_article' object.pk %}">Модерировать</a>
                             </div>
                             <div class="w-100 d-none d-md-block"></div>
-                            <div class="col-sm-3"><span>Категория: <p>{{ article.category }}</p></span></div>
-                            <div class="col-sm-3">
-                                <span>Автор:
-                                    <p><a href="{% url '_admin:user_update' article.author.pk %}" target="_blank"
-                                          style="color: dodgerblue" class="">{{ article.author }}</a></p></span>
+                            <div class="col-sm-3"><span>Категория: <p>{{ object.category }}</p></span></div>
+                            <div class="col-sm-3"><span>Автор:
+                                    <p><a href="{% url '_admin:user_update' object.author.pk %}" target="_blank"
+                                          style="color: dodgerblue" class="">{{ object.author }}</a></p></span>
                             </div>
-
-
                         </div>
-
                     </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
 
-<!--        <div class="card">-->
-<!--            <div class="card-header" id="headingThree">-->
-<!--                <h5 class="mb-0">-->
-<!--                    <button class="btn btn-outline-dark collapsed w-100"-->
-<!--                            data-bs-toggle="collapse" data-bs-target="#collapseThree"-->
-<!--                            aria-expanded="false" aria-controls="collapseThree">-->
-<!--                        Разворачиваемая панель #3-->
-<!--                    </button>-->
-<!--                </h5>-->
-<!--            </div>-->
-<!--            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">-->
-<!--                <div class="card-body">-->
-<!--                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3-->
-<!--                    wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum-->
-<!--                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla-->
-<!--                    assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt-->
-<!--                    sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer-->
-<!--                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus-->
-<!--                    labore sustainable VHS.-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-outline-dark collapsed w-100"
+                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                            aria-expanded="false" aria-controls="collapseThree">
+                        Новости на модерации
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                    {% for object in news %}
+                    <div class="item-block shadow row">
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-3">{{ object.created }}</div>
+                            <div class="col-sm-7"><span>{{ object.title }}</span></div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-secondary btn-block align-items-start d-b"
+                                   href="{% url '_admin:approve_news' object.pk %}">Модерировать</a>
+                            </div>
+                            <div class="w-100 d-none d-md-block"></div>
+
+                            <div class="col-sm-3"><span>Автор:
+                                    <p><a href="{% url '_admin:user_update' object.author.pk %}" target="_blank"
+                                          style="color: dodgerblue" class="">{{ object.author }}</a></p></span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
-<script>
-  $('.collapse').collapse()
-
-</script>
+<!--<script>-->
+<!--  $('.collapse').collapse()-->
+<!---->
+<!--</script>-->

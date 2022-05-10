@@ -31,6 +31,7 @@ urlpatterns = [
     path('news/delete/<int:pk>/', adminapp.NewsDeleteView.as_view(), name='news_delete'),
 
     path('moder/', adminapp.ModerListView.as_view(), name='moder'),
-    path('moder/article/<uuid:pk>/', adminapp.ApproveArticle.as_view(), name='approve'),
+    path('moder/article/<uuid:pk>/', adminapp.ApproveArticle.as_view(), name='approve_article'),
+    path('moder/news/<int:pk>/', adminapp.ApproveNews.as_view(), name='approve_news'),
     path('moder/notify/delete/<int:pk>/', adminapp.NotifyDeleteView.as_view(), name='notify_delete'),
 ]
