@@ -1,6 +1,6 @@
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.utils import timezone
 
 from commentapp.models import Comments
 from news.models import News
@@ -9,6 +9,7 @@ from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCr
 from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
+from .models import NotifyComment
 
 
 # главная страница админки
@@ -185,13 +186,12 @@ class NewsDeleteView(UserIsPersonalMixin, DeleteView):
 # контролеры для модерации
 class ModerListView(UserIsPersonalMixin, TemplateView):
     template_name = 'adminapp/moder/moder.html'
-    # context_object_name = 'objects'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['articles'] = Article.objects.all().filter(approve=False, status='PB')
-        context['comments'] = Comments.objects.all().filter(comment_text__startswith='@moder')
-
+        context['notifications'] = NotifyComment.objects.all().filter(is_read=False)
+        context['news'] = News.objects.all().filter(status='DF')
         return context
 
 
@@ -204,5 +204,11 @@ class ApproveArticle(UserIsPersonalMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.approve = True
+        self.object.publication_date = timezone.now()
         self.object.save()
         return super().post(request, *args, **kwargs)
+
+
+class NotifyDeleteView(UserIsPersonalMixin, DeleteView):
+    model = NotifyComment
+    success_url = reverse_lazy('_admin:moder')
