@@ -33,7 +33,7 @@
                             <div class="entry-meta">
                                 <ul>
                                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                            href="{% url 'news:news_detail' data.id %}">{{ data.author }}</a></li>
+                                            href="{% url 'auth:profile' data.author.pk %}">{{ data.author }}</a></li>
                                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                             href="{% url 'news:news_detail' data.id %}">{{ data.date }}</a></li>
                                     {#<li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a>#}

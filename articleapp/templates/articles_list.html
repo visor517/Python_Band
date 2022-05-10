@@ -20,7 +20,7 @@
                     <div class="entry-meta">
                         <ul>
                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                    href="{% url 'article:detail' article.pk %}">{{ article.author }}</a></li>
+                                    href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></li>
                             <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                     href="{% url 'article:detail' article.pk %}">
                                 <time datetime="2020-01-01">{{ article.created }}</time>

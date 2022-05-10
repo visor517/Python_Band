@@ -21,7 +21,7 @@
 
                 {% if user.is_authenticated %}
 
-                    Автор комментария: {{ item.comment_author }}<br>
+                    Автор комментария: <a href="{% url 'auth:profile' item.comment_author.pk %}">{{ item.comment_author }}</a><br>
 
                     {% if item.comment_article.author == request.user %}
 

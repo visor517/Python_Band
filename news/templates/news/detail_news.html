@@ -34,7 +34,7 @@
               <ul>
                 <li class="d-flex align-items-center">
                     <i class="bi bi-person"></i>
-                    <a href="#">{{ detail_view.author }}</a>
+                    <a href="{% url 'auth:profile' detail_view.author.pk %}">{{ detail_view.author }}</a>
                 </li>
                 <li class="d-flex align-items-center">
                     <i class="bi bi-clock"></i>
