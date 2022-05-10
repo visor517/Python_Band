@@ -29,4 +29,9 @@ urlpatterns = [
     path('news/create/', adminapp.NewsCreateView.as_view(), name='news_create'),
     path('news/update/<int:pk>/', adminapp.NewsUpdateView.as_view(), name='news_update'),
     path('news/delete/<int:pk>/', adminapp.NewsDeleteView.as_view(), name='news_delete'),
+
+    path('moder/', adminapp.ModerListView.as_view(), name='moder'),
+    path('moder/article/<uuid:pk>/', adminapp.ApproveArticle.as_view(), name='approve_article'),
+    path('moder/news/<int:pk>/', adminapp.ApproveNews.as_view(), name='approve_news'),
+    path('moder/notify/delete/<int:pk>/', adminapp.NotifyDeleteView.as_view(), name='notify_delete'),
 ]
