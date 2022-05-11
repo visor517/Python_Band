@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, HttpResponseRedirect
@@ -132,11 +134,13 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 class UserDetailView(DetailView):
     model = HabrUser
     template_name = 'authapp/user_detail.html'
-    context_object_name = 'user'
+    context_object_name = 'object'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['articles_draft'] = Article.objects.all().filter(author=self.object, status='DF')
-        context['articles_moder'] = Article.objects.all().filter(author=self.object, status='PB', approve=False)
-        context['articles_public'] = Article.objects.all().filter(author=self.object, status='PB', approve=True)
+
+        articles = Article.objects.all().filter(author=self.object)
+        context['articles_draft'] = articles.filter(status='DF')
+        context['articles_moder'] = articles.filter(status='PB', approve=False)
+        context['articles_public'] = articles.filter(status='PB', approve=True)
         return context

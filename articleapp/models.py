@@ -82,6 +82,7 @@ class Article(models.Model):
 
     def delete(self, using=None, keep_parents=False):
         self.status = 'DT' if self.status != 'DT' else 'DF'
+        self.approve = False
         self.save()
 
     @property

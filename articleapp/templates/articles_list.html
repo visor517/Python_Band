@@ -23,7 +23,11 @@
                                     href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></li>
                             <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                     href="{% url 'article:detail' article.pk %}">
+                                {% if article.publication_date %}
+                                <time datetime="2020-01-01">{{ article.publication_date }}</time>
+                                {% else %}
                                 <time datetime="2020-01-01">{{ article.created }}</time>
+                                {% endif %}
                             </a></li>
                             <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
                                     href="{% url 'article:detail' article.pk %}">Комментариев: {{ article.comments_articles.all.count }}</a>
