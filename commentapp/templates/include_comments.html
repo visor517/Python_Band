@@ -36,19 +36,19 @@
         </ul>
     </div>
     <hr>
+    {% if user.is_authenticated %}
     <p>Добавить комментарий</p>
 
     <div class="col-5">
+
         <form action="" id="add_form" method="post">
             {% csrf_token %}
             {{ form.as_p }}
         </form>
-
-        {% if user.is_authenticated %}
             <input form="add_form" type="submit" value="Добавить"/>
-        {% else %}
-            <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
-        {% endif %}
+    {% else %}
+        <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
     </div>
+    {% endif %}
     <br>
 </div>
