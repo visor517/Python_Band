@@ -2,7 +2,7 @@ from django.urls import path
 from articleapp.views import IndexView, ArticleDetailView, \
     ArticleCreateView, ArticleUpdateView, ArticleDeleteView, like_art, \
     CategoryArticleView, ArticleListView
-from mainapp.views import main
+
 
 app_name = 'articleapp'
 

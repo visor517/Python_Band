@@ -95,6 +95,7 @@ class Article(models.Model):
     status = models.CharField(choices=STATUSES, max_length=128, default='DF')
     liked = models.ManyToManyField(IpModel, blank=True, related_name='likes')
     approve = models.BooleanField('Модерация', default=False)
+    publication_date = models.DateTimeField(verbose_name='Дата публикации', blank=True, null=True)
     objects = FilterArticle()
 
     def __str__(self):

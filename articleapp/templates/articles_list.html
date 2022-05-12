@@ -29,12 +29,9 @@
                                     href="{% url 'article:detail' article.pk %}">Комментариев: {{ article.comments_articles.all.count }}</a>
                             </li>
                             <li class="d-flex align-items-center"><i class="bi bi-hand-thumbs-up"></i> <a
-                                    href="{% url 'article:detail' article.pk %}">{{ article.likes.all.count }}</a>
+                                    href="{% url 'article:detail' article.pk %}">{{ article.liked.all.count }}</a>
+                            </li>
 
-                            </li>
-                            <li class="d-flex align-items-center"><i class="bi bi-hand-thumbs-down"></i> <a
-                                    href="{% url 'article:detail' article.pk %}">{{ article.dislikes.all.count }}</a>
-                            </li>
                         </ul>
                     </div>
 

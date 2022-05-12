@@ -1,7 +1,6 @@
 from django.urls import path
-
 from .views import LoginUserView, LogoutUserView, RegisterUserView, VerifyView, ProfileEditView
-from django.conf.urls import include, url
+
 
 app_name = 'authapp'
 

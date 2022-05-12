@@ -128,3 +128,15 @@ class NewsUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         add_class_html(self.fields)
+
+
+class ApproveArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ()
+
+
+class ApproveNewsForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ()

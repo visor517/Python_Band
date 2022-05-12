@@ -22,9 +22,6 @@ from authapp.models import HabrUser
 from django.utils.timezone import now
 
 
-
-
-
 class SendVerifyMail:
     """ Отправка сообщения пользователю """
 

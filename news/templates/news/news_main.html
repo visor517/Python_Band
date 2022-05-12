@@ -21,7 +21,9 @@
                     {% for data in news %}
                         <article class="entry">
                             <div class="entry-img">
+                                {% if data.image %}
                                 <img src="{{ data.image.url }}" alt="" class="img-fluid" width="100%">
+                                {% endif %}
                             </div>
 
                             <h2 class="entry-title">
