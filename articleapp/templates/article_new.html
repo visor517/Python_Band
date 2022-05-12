@@ -15,11 +15,6 @@
                 <form action="" method="post">{% csrf_token %}
                     {{ form.media | safe }}
                     {{ form.as_p }}
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            {{ form.image }}
-                        </div>
-                    </div>
                     <button type="submit" class="btn btn-primary">Создать</button>
                 </form>
             </div>

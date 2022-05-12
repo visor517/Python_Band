@@ -1,5 +1,4 @@
 from django.urls import path
-
 from .views import LoginUserView, LogoutUserView, RegisterUserView, VerifyView, ProfileEditView, UserDetailView, \
     UserChangePassword
 from django.conf.urls import include, url

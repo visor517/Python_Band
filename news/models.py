@@ -10,7 +10,7 @@ class News(models.Model):
     STATUSES = (
         (DRAFT, 'Черновик'),
         (PUBLISHED, 'Опубликованно'),
-        (DELETED, 'Удалённо'),
+        (DELETED, 'Удалено'),
     )
     author = models.ForeignKey(HabrUser, on_delete=models.DO_NOTHING,
                                verbose_name="Автор")

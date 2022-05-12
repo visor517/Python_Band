@@ -74,13 +74,7 @@ class HabrProfile(models.Model):
     def create_user_profile(sender, instance, created, **kwards):
         if created:
             HabrProfile.objects.create(user=instance)
-            # Выше тоже самое, что и
-            # shop_user_profile = ShopUserProfile(user=instance)
-            # shop_user_profile.save()
 
-    # @receiver(post_save, sender=HabrUser)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.user.profile.save()
 
     def delete(self, using=None, keep_parents=False):
         """ Переопределение метода delete"""
