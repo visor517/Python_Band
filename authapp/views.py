@@ -152,7 +152,6 @@ class UserDetailView(DetailView):
 class UserChangePassword(LoginRequiredMixin, PasswordChangeView):
     template_name = 'authapp/change_pass.html'
     form_class = PasswordChangeForm
-    success_url = reverse_lazy('main')
 
     def get_success_url(self):
         return reverse('auth:profile', kwargs={'pk': self.request.user.pk})
