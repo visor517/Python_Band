@@ -13,8 +13,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
         <h4>
-            В категории: {{ category.name }} - {{ article_list|length }}
-            статьи.
+            Статьи в категории: {{ category.name }} - {{ article_list|length }}
+            шт.
         </h4>
       </div>
 </section>
@@ -24,6 +24,11 @@
         <h4 class="col-lg-12 entries">
         {% for article in article_list %}
             <article class="entry">
+
+                <div class="entry-img">
+
+                </div>
+
                 <h2 class="entry-title">
                     <a href="{% url 'article:detail' article.pk %}">
                         {{ article.title }}
