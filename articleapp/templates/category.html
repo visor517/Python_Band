@@ -2,40 +2,75 @@
 {% load static %}
 
 {% block css %}
-<link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 {% endblock css %}
 
 {% block content %}
 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
         <h4>
-            В категории: {{ category.name }} - {{ article_list|length }}
-            статьи.
+            Статьи в категории: {{ category.name }} - {{ article_list|length }}
+            шт.
         </h4>
       </div>
 </section>
-<div class="container items-wrapper overflow-auto h-auto">
+<div id="blog" class="blog">
+<div class="container" data-aos="fade-up">
+    <div class="row">
+        <h4 class="col-lg-12 entries">
+        {% for article in article_list %}
+            <article class="entry">
 
-    {% for article in article_list %}
-        <div class="item-block shadow row">
-            <div class="col-sm-10 row">
-                <div class="col-sm-1">{{ forloop.counter }}</div>
-                <div class="col-sm-9">
+                <div class="entry-img">
+                    <img src="{{ article.image }}" alt="" class="img-fluid" width="100%">
+                </div>
+
+                <h2 class="entry-title">
                     <a href="{% url 'article:detail' article.pk %}">
                         {{ article.title }}
                     </a>
+                </h2>
+
+                <h5>
+                    <span>Категория: {{ article.category }}</span>
+                </h5>
+
+                <div class="entry-meta">
+                    <ul>
+                        <li class="d-flex align-items-center"><i class="bi bi-person"></i>
+                            <span>автор:
+                                <a target="_blank"
+                                   style="color: dodgerblue"
+                                   class="">
+                                    {{ article.author }}
+                                </a>
+                            </span>
+                        </li>
+
+                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
+                            <a>{{ article.updated }}</a></li>
+                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>
+                            <a>
+                                ({{article.comments_articles.all.count }}) комментариев
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="w-100 d-none d-md-block"></div>
-                <div class="col-sm-4"><span>Категория: {{ article.category }}</span></div>
-                <div class="col-sm-3">
-                    <span>
-                        автор: <a href="{% url '_admin:user_update' article.author.pk %}" target="_blank"
-                            style="color: dodgerblue" class="">{{ article.author }}</a>
-                    </span>
+
+                <div class="entry-content">
+                    <div class="read-more">
+                        <a href="{% url 'article:detail' article.pk %}">Читать далее</a>
+                    </div>
                 </div>
-            </div>
+            </article>
+        {% endfor %}
+        {% include 'adminapp/includes/pagination.html' %}
         </div>
-    {% endfor %}
-    {% include 'adminapp/includes/pagination.html' %}
+    </div>
+</div>
 </div>
 {% endblock content %}
