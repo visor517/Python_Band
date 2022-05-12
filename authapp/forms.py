@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import fields
 from .models import HabrUser, HabrProfile
+from django.contrib.auth import forms as auth_forms
 
 from django.contrib.auth.forms import UserChangeForm
 
@@ -102,4 +103,14 @@ class ProfileEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class PasswordChangeForm(auth_forms.PasswordChangeForm):
+    class Meta:
+        model = HabrUser
+        fields = ('old_password', 'new_password1', 'new_password2')
+
+    def __init__(self, *args, **kwargs):
+        super(PasswordChangeForm, self).__init__(*args, **kwargs)
         add_class_html(self.fields)

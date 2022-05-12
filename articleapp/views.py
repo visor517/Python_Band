@@ -6,7 +6,6 @@ from django.views.generic.edit import FormMixin
 
 from articleapp.forms import ArticleForm, ArticleApprove
 from articleapp.models import Article, Like, Category
-from authapp.models import HabrUser
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
@@ -27,16 +26,6 @@ class ArticleListView(ListView):
 
     def get_queryset(self):
         return Article.objects.filter(author=self.request.user)
-
-
-class ArticleStatusListView(ListView):
-    model = Article
-    paginate_by = 5
-    template_name = 'articles_list.html'
-
-    def get_queryset(self):
-        return Article.objects.filter(author=self.kwargs['pk'], status=self.kwargs['status'],
-                                      approve=self.kwargs['approve']).order_by('-publication_date')
 
 
 # Отображение содержимого

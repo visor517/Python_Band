@@ -67,7 +67,7 @@ class Article(models.Model):
     liked = models.ManyToManyField(HabrUser, blank=True, related_name='likes')
     approve = models.BooleanField('Модерация', default=False)
     publication_date = models.DateTimeField(verbose_name='Дата публикации', blank=True, null=True)
-    objects = FilterArticle()
+    # objects = FilterArticle()
 
     def __str__(self):
         return self.title

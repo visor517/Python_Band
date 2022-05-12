@@ -3,6 +3,7 @@
 
 {% block css %}
 <link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
+<link href="{% static 'authapp/css/profile_style.css' %}" rel="stylesheet">
 {% endblock css %}
 
 {% block content %}
@@ -10,60 +11,182 @@
 <div class="container items-wrapper overflow-auto h-auto">
     <div class="row d-flex d-flex justify-content-around">
         <div class="col-lg-4 col-md-6 d-flex align-items-stretch shadow">
-            <div class="member">
+            <div class="member" style="min-height:500px">
                 <section>
                     {% if object.avatar %}
-                    <div class="d-flex justify-content-center"><img src="{{ object.avatar.url }}"
-                                                                    class="mx-auto" height="350" alt="avatar"></div>
+                    <div class=" d-flex justify-content-center" style="margin: 20px 0">
+                    <div class="avatar" style="background-image:url({{ object.avatar.url }})"></div></div>
                     {% endif %}
-                    <div class="d-flex justify-content-center"><h4>{{ object }}</h4></div>
-                    <div class="d-flex justify-content-center"><span>{{ object.get_role_display }}</span></div>
-                    <div class="d-flex justify-content-center overflo-hidden">
-                        <p>{{object.habrprofile.tagline}}</p>
+                    <div class="row d-flex justify-content-center" style="margin-bottom:30px">
+                        <div class="col-sm-6">
+                            <div class="col-sm-12 d-flex justify-content-center"><h4>{{ object }}</h4></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 mar-b-5">Статус</div>
+                        <div class="col-sm-7 mar-b-5">{{ object.get_role_display }}</div>
+                        <div class="col-sm-5 mar-b-5">Рейтинг</div>
+                        <div class="col-sm-7 mar-b-5">"тут будет рейтинг"</div>
+                        <div class="col-sm-5 mar-b-5">Зарегистрирован</div>
+                        <div class="col-sm-7 mar-b-5">{{ object.date_joined|date:"d-M-Y" }}</div>
+                        <div class="overflow-hidden mar-b-5"><p>{{object.habrprofile.tagline}}</p></div>
                     </div>
                 </section>
                 {% if request.user == object %}
-                <section>
-                    <div class="d-flex justify-content-center">
-                        <h5><a href="{% url 'auth:edit' user.pk %}">редактировать профиль</a></h5>
-                    </div>
-                </section>
+                <div class="row">
+                    <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
+                       href="{% url 'auth:edit' user.pk %}">редактировать профиль</a>
+                    <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
+                       href="{% url 'auth:change_pass' %}">сменить пароль</a>
+                </div>
                 {% endif %}
                 {% if request.user.is_authenticated %}
                 {% if request.user.role != 'U' or request.user.is_superuser %}
-                <div class="row border border-2">
+                <div class="row border border-3">
                     <div class="col-sm-12 d-flex justify-content-center"><p>Для администраторов:</p></div>
                     {% if request.user.role == 'A'%}
-                    <div class="col-sm-12  d-flex justify-content-center"><a
-                            href="{% url '_admin:user_update' user.pk %}">редактировать</a></div>
-                    {% endif %}
-                    <div class="col-sm-12 d-flex justify-content-center"><a href="#">блокировать</a></div>
                     <div class="col-sm-12  d-flex justify-content-center">
-                        <a href="{% url '_admin:user_delete' user.pk %}">удалить</a></div>
+                        <a class="btn btn-outline-secondary btn-block w-100 mar-b-5" href="{% url '_admin:user_update' user.pk %}">редактировать</a></div>
+                    {% endif %}
+                    <div class="col-sm-12 d-flex justify-content-center">
+                        <a class="btn btn-outline-secondary btn-block w-100 mar-b-5" href="#">блокировать</a></div>
+                    <div class="col-sm-12  d-flex justify-content-center">
+                        <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
+                           href="{% url '_admin:user_delete' user.pk %}">удалить</a></div>
                 </div>
                 {% endif %}
                 {% endif %}
             </div>
         </div>
-        <div class="col-sm-7 shadow">
+        <div class="col-sm-7">
             <div class="row">
-                <div class="col-sm-12">
-                    <span>Мои статьи:</span>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="public-tab" data-bs-toggle="tab" data-bs-target="#public"
+                                type="button" role="tab" aria-controls="home" aria-selected="true">Публикации</button>
+                    </li>
                     {% if request.user == object %}
-                    <a href="{% url 'article:list_status' status='DF' approve='False' pk=object.pk  %}">
-                        Черновики: {{articles_draft.all.count}}</a>
-                    <a href="{% url 'article:list_status' status='PB' approve='False' pk=object.pk  %}">
-                        На модерации: {{articles_moder.all.count}}</a>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="moder-tab" data-bs-toggle="tab" data-bs-target="#moder"
+                                type="button" role="tab" aria-controls="moder" aria-selected="false">На модерации</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="draft-tab" data-bs-toggle="tab" data-bs-target="#draft"
+                                type="button" role="tab" aria-controls="draft" aria-selected="false">Черновики</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="notify-tab" data-bs-toggle="tab" data-bs-target="#notify"
+                                type="button" role="tab" aria-controls="notify" aria-selected="false">Уведомления</button>
+                    </li>
                     {% endif %}
-                    <a href="{% url 'article:list_status' status='PB' approve='True' pk=object.pk  %}">
-                        Опубликованные: {{articles_public.all.count}}</a>
-                    <a href="{% url 'article:list' %}">
-                        все статьи</a>
-                </div>
-                <div class="col-sm w-100"></div>
-                <div class="col-sm-12">
-                    <span>Уведомления:</span>
-                    <div>сами уведомления</div>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content shadow" style="min-height:500px">
+                    <div class="tab-pane active" id="public" role="tabpanel" aria-labelledby="public-tab">
+                        {% if articles_public %}
+                            <div class="row" style="margin: 10px">
+                            {% for item in articles_public %}
+                                <div class="w-100" style="">
+                                    <div class="col-sm-12 overflow-hidden" style=""><h3>{{ item }}</h3></div>
+                                    <div class="row">
+                                        <div class="col-sm-4 d-flex align-items-center"><i class="bi bi-clock"></i>
+                                            {{ item.publication_date }}</div>
+                                        <div class="col-sm-3 d-flex align-items-center"><i class="bi bi-chat-dots"></i>
+                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-1 d-flex align-items-center"><i class="bi bi-hand-thumbs-up"></i>
+                                            {{ item.liked.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <a class="btn btn-secondary w-100"
+                                               style="background-color: #e96b56; border-color: #e96b56;"
+                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="d-flex justify-content-center">
+                                <h5 style="margin:20px auto">опубликованных статей нет</h5>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if request.user == object %}
+                    <div class="tab-pane" id="moder" role="tabpanel" aria-labelledby="moder-tab">
+                        {% if articles_moder %}
+                            <div class="row" style="margin: 10px">
+                            {% for item in articles_moder %}
+                                <div class="w-100" style="">
+                                    <div class="col-sm-12 overflow-hidden" style=""><h3>{{ item }}</h3></div>
+                                    <div class="row">
+                                        <div class="col-sm-4 d-flex align-items-center">
+                                            <i class="bi bi-clock"></i>
+                                            {{ item.created }}</div>
+                                        <div class="col-sm-3 d-flex align-items-center">
+                                            <i class="bi bi-chat-dots"></i>
+                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-1 d-flex align-items-center">
+                                            <i class="bi bi-hand-thumbs-up"></i>
+                                            {{ item.liked.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <a class="btn btn-secondary w-100"
+                                               style="background-color: #e96b56; border-color: #e96b56;"
+                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="d-flex justify-content-center">
+                                <h5 style="margin:20px auto">статей проходящих модерацию нет</h5>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane" id="draft" role="tabpanel" aria-labelledby="draft-tab">
+                        {% if articles_draft %}
+                            <div class="row" style="margin: 10px">
+                            {% for item in articles_draft %}
+                                <div class="w-100" style="">
+                                    <div class="col-sm-12 overflow-hidden" style=""><h3>{{ item }}</h3></div>
+                                    <div class="row">
+                                        <div class="col-sm-4 d-flex align-items-center">
+                                            <i class="bi bi-clock"></i>
+                                            {{ item.created }}</div>
+                                        <div class="col-sm-3 d-flex align-items-center">
+                                            <i class="bi bi-chat-dots"></i>
+                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-1 d-flex align-items-center">
+                                            <i class="bi bi-hand-thumbs-up"></i>
+                                            {{ item.liked.all.count }}</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <a class="btn btn-secondary w-100"
+                                               style="background-color: #e96b56; border-color: #e96b56;"
+                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="d-flex justify-content-center">
+                                <h5 style="margin:20px auto">в черновиках пусто</h5>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane" id="notify" role="tabpanel" aria-labelledby="notify-tab">3</div>
+                    {% endif %}
                 </div>
             </div>
         </div>
