@@ -12,7 +12,7 @@ class ArticleForm(ModelForm):
         класс - Мета
         """
         model = Article
-        fields = ('title', 'author', 'category', 'content', 'image')
+        fields = ('title', 'category', 'content', 'image')
 
     def __init__(self, *args, **kwargs):
         super(ArticleForm, self).__init__(*args, **kwargs)

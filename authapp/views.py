@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, HttpResponseRedirect
@@ -6,15 +8,16 @@ from django.contrib import auth
 from django.urls import reverse
 # from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.views.generic import TemplateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 # from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from adminapp.views import UserUpdateView
-from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm
+from articleapp.models import Article
+from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm, PasswordChangeForm
 
 
 from authapp.models import HabrUser
@@ -100,9 +103,12 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     """ Редактирование профиля """
     model = HabrUser
     template_name = 'authapp/edit.html'
-    success_url = reverse_lazy('main')
     form_class = UserEditForm
     second_form_class = ProfileEditForm
+
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse('auth:profile', kwargs={'pk': pk})
 
     def get_context_data(self, **kwargs):
         context = super(ProfileEditView, self).get_context_data(**kwargs)
@@ -125,4 +131,24 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
                 self.get_context_data(form=form, form2=form2))
 
 
+class UserDetailView(DetailView):
+    model = HabrUser
+    template_name = 'authapp/user_detail.html'
+    context_object_name = 'object'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        articles = Article.objects.all().filter(author=self.object)
+        context['articles_draft'] = articles.filter(status='DF')
+        context['articles_moder'] = articles.filter(status='PB', approve=False)
+        context['articles_public'] = articles.filter(status='PB', approve=True)
+        return context
+
+
+class UserChangePassword(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'authapp/change_pass.html'
+    form_class = PasswordChangeForm
+
+    def get_success_url(self):
+        return reverse('auth:profile', kwargs={'pk': self.request.user.pk})

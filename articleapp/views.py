@@ -129,7 +129,7 @@ class ArticleCreateView(CreateView):
             article = form.save(commit=False)
             article.author = request.user
             self.object = article.save()
-            return redirect('article:list')
+            return redirect('auth:profile', request.user.pk)
 
         return self.form_invalid(form)
 
@@ -185,7 +185,7 @@ class CategoryArticleView(ListView):
         """
         self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
         return Article.objects.filter(category=self.category)\
-            .filter(status='PB')
+            .filter(status='PB', approve=True)
 
     def get_context_data(self, **kwargs):
         """

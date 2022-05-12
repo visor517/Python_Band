@@ -9,7 +9,7 @@
           
             <div class="post-entry">
                 <h2>{{ article.title }}</h2>
-                <p>{{ article.author }}</p>
+                <p><a href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
                 {#<p>{{ article.image }}</p>#}
