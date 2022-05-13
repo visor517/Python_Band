@@ -47,7 +47,8 @@
         </form>
             <input form="add_form" type="submit" value="Добавить"/>
     {% else %}
-        <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
+        <p>Чтобы добавить комментарий <a href="{% url 'auth:login' %}">войдите</a>
+            или <a href="{% url 'auth:register' %}">зарегистрируйтесь.</a></p>
     </div>
     {% endif %}
     <br>

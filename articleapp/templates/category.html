@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block css %}
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
-          id="bootstrap-css">
+<!--    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          id="bootstrap-css">-->
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
@@ -42,9 +42,7 @@
                     <ul>
                         <li class="d-flex align-items-center"><i class="bi bi-person"></i>
                             <span>автор:
-                                <a target="_blank"
-                                   style="color: dodgerblue"
-                                   class="">
+                                <a target="_blank" href="{% url 'auth:profile' article.author.pk %}">
                                     {{ article.author }}
                                 </a>
                             </span>

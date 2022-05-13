@@ -14,9 +14,10 @@
                 <p>{{ article.content | safe }}</p>
                 {#<p>{{ article.image }}</p>#}
             </div>
-
-            <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
-            <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+            {% if request.user == article.author %}
+            <a href="{% url 'article:edit' article.pk %}">Редактировать</a>
+            <a href="{% url 'article:delete' article.pk %}">Удалить</a>
+            {% endif %}
             <br>
 
             <div class="d-flex flex-row div_like"

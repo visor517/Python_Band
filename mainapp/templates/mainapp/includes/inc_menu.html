@@ -20,7 +20,7 @@
                 </form>
                 <li class="dropdown">
                     {% if user.is_authenticated %}
-                    <a href="#">{{ user }}</a>
+                    <a href="#">{{ user.username }}</a>
                     {% else %}
                     <a href="#">Войти</a>
                     {% endif %}
