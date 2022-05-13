@@ -113,6 +113,7 @@ class Article(models.Model):
         """
         self.status = 'DT' if self.status != 'DT' else 'DF'
         self.approve = False
+
         self.save()
 
     @property
@@ -123,19 +124,22 @@ class Article(models.Model):
         return self.liked.all().count()
 
 
-LIKE_CHOICES = (
-    ('Like', 'Like'),
-    ('Dislike', 'Dislike')
-)
-
-
 class Like(models.Model):
+
+    LIKE = 'Like'
+    DISLIKE = 'Like'
+
+    LIKE_CHOICES = (
+        (LIKE, 'Like'),
+        (DISLIKE, 'Dislike')
+    )
+
     """
     класс - Лайки
     """
     user = models.ForeignKey(HabrUser, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    value = models.CharField(choices=LIKE_CHOICES, default='Like',
+    value = models.CharField(choices=LIKE_CHOICES, default=LIKE,
                              max_length=8)
 
     def __str__(self):
