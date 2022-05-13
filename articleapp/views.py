@@ -86,27 +86,7 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
             return super().post(request, *args, **kwargs)
         else:
             return self.render_to_response(
-                self.get_context_data(form2=form2))
-
-    def get(self, request, *args, **kwargs):
-        """
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-
-        like_status = False
-        ip = get_user_ip(request)
-        if self.object.liked.filter(id=IpModel.objects.get(ip=ip).id).exists():
-            like_status = True
-        else:
-            like_status = False
-        context['like_status'] = like_status
-
-        return self.render_to_response(context)
+                self.get_context_data(form2=form2))    
 
 
 class ArticleCreateView(CreateView):
@@ -151,7 +131,6 @@ class ArticleDeleteView(DeleteView):
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
 
-# Create your views here.
 
 def like_art(request, pk):
     """
