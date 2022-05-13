@@ -1,11 +1,11 @@
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import redirect, get_object_or_404, reverse
+from django.http import JsonResponse
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
+    DeleteView
 from django.views.generic.edit import FormMixin
-
 from articleapp.forms import ArticleForm, ArticleApprove
-from articleapp.models import Article, Category, IpModel
+from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
@@ -35,19 +35,6 @@ class ArticleListView(ListView):
         :return:
         """
         return Article.objects.filter(author=self.request.user)
-
-
-def get_user_ip(request):
-    """
-    :param request:
-    :return:
-    """
-    forwarded = request.META.get('HTTP_X_FORWARDED_FOR')
-    if forwarded:
-        ip = forwarded.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
 
 
 # Отображение содержимого
@@ -87,26 +74,6 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
         else:
             return self.render_to_response(
                 self.get_context_data(form2=form2))
-
-    def get(self, request, *args, **kwargs):
-        """
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
-
-        like_status = False
-        ip = get_user_ip(request)
-        if self.object.liked.filter(id=IpModel.objects.get(ip=ip).id).exists():
-            like_status = True
-        else:
-            like_status = False
-        context['like_status'] = like_status
-
-        return self.render_to_response(context)
 
 
 class ArticleCreateView(CreateView):
@@ -151,7 +118,6 @@ class ArticleDeleteView(DeleteView):
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
 
-# Create your views here.
 
 def like_art(request, pk):
     """
@@ -159,16 +125,35 @@ def like_art(request, pk):
     :param pk:
     :return:
     """
-    article_id = request.POST.get('article_id')
-    article = Article.objects.get(pk=article_id)
-    ip = get_user_ip(request)
-    if not IpModel.objects.filter(ip=ip).exists():
-        IpModel.objects.create(ip=ip)
-    if article.liked.filter(id=IpModel.objects.get(ip=ip).id).exists():
-        article.liked.remove(IpModel.objects.get(ip=ip))
-    else:
-        article.liked.add(IpModel.objects.get(ip=ip))
-    return HttpResponseRedirect(reverse('article:detail', args=[article_id]))
+    user = request.user
+    if request.method == 'POST':
+        article_id = request.POST.get('article_id')
+        article_obj = Article.objects.get(pk=article_id)
+
+        if user in article_obj.liked.all():
+            article_obj.liked.remove(user)
+        else:
+            article_obj.liked.add(user)
+        like, created = Like.objects.get_or_create(user=user,
+                                                   article_id=article_id)
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Dislike'
+            else:
+                like.value = 'Like'
+        else:
+            like.value = 'Like'
+
+            article_obj.save()
+            like.save()
+
+        data = {
+            'value': like.value,
+            'likes': article_obj.liked.all().count()
+        }
+        return JsonResponse(data, safe=False)
+
+    return redirect('article:detail', pk=pk)
 
 
 class CategoryArticleView(ListView):
