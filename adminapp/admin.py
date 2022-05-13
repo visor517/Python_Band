@@ -1,3 +1,4 @@
 from django.contrib import admin
+from adminapp.models import NotifyComment
 
-# Register your models here.
+admin.site.register(NotifyComment)

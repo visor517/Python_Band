@@ -1,12 +1,16 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.utils import timezone
 
 from commentapp.models import Comments
+from news.models import News
 from .forms import UserUpdateForm, UserCreateForm, ProfileUpdateForm, CategoryCreateForm, ArticleCreateForm, \
-    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm
+    ArticleUpdateForm, CommentCreateForm, CommentUpdateForm, NewsCreateForm, NewsUpdateForm, \
+    ApproveArticleForm, ApproveNewsForm
 from .mixins import UserIsPersonalMixin, UserIsAdminMixin
 from articleapp.models import Category, Article
 from authapp.models import HabrUser
+from .models import NotifyComment
 
 
 # главная страница админки
@@ -37,7 +41,7 @@ class UserUpdateView(UserIsAdminMixin, UpdateView):
     second_form_class = ProfileUpdateForm
 
     def get_context_data(self, **kwargs):
-        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if 'form' not in context:
             context['form'] = self.form_class(instance=self.object)
         if 'form2' not in context:
@@ -149,3 +153,77 @@ class CommentDeleteView(UserIsPersonalMixin, DeleteView):
     template_name = 'adminapp/comment/comment_delete.html'
     context_object_name = 'comment_to_delete'
     success_url = reverse_lazy('_admin:comments')
+
+
+# контроллеры для новостей
+class NewsListView(UserIsPersonalMixin, ListView):
+    model = News
+    template_name = 'adminapp/news/news.html'
+    context_object_name = 'objects'
+    paginate_by = 10
+
+
+class NewsCreateView(UserIsPersonalMixin, CreateView):
+    model = News
+    form_class = NewsCreateForm
+    template_name = 'adminapp/news/news_create.html'
+    success_url = reverse_lazy('_admin:news')
+
+
+class NewsUpdateView(UserIsPersonalMixin, UpdateView):
+    model = News
+    form_class = NewsUpdateForm
+    template_name = 'adminapp/news/news_update.html'
+    success_url = reverse_lazy('_admin:news')
+
+
+class NewsDeleteView(UserIsPersonalMixin, DeleteView):
+    model = News
+    template_name = 'adminapp/news/news_delete.html'
+    context_object_name = 'news_to_delete'
+    success_url = reverse_lazy('_admin:news')
+
+
+# контролеры для модерации
+class ModerListView(UserIsPersonalMixin, TemplateView):
+    template_name = 'adminapp/moder/moder.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Article.objects.all().filter(approve=False, status='PB')
+        context['notifications'] = NotifyComment.objects.all().filter(is_read=False)
+        context['news'] = News.objects.all().filter(status='DF')
+        return context
+
+
+class ApproveArticle(UserIsPersonalMixin, UpdateView):
+    model = Article
+    template_name = 'adminapp/moder/article_approve.html'
+    success_url = reverse_lazy('_admin:moder')
+    form_class = ApproveArticleForm
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.approve = True
+        self.object.publication_date = timezone.now()
+        self.object.save()
+        return super().post(request, *args, **kwargs)
+
+
+class ApproveNews(UserIsPersonalMixin, UpdateView):
+    model = News
+    template_name = 'adminapp/moder/news_approve.html'
+    success_url = reverse_lazy('_admin:moder')
+    form_class = ApproveNewsForm
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.status = 'PB'
+        self.object.date = timezone.now()
+        self.object.save()
+        return super().post(request, *args, **kwargs)
+
+
+class NotifyDeleteView(UserIsPersonalMixin, DeleteView):
+    model = NotifyComment
+    success_url = reverse_lazy('_admin:moder')

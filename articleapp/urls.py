@@ -2,7 +2,7 @@ from django.urls import path
 from articleapp.views import IndexView, ArticleDetailView, \
     ArticleCreateView, ArticleUpdateView, ArticleDeleteView, like_art, \
     CategoryArticleView, ArticleListView
-from mainapp.views import main
+
 
 app_name = 'articleapp'
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('article/<uuid:pk>/edit/', ArticleUpdateView.as_view(), name='edit'),
     path('article/<uuid:pk>/delete/', ArticleDeleteView.as_view(),
          name='delete'),
-    path('article/<uuid:pk>/like/', like_art, name='like-art'),    
+    path('article/<uuid:pk>/like/', like_art, name='like-art'),
     path('article/category/<int:pk>', CategoryArticleView.as_view(),
          name='article_category'),
 ]

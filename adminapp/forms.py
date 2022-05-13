@@ -5,8 +5,10 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from authapp.models import HabrUser, HabrProfile
 from articleapp.models import Category, Article
 from commentapp.models import Comments
+from news.models import News
 
-CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted', 'comment_moderation']
+CHECK_LIST = ['is_active', 'is_delete', 'is_staff', 'is_deleted',
+              'comment_moderation', 'approve']
 
 
 def add_class_html(fields):
@@ -69,7 +71,8 @@ class CategoryCreateForm(forms.ModelForm):
 class ArticleCreateForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('title', 'category', 'content', 'author', 'image', 'status')
+        fields = ('title', 'category', 'content', 'author',
+                  'image', 'status')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -80,7 +83,7 @@ class ArticleUpdateForm(forms.ModelForm):
     class Meta:
         model = Article
         # fields = ('title', 'category', 'content', 'author', 'image', 'status')
-        exclude = ['uid', 'likes', 'dislikes']
+        exclude = ['uid', 'likes']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -105,3 +108,35 @@ class CommentUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         add_class_html(self.fields)
+
+
+class NewsCreateForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ('title', 'anons', 'full_text', 'author', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class NewsUpdateForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ('title', 'anons', 'full_text', 'status', 'author', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_class_html(self.fields)
+
+
+class ApproveArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ()
+
+
+class ApproveNewsForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ()
