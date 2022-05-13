@@ -17,7 +17,7 @@ INSTALLED_APPS:
   - ckeditor
   - news
   - searchapp
-
+  - ratingapp
 
 TEMPLATES:
   -
