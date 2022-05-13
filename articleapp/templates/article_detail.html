@@ -9,43 +9,64 @@
           
             <div class="post-entry">
                 <h2>{{ article.title }}</h2>
-                <p><a href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></p>
+                <p><i class="bi bi-person"></i><a href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></p>
+                <p><i class="bi bi-clock"></i>
+                    {% if article.status == 'PB' and article.approve %}
+                    <a>{{ article.publication_date }}</a>
+                    {% else %}
+                        {% if not article.updated == '' %}
+                        <a>{{ article.updated }}</a>
+                        {% else %}
+                        <a>{{ article.created }}</a>
+                        {% endif %}
+                    {% endif %}
+                </p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
                 {#<p>{{ article.image }}</p>#}
             </div>
-            {% if request.user == article.author %}
-            <a href="{% url 'article:edit' article.pk %}">Редактировать</a>
-            <a href="{% url 'article:delete' article.pk %}">Удалить</a>
+            {% if request.user == article.author and not request.user.check_block %}
+            <div class="row">
+                <div class="col-sm-2 d-flex justify-content-center">
+                    <a class=" btn btn-secondary btn-block w-100" style="background-color: #e96b56; border-color: #e96b56;"
+                       href="{% url 'article:edit' article.pk %}">Редактировать</a>
+                </div>
+                <div class="col-sm-2 d-flex justify-content-center">
+                    <a class="btn btn-secondary btn-block w-100" style="background-color: #e96b56; border-color: #e96b56;"
+                       href="{% url 'article:delete' article.pk %}">Удалить</a>
+                </div>
+                {% if article.status == 'DF' %}
+                <div class="col-sm-2 d-flex align-items-center ">
+                    <form method="POST" class="w-100 mar-b-5" action="{% url 'article:public' article.pk %}">
+                        {% csrf_token %}
+                        <input class="btn btn-secondary btn-block w-100 d-flex justify-content-center" type="submit"
+                            style="background-color: #e96b56; border-color: #e96b56;" value="опубликовать">
+                    </form>
+                </div>
+                {% endif %}
+            </div>
             {% endif %}
             <br>
 
-            <div class="d-flex flex-row div_like"
-                 style="margin-top: 10px; margin-bottom: 10px;">
-
-                <form action="{% url 'article:like-art' article.pk %}"
-                      method="POST"
-                      class="like-form"
-                      id="{{article.pk}}">
-                    {% csrf_token %}
-                    <input type="hidden"
-                           name="article_id"
-                           value="{{article.pk}}">
-                    <button type="submit"
-                            class="btn btn-success btn-sm
-                                        like-btn{{article.pk}}">
-                      {% if like_status %}
-                        Ненравится
-                      {% else %}
-                        Нравится
-                      {% endif %}
-                    </button>
-                    <br>
-                    <div class="fa fa-thumbs-up like-count{{article.pk}}"
-                         style="font-size: 21px; margin-top: 5px;">
+            <div class="d-flex row div_like" style="margin-top: 10px; margin-bottom: 10px;">
+                {% if not request.user.check_block and  request.user.is_authenticated%}
+                <div class="col-sm-12">
+                    <form action="{% url 'article:like-art' article.pk %}" method="POST" class="like-form"
+                            id="{{article.pk}}">
+                        {% csrf_token %}
+                        <input type="hidden" name="article_id" value="{{article.pk}}">
+                        <button type="submit" class="btn btn-success btn-sm like-btn{{article.pk}}">
+                        {% if like_status %}Ненравится{% else %}Нравится{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                <br>
+                <div class="col-sm-12">
+                    <div class="fa fa-thumbs-up like-count{{article.pk}}" style="font-size: 21px; margin-top: 5px;">
                         {{ article.total_likes }}
                     </div>
-                </form>
+                </div>
 
             </div>
 

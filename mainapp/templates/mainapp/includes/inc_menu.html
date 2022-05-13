@@ -31,7 +31,9 @@
                                 <li><a href="{% url '_admin:main_admin' %}">Админка</a></li>
                             {% endif %}
                             <li><a href="{% url 'article:list' %}">Все мои статьи</a></li>
+                            {% if not user.check_block %}
                             <li><a href="{% url 'article:add' %}">Добавить статью</a></li>
+                            {% endif %}
                             <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
                         {% else %}
                             <li><a href="{% url 'auth:login' %}">Войти</a></li>

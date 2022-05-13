@@ -1,9 +1,5 @@
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-# from articleapp.models import Article
 from django.contrib import messages
-from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class SuccessMessage:

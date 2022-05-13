@@ -51,9 +51,7 @@
                         <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
                             <a>{{ article.updated }}</a></li>
                         <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>
-                            <a>
-                                ({{article.comments_articles.all.count }}) комментариев
-                            </a>
+                            <a>комментариев: {{article.comments_articles.all.count }}</a>
                         </li>
                     </ul>
                 </div>

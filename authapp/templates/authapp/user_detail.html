@@ -109,8 +109,8 @@
                                         <div class="col-sm-4 d-flex align-items-center"><i class="bi bi-clock"></i>
                                             {{ item.publication_date }}
                                         </div>
-                                        <div class="col-sm-3 d-flex align-items-center"><i class="bi bi-chat-dots"></i>
-                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        <div class="col-sm-1 d-flex align-items-center"><i class="bi bi-chat-dots"></i>
+                                            {{ item.comments_articles.all.count }}</a>
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center"><i
                                                 class="bi bi-hand-thumbs-up"></i>
@@ -120,6 +120,11 @@
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
                                                href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <a class="btn btn-secondary w-100"
+                                               style="background-color: #e96b56; border-color: #e96b56;"
+                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -144,18 +149,21 @@
                                             <i class="bi bi-clock"></i>
                                             {{ item.created }}
                                         </div>
-                                        <div class="col-sm-3 d-flex align-items-center">
-                                            <i class="bi bi-chat-dots"></i>
-                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        <div class="col-sm-1 d-flex align-items-center">
+                                            <i class="bi bi-chat-dots"></i>{{ item.comments_articles.all.count }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center">
-                                            <i class="bi bi-hand-thumbs-up"></i>
-                                            {{ item.liked.all.count }}</a>
+                                            <i class="bi bi-hand-thumbs-up"></i>{{ item.liked.all.count }}
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
                                                href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <a class="btn btn-secondary w-100"
+                                               style="background-color: #e96b56; border-color: #e96b56;"
+                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -179,18 +187,26 @@
                                             <i class="bi bi-clock"></i>
                                             {{ item.created }}
                                         </div>
-                                        <div class="col-sm-3 d-flex align-items-center">
-                                            <i class="bi bi-chat-dots"></i>
-                                            Комментариев: {{ item.comments_articles.all.count }}</a>
+                                        <div class="col-sm-1 d-flex align-items-center">
+                                            <i class="bi bi-chat-dots"></i>{{ item.comments_articles.all.count }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center">
-                                            <i class="bi bi-hand-thumbs-up"></i>
-                                            {{ item.liked.all.count }}</a>
+                                            <i class="bi bi-hand-thumbs-up"></i>{{ item.liked.all.count }}
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
                                                href="{% url 'article:detail' item.pk %}">читать</a>
+                                        </div>
+                                        <div class="col-sm-3 d-flex align-items-center ">
+                                            <form method="POST" class="w-100 mar-b-5"
+                                                  action="{% url 'article:public' item.pk %}">
+                                                {% csrf_token %}
+                                                <input class="btn btn-secondary btn-block w-100 d-flex
+                                                    justify-content-center" type="submit"
+                                                       style="background-color: #e96b56; border-color: #e96b56;"
+                                                      value="опубликовать">
+                                            </form>
                                         </div>
                                     </div>
                                     <hr/>
