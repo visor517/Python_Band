@@ -76,6 +76,7 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
                 self.get_context_data(form2=form2))
 
 
+
 class ArticleCreateView(CreateView):
     """
     класс - ArticleCreate
