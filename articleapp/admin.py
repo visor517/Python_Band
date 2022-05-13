@@ -1,5 +1,5 @@
 from django.contrib import admin
-from articleapp.models import Category, Article, IpModel
+from articleapp.models import Category, Article, Like
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -32,4 +32,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(IpModel)
+admin.site.register(Like)

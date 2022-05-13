@@ -9,7 +9,11 @@
           
             <div class="post-entry">
                 <h2>{{ article.title }}</h2>
-                <p><a href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></p>
+                <p>
+                    <a href="{% url 'auth:profile' article.author.pk %}">
+                        {{ article.author }}
+                    </a>
+                </p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
                 {#<p>{{ article.image }}</p>#}
@@ -18,7 +22,7 @@
             <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
             <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
             <br>
-
+            {% if user.is_authenticated %}
             <div class="d-flex flex-row div_like"
                  style="margin-top: 10px; margin-bottom: 10px;">
 
@@ -33,21 +37,20 @@
                     <button type="submit"
                             class="btn btn-success btn-sm
                                         like-btn{{article.pk}}">
-                      {% if like_status %}
-                        Ненравится
-                      {% else %}
+                      {% if user not in article.liked.all %}
                         Нравится
+                      {% else %}
+                        Не нравится
                       {% endif %}
                     </button>
                     <br>
+            {% endif %}
                     <div class="fa fa-thumbs-up like-count{{article.pk}}"
                          style="font-size: 21px; margin-top: 5px;">
-                        {{ article.total_likes }}
+                        {{ article.liked.all.count }}
                     </div>
                 </form>
-
             </div>
-
             <hr>
             {% include "include_comments.html" %}
           
