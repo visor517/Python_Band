@@ -21,11 +21,11 @@ $( document ).ready(function() {
                 'article_id': article_id,
             },
             success: function(response) {
-                if(trim === 'Ненравится') {
+                if(trim === 'Не нравится') {
                     $(`.like-btn${article_id}`).text('Нравится')
                     result = trimCount - 1
                 } else {
-                    $(`.like-btn${article_id}`).text('Ненравится')
+                    $(`.like-btn${article_id}`).text('Не нравится')
                     result = trimCount + 1
                 }
                 $(`.like-count${article_id}`).text(result)

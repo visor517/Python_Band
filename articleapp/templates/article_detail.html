@@ -9,49 +9,50 @@
           
             <div class="post-entry">
                 <h2>{{ article.title }}</h2>
-                <p>{{ article.author }}</p>
+                <p>
+                    <a href="{% url 'auth:profile' article.author.pk %}">
+                        {{ article.author }}
+                    </a>
+                </p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
                 {#<p>{{ article.image }}</p>#}
             </div>
 
-                <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
-                <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
-                <br>
-                {% if user.is_authenticated %}
+            <a href='{% url 'article:edit' article.pk %}'>Редактировать</a>
+            <a href='{% url 'article:delete' article.pk %}'>Удалить</a>
+            <br>
+            {% if user.is_authenticated %}
+            <div class="d-flex flex-row div_like"
+                 style="margin-top: 10px; margin-bottom: 10px;">
 
-                <div class="d-flex flex-row div_like"
-                     style="margin-top: 10px; margin-bottom: 10px;">
-                    <form action="{% url 'article:like-art' article.pk %}"
-                          method="POST"
-                          class="like-form"
-                          id="{{article.pk}}">
-                        {% csrf_token %}
-                        <input type="hidden"
-                               name="article_id"
-                               value="{{article.pk}}">
-                            <button class="btn
-                                            btn-success
-                                            btn-sm
-                                            like-btn{{article.pk}}"
-                                    type="submit">
-                                {% if user not in article.liked.all %}
-                                Нравится
-                                {% else %}
-                                Ненравится
-                                {% endif %}
-                            </button><br>
-                {% endif %}
-                        <div class="fa fa-thumbs-up
-                                    like-count{{article.pk}}"
-                            style="font-size: 21px; margin-top: 5px;">
+                <form action="{% url 'article:like-art' article.pk %}"
+                      method="POST"
+                      class="like-form"
+                      id="{{article.pk}}">
+                    {% csrf_token %}
+                    <input type="hidden"
+                           name="article_id"
+                           value="{{article.pk}}">
+                    <button type="submit"
+                            class="btn btn-success btn-sm
+                                        like-btn{{article.pk}}">
+                      {% if user not in article.liked.all %}
+                        Нравится
+                      {% else %}
+                        Не нравится
+                      {% endif %}
+                    </button>
+                    <br>
+            {% endif %}
+                    <div class="fa fa-thumbs-up like-count{{article.pk}}"
+                         style="font-size: 21px; margin-top: 5px;">
                         {{ article.liked.all.count }}
-                        </div>
-                    </form>
-
-                </div>
-                <hr>
-                {% include "include_comments.html" %}
+                    </div>
+                </form>
+            </div>
+            <hr>
+            {% include "include_comments.html" %}
           
         </div>
     </div>
