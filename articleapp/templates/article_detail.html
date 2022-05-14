@@ -9,7 +9,7 @@
           
             <div class="post-entry">
                 <h2>{{ article.title }}</h2>
-                <p><i class="bi bi-person"></i><a href="{% url 'auth:profile' article.author.pk %}">{{ article.author }}</a></p>
+                <p><i class="bi bi-person"></i><a href="{% url 'auth:profile' article.author.pk %}" target="_blank">{{ article.author }}</a></p>
                 <p><i class="bi bi-clock"></i>
                     {% if article.status == 'PB' and article.approve %}
                     <a>{{ article.publication_date }}</a>
