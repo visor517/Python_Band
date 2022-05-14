@@ -9,6 +9,7 @@ from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
+from .mixins import UserIsNoBlockMixin
 
 
 # Отображение содержимого из модели Article
@@ -59,25 +60,27 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
             context['form2'] = self.second_form_class(instance=self.object)
         return context
 
-    def post(self, request, *args, **kwargs):
-        """
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        self.object = self.get_object()
-        form2 = self.second_form_class(request.POST, instance=self.object)
-        if form2.is_valid():
-            form2.save()
-            return super().post(request, *args, **kwargs)
-        else:
-            return self.render_to_response(
-                self.get_context_data(form2=form2))
-
+    # Убрал форму апрува статьи, так как при создании нового коммента статья отправляется на модерацию
+    # Не понимаю назначения этого действия!!
+    # def post(self, request, *args, **kwargs):
+    #     """
+    #     :param request:
+    #     :param args:
+    #     :param kwargs:
+    #     :return:
+    #     """
+    #     self.object = self.get_object()
+    #     form2 = self.second_form_class(request.POST, instance=self.object)
+    #     if form2.is_valid():
+    #         form2.save()
+    #         return super().post(request, *args, **kwargs)
+    #     else:
+    #         return self.render_to_response(
+    #             self.get_context_data(form2=form2))
 
 
 class ArticleCreateView(CreateView):
+
     """
     класс - ArticleCreate
     """
@@ -102,7 +105,7 @@ class ArticleCreateView(CreateView):
         return self.form_invalid(form)
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(UserIsNoBlockMixin, UpdateView):
     """
     класс - ArticleUpdate
     """
@@ -111,13 +114,31 @@ class ArticleUpdateView(UpdateView):
     fields = ['title', 'category', 'content', 'image']
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(UserIsNoBlockMixin, DeleteView):
     """
     класс - ArticleDelete
     """
     model = Article
     template_name = 'article_delete.html'
     success_url = reverse_lazy(main)
+
+
+class ArticlePublished(UserIsNoBlockMixin, DeleteView):
+    """
+    класс - Публикация статьи
+    """
+    model = Article
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
+    def delete(self, request, *args, **kwargs):
+        """  """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.status = 'PB'
+        self.object.save()
+        return HttpResponseRedirect(success_url)
 
 
 def like_art(request, pk):

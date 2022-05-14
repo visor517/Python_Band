@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.utils import timezone
@@ -227,3 +228,17 @@ class ApproveNews(UserIsPersonalMixin, UpdateView):
 class NotifyDeleteView(UserIsPersonalMixin, DeleteView):
     model = NotifyComment
     success_url = reverse_lazy('_admin:moder')
+
+
+class UserBlock(UserIsPersonalMixin, DeleteView):
+    model = HabrUser
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
+    def delete(self, request, *args, **kwargs):
+        """  """
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.user_block()
+        return HttpResponseRedirect(success_url)

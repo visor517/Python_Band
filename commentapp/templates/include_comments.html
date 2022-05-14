@@ -37,17 +37,27 @@
     </div>
     <hr>
     {% if user.is_authenticated %}
-    <p>Добавить комментарий</p>
+        {% if not user.check_block %}
+        <p>Добавить комментарий</p>
 
-    <div class="col-5">
+        <div class="col-5">
 
-        <form action="" id="add_form" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-        </form>
+            <form action="" id="add_form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </form>
             <input form="add_form" type="submit" value="Добавить"/>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <p>Вы не можете оставлять комментарии так как заблокированы до {{ user.is_block }}</p>
+        </div>
+        {% endif %}
+
     {% else %}
-        <p>Чтобы добавить комментарий, зарегистрируйтесь.</p>
+    <div class="col-5">
+        <p>Чтобы добавить комментарий <a href="{% url 'auth:login' %}">войдите</a>
+            или <a href="{% url 'auth:register' %}">зарегистрируйтесь.</a></p>
     </div>
     {% endif %}
     <br>

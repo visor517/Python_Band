@@ -34,4 +34,5 @@ urlpatterns = [
     path('moder/article/<uuid:pk>/', adminapp.ApproveArticle.as_view(), name='approve_article'),
     path('moder/news/<int:pk>/', adminapp.ApproveNews.as_view(), name='approve_news'),
     path('moder/notify/delete/<int:pk>/', adminapp.NotifyDeleteView.as_view(), name='notify_delete'),
+    path('moder/block/<int:pk>', adminapp.UserBlock.as_view(), name='user_block'),
 ]

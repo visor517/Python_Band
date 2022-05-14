@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
@@ -27,6 +27,7 @@ class HabrUser(AbstractUser):
     activation_key_expires = models.DateTimeField(
         default=(now() + timedelta(hours=48)))
     role = models.CharField(verbose_name='роль', max_length=1, choices=ROLE_CHOICES, default=USER)
+    is_block = models.DateTimeField(verbose_name='дата конца блокировки', default=now)
 
     def is_activation_key_expired(self):
         if now() < self.activation_key_expires:
@@ -40,6 +41,15 @@ class HabrUser(AbstractUser):
         """ Переопределение метода delete"""
         self.is_active = False if self.is_active else True
         self.save()
+
+    def user_block(self):
+        """ Изменение даты конца блокировки """
+        self.is_block = now() + timedelta(days=14) if self.is_block <= now() else now()
+        self.save()
+
+    def check_block(self):
+        """ Проверяется заблокирован ли пользователь или нет"""
+        return True if self.is_block >= now() else False
 
 
 class HabrProfile(models.Model):
