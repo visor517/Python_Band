@@ -35,10 +35,14 @@
 
                 {% if request.user == object %}
                 <div class="row">
-                    <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                       href="{% url 'auth:edit' user.pk %}">редактировать профиль</a>
-                    <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                       href="{% url 'auth:change_pass' %}">сменить пароль</a>
+                    <div class="col-sm-12">
+                        <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
+                            href="{% url 'auth:edit' user.pk %}">редактировать профиль</a>
+                    </div>
+                    <div class="col-sm-12">
+                        <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
+                           href="{% url 'auth:change_pass' %}">сменить пароль</a>
+                    </div>
                 </div>
                 {% endif %}
                 {% if request.user.is_authenticated %}
