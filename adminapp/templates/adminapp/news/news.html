@@ -38,8 +38,8 @@
                 <div class="w-100 d-none d-md-block"></div>
                 <div class="col-sm-3">
                     <span>
-                        автор: <a href="{% url '_admin:user_update' news.author.pk %}" target="_blank"
-                            style="color: dodgerblue" class="">{{ news.author }}</a>
+                        автор: <a href="{% url 'auth:profile' news.author.pk %}" target="_blank">
+                        {{ news.author }}</a>
                     </span>
                 </div>
                 <div class="col-sm-3"><span>статус: {{ news.get_status_display }}</span></div>

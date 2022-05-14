@@ -34,10 +34,13 @@
 
             <div class="col-sm-10 row">
                 <div class="col-sm-1">{{ forloop.counter }}</div>
-                <div class="col-sm-2"><span>{{ comment.comment_author }}</span></div>
-                <div class="col-sm-9"><span> {{ comment.comment_article }}</span></div>
+                <div class="col-sm-2"><a href="{% url 'auth:profile' comment.comment_author.pk %}">
+                    {{ comment.comment_author }}</a></div>
+                <div class="col-sm-9"><a href="{% url 'article:detail' comment.comment_article.pk %}">
+                    {{ comment.comment_article }}</a></div>
                 <div class="w-100 d-none d-md-block"></div>
-                <div class="col-sm-12 overflow-auto" style="max-height: 100px"><span>Текст: {{ comment.comment_text }}</span></div>
+                <div class="col-sm-12 overflow-hidden" style="min-height: 60px">
+                    <span>Текст: {{ comment.comment_text }}</span></div>
             </div>
 
             <div class="col-sm-2 row-cols-2">
