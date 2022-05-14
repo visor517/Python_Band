@@ -1,28 +1,20 @@
-from typing import Dict, Any
-
 from django.core.mail import send_mail
 from django.conf import settings
-from django.shortcuts import render, HttpResponseRedirect
-# from django.conf.urls import url
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib import auth
 from django.urls import reverse
-# from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.views.generic import TemplateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.utils.timezone import now
 
-from adminapp.views import UserUpdateView
 from articleapp.models import Article
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm, PasswordChangeForm
-
-
 from authapp.models import HabrUser
-
-from django.utils.timezone import now
+from ratingapp.models import AuthorRating
 
 
 class SendVerifyMail:
@@ -132,6 +124,7 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
 
 class UserDetailView(DetailView):
+    """ Страница профиля """
     model = HabrUser
     template_name = 'authapp/user_detail.html'
     context_object_name = 'object'
@@ -143,10 +136,13 @@ class UserDetailView(DetailView):
         context['articles_draft'] = articles.filter(status='DF')
         context['articles_moder'] = articles.filter(status='PB', approve=False)
         context['articles_public'] = articles.filter(status='PB', approve=True)
+        rating = get_object_or_404(AuthorRating, author=self.object)
+        context['rating'] = rating.value()
         return context
 
 
 class UserChangePassword(LoginRequiredMixin, PasswordChangeView):
+    """ Сменя пароля """
     template_name = 'authapp/change_pass.html'
     form_class = PasswordChangeForm
 
