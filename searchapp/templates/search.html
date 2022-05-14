@@ -24,18 +24,24 @@
         {% if searched %}
 
             <h2>Вы искали: "{{ searched }}"</h2>
-            <p>Результат вашего запроса : {{ results|length }} шт.</p><br/>
+            <p>
+                Результат вашего запроса :
+                Статей - {{ results|length }} шт.
+                Комментариев - {{ results_2|length }} шт.
+                Авторов - {{ results_3|length }} шт.
+            </p>
 
+            <div class="row justify-content-md-center">
+                <a class="col col-lg-2" href="#">Статьи</a>
+                <a class="col col-lg-2" href="#">Комментарии</a>
+                <a class="col col-lg-2" href="#">Авторы</a>
+            </div>
+
+            <br>
             <div class="s_art">
-                {% for result in results %}
-
-<!--                        {% include "includes/inc_search.html" %}-->
-                    <p>"{{ searched }}" находится в этой статье:
-                    <a href="{% url 'article:detail' result.pk %}">
-                        {{ result }}
-                    </a></p>
-
-                {% endfor %}
+                {% include "includes/inc_search_article.html" %}
+                {% include "includes/inc_search_comment.html" %}
+                {% include "includes/inc_search_author.html" %}
             </div>
 
         {% else %}

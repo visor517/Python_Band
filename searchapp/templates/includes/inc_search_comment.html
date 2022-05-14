@@ -1,0 +1,8 @@
+{% for result in results_2 %}
+
+    <p>"{{ searched }}" находится в этом комментарии:
+        <a href="{% url 'article:detail' result.comment_article.pk %}">
+        {{ result }}
+    </a></p>
+
+{% endfor %}

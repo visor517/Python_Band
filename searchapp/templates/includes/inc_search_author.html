@@ -1,0 +1,8 @@
+{% for result in results_3 %}
+
+    <p>"{{ searched }}" находится в этом профиле:
+        <a href="{% url 'auth:profile' result.pk %}">
+        {{ result }}
+    </a></p>
+
+{% endfor %}

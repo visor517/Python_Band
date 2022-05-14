@@ -1,9 +1,8 @@
-<center>
+{% for result in results %}
 
     <p>"{{ searched }}" находится в этой статье:
-    <a href="{% url 'article:detail' result.pk %}">
+        <a href="{% url 'article:detail' result.pk %}">
         {{ result }}
     </a></p>
 
-</center>
-
+{% endfor %}
