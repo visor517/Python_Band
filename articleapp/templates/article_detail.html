@@ -47,7 +47,6 @@
             </div>
             {% endif %}
             <br>
-
             <div class="d-flex row div_like" style="margin-top: 10px; margin-bottom: 10px;">
                 {% if not request.user.check_block and  request.user.is_authenticated%}
                 <div class="col-sm-12">
@@ -64,15 +63,12 @@
                 <br>
                 <div class="col-sm-12">
                     <div class="fa fa-thumbs-up like-count{{article.pk}}" style="font-size: 21px; margin-top: 5px;">
-                        {{ article.total_likes }}
+                         {{ article.liked.all.count }}
                     </div>
                 </div>
-
             </div>
-
             <hr>
             {% include "include_comments.html" %}
-          
         </div>
     </div>
 </section>

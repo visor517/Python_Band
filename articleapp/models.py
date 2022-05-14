@@ -6,24 +6,10 @@ from ckeditor.fields import RichTextField
 from commentapp.middleware import get_current_user
 
 
-class IpModel(models.Model):
-    """
-    класс - Ip
-    """
-    ip = models.CharField(max_length=100)
-
-    def __str__(self):
-        """
-        :return:
-        """
-        return self.ip
-
-
 class FilterArticle(models.Manager):
     """
     класс - Фильтр статей
     """
-
     def get_queryset(self):
         """
         :return:
@@ -93,9 +79,10 @@ class Article(models.Model):
     image = models.ImageField(upload_to='article_photos/', blank=True,
                               null=True, verbose_name='Изображение')
     status = models.CharField(choices=STATUSES, max_length=128, default='DF')
-    liked = models.ManyToManyField(IpModel, blank=True, related_name='likes')
+    liked = models.ManyToManyField(HabrUser, blank=True, related_name='likes')
     approve = models.BooleanField('Модерация', default=False)
-    publication_date = models.DateTimeField(verbose_name='Дата публикации', blank=True, null=True)
+    publication_date = models.DateTimeField(verbose_name='Дата публикации',
+                                            blank=True, null=True)
     # objects = FilterArticle()
 
     def __str__(self):
@@ -126,10 +113,37 @@ class Article(models.Model):
         """
         self.status = 'DT' if self.status != 'DT' else 'DF'
         self.approve = False
-        self.save()      
 
-    def total_likes(self):
+        self.save()
+
+    @property
+    def num_likes(self):
         """
         :return:
         """
-        return self.liked.count()
+        return self.liked.all().count()
+
+
+class Like(models.Model):
+
+    LIKE = 'Like'
+    DISLIKE = 'Like'
+
+    LIKE_CHOICES = (
+        (LIKE, 'Like'),
+        (DISLIKE, 'Dislike')
+    )
+
+    """
+    класс - Лайки
+    """
+    user = models.ForeignKey(HabrUser, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES, default=LIKE,
+                             max_length=8)
+
+    def __str__(self):
+        """
+        :return:
+        """
+        return str(self.article)
