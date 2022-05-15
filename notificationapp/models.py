@@ -10,6 +10,8 @@ from commentapp.models import Comments
 
 
 class NotifyUser(models.Model):
+    """ Модель уведомления пользователя """
+
     class Meta:
         ordering = ('-created',)
         verbose_name = 'уведомление пользователя'
@@ -38,8 +40,16 @@ class NotifyUser(models.Model):
     created = models.DateTimeField('Дата создания', auto_now_add=now)
     is_read = models.BooleanField('Статус прочтения', default=False)
 
+    def delete(self, using=None, keep_parents=False):
+        """ Переопределение удаления комментария """
+
+        self.is_read = True
+        self.save()
+
     @receiver(post_save, sender=Comments)
     def add_comment_notify(sender, instance, created, **kwargs):
+        """ Создание уведомления при новом комментарии статьи """
+
         if created:
             notify = NotifyUser()
             notify.user_to = HabrUser.objects.get(pk=instance.comment_article.author.pk)
@@ -50,6 +60,8 @@ class NotifyUser(models.Model):
 
     @receiver(post_save, sender=Article)
     def approve_article_notify(sender,  instance, **kwargs):
+        """ Создание уведомления при положительной модерации статьи """
+
         if kwargs['update_fields']:
             notify = NotifyUser()
             notify.user_to = HabrUser.objects.get(pk=instance.author.pk)
@@ -58,13 +70,15 @@ class NotifyUser(models.Model):
             notify.save()
 
     @receiver(post_save, sender=HabrUser)
-    def block_user_notify(sender, instance, created, **kwargs):
+    def block_user_notify(sender, instance, **kwargs):
+        """ Создание уведомления при блокировке/разблокировке пользователя """
+
         today = now()
         block = instance.is_block
         check_date = timedelta(seconds=1)
         timedelta_date = block - today
 
-        if kwargs['update_fields']:
+        if kwargs['update_fields'] == {'is_block'}:
             notify = NotifyUser()
             notify.user_to = HabrUser.objects.get(pk=instance.pk)
             if timedelta_date > check_date:
@@ -75,6 +89,8 @@ class NotifyUser(models.Model):
 
     @receiver(m2m_changed, sender=Article.liked.through)
     def add_like_notify(sender, instance, **kwargs):
+        """ Создание уведомления при новом лайке/ удалении лайка  """
+
         notify = NotifyUser()
         from_user, *_ = kwargs['pk_set']
 

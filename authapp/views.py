@@ -14,7 +14,7 @@ from django.utils.timezone import now
 from articleapp.models import Article
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm, PasswordChangeForm
 from authapp.models import HabrUser
-from notifyapp.models import NotifyUser
+from notificationapp.models import NotifyUser
 from ratingapp.models import AuthorRating
 
 

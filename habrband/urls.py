@@ -15,9 +15,9 @@ urlpatterns = [
     path('', include('articleapp.urls', namespace='article')),
     path('', include('social_django.urls', namespace='social')),
     path('', include('searchapp.urls', namespace='search')),
+    path('notification/', include('notificationapp.urls', namespace='notify')),
 ]
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
