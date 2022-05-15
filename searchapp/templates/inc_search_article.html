@@ -1,6 +1,6 @@
 {% for result in results %}
 
-    <p>"{{ searched }}" находится в этой статье:
+    <p>Статья, в которой есть "{{ searched }}" находится по этой ссылке:
         <a href="{% url 'article:detail' result.pk %}">
         {{ result }}
     </a></p>

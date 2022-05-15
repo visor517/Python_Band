@@ -15,12 +15,18 @@ def search(request):
         searched = request.POST['searched']
         results = Article.objects.filter(
             Q(content__contains=searched) | Q(title__contains=searched) |
-            Q(author__username__contains=searched))
+            Q(author__username__contains=searched) |
+            Q(author__first_name__contains=searched) |
+            Q(author__last_name__contains=searched))
         results_2 = Comments.objects.filter(
             Q(comment_author__username__contains=searched) |
+            Q(comment_author__first_name__contains=searched) |
+            Q(comment_author__last_name__contains=searched) |
             Q(comment_text__contains=searched))
         results_3 = HabrUser.objects.filter(
-            Q(username__contains=searched))
+            Q(username__contains=searched) |
+            Q(first_name__contains=searched) |
+            Q(last_name__contains=searched))
         return render(request, 'search.html',
                       {'searched': searched,
                        'results': results,
