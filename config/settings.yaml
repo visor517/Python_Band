@@ -18,6 +18,7 @@ INSTALLED_APPS:
   - news
   - searchapp
   - ratingapp
+  - notifyapp
 
 TEMPLATES:
   -

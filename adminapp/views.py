@@ -207,7 +207,8 @@ class ApproveArticle(UserIsPersonalMixin, UpdateView):
         self.object = self.get_object()
         self.object.approve = True
         self.object.publication_date = timezone.now()
-        self.object.save()
+        self.object.save(update_fields=['approve', 'publication_date'])
+        # self.object.save()
         return super().post(request, *args, **kwargs)
 
 

@@ -45,7 +45,7 @@ class HabrUser(AbstractUser):
     def user_block(self):
         """ Изменение даты конца блокировки """
         self.is_block = now() + timedelta(days=14) if self.is_block <= now() else now()
-        self.save()
+        self.save(update_fields=['is_block'])
 
     def check_block(self):
         """ Проверяется заблокирован ли пользователь или нет"""
