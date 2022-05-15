@@ -20,8 +20,10 @@
                     <div class="row">
                         <div class="col-sm-5 mar-b-5">Статус</div>
                         <div class="col-sm-7 mar-b-5">{{ object.get_role_display }}</div>
+                        {% if rating %}
                         <div class="col-sm-5 mar-b-5">Рейтинг</div>
                         <div class="col-sm-7 mar-b-5">{{ rating }} HABR-point</div>
+                        {% endif %}
                         <div class="col-sm-5 mar-b-5">Зарегистрирован</div>
                         <div class="col-sm-7 mar-b-5">{{ object.date_joined|date:"d-M-Y" }}</div>
                         <div class="col-sm-12 overflow-hidden mar-b-5"><p>{{object.habrprofile.tagline}}</p></div>

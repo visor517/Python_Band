@@ -136,8 +136,11 @@ class UserDetailView(DetailView):
         context['articles_draft'] = articles.filter(status='DF')
         context['articles_moder'] = articles.filter(status='PB', approve=False)
         context['articles_public'] = articles.filter(status='PB', approve=True)
-        rating = get_object_or_404(AuthorRating, author=self.object)
-        context['rating'] = rating.value()
+        try:
+            rating = get_object_or_404(AuthorRating, author=self.object)
+            context['rating'] = rating.value()
+        except:
+            pass
         return context
 
 
