@@ -39,11 +39,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                            href="{% url 'auth:edit' user.pk %}">редактировать профиль</a>
+                            href="{% url 'auth:edit' user.pk %}">Редактировать профиль</a>
                     </div>
                     <div class="col-sm-12">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url 'auth:change_pass' %}">сменить пароль</a>
+                           href="{% url 'auth:change_pass' %}">Сменить пароль</a>
                     </div>
                 </div>
                 {% endif %}
@@ -54,7 +54,7 @@
                     {% if request.user.role == 'A'%}
                     <div class="col-sm-12  d-flex justify-content-center">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url '_admin:user_update' user.pk %}">редактировать</a>
+                           href="{% url '_admin:user_update' user.pk %}">Редактировать</a>
                     </div>
                     {% endif %}
                     <div class="col-sm-12 d-flex justify-align-center">
@@ -62,12 +62,12 @@
                             {% csrf_token %}
                             <input class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
                                    type="submit"
-                                   value="{% if not object.check_block %}блокировать{% else %}снять блокировку{% endif %}">
+                                   value="{% if not object.check_block %}Блокировать{% else %}Снять блокировку{% endif %}">
                         </form>
                     </div>
                     <div class="col-sm-12  d-flex justify-content-center">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url '_admin:user_delete' user.pk %}">удалить</a>
+                           href="{% url '_admin:user_delete' user.pk %}">Удалить</a>
                     </div>
                 </div>
                 {% endif %}
@@ -115,21 +115,21 @@
                                             {{ item.publication_date }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center"><i class="bi bi-chat-dots"></i>
-                                            {{ item.comments_articles.all.count }}</a>
+                                            {{ item.comments_articles.all.count }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center"><i
                                                 class="bi bi-hand-thumbs-up"></i>
-                                            {{ item.liked.all.count }}</a>
+                                            {{ item.liked.all.count }}
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
+                                               href="{% url 'article:edit' item.pk %}">Редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -138,7 +138,7 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">опубликованных статей нет</h5>
+                                <h5 style="margin:20px auto">Опубликованных статей нет</h5>
                             </div>
                             {% endif %}
                         </div>
@@ -163,12 +163,12 @@
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
+                                               href="{% url 'article:edit' item.pk %}">Редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -177,7 +177,7 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">статей проходящих модерацию нет</h5>
+                                <h5 style="margin:20px auto">Статей проходящих модерацию нет</h5>
                             </div>
                             {% endif %}
                         </div>
@@ -201,7 +201,7 @@
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <form method="POST" class="w-100 mar-b-5"
@@ -210,7 +210,7 @@
                                                 <input class="btn btn-secondary btn-block w-100 d-flex
                                                     justify-content-center" type="submit"
                                                        style="background-color: #e96b56; border-color: #e96b56;"
-                                                      value="опубликовать">
+                                                      value="Опубликовать">
                                             </form>
                                         </div>
                                     </div>
@@ -220,7 +220,7 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">в черновиках пусто</h5>
+                                <h5 style="margin:20px auto">В черновиках пусто</h5>
                             </div>
                             {% endif %}
                         </div>
