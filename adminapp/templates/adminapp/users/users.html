@@ -36,13 +36,33 @@
                      alt="avatar" class="rounded-circle" width="50">
                 </div>
             </div>
-            <div class="col-sm-9 row">
-                <div class="col-sm-4"><span>username: {{ user.username }}</span></div>
-                <div class="col-sm-6"><span>name: {{ user }}</span></div>
+            <div class="col-sm-5 row">
+                <div class="col-sm-4">
+                    <a href="{% url 'auth:profile' user.pk %}" target="_blank" title="к профилю">{{ user.username }}</a>
+                </div>
+                <div class="col-sm-8"><span>имя: {{ user }}</span></div>
+
                 <div class="w-100 d-none d-md-block"></div>
-                <div class="col-sm-4"><span>e-mail: {{ user.email }}</span></div>
-                <div class="col-sm-6"><span>role: {{user.get_role_display}}</span></div>
-                <div class="col-sm-2"></div>
+                <div class="col-sm-12"><span>{{ user.email }}</span></div>
+                <div class="w-100 d-none d-md-block"></div>
+                <div class="col-sm-12"><span>{{user.get_role_display}}</span></div>
+            </div>
+            <div class="col-sm-4 row">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                     <form method="POST" class="w-100 mar-b-5" action="{% url '_admin:user_block' user.pk %}">
+                            {% csrf_token %}
+                            <input class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
+                                   type="submit"
+                                   value="{% if not user.check_block %}блокировать{% else %}снять блокировку{% endif %}">
+                        </form>
+                </div>
+
+                <div class="col-sm-12">
+                    {% if user.check_block %}
+                    Заблокирован до: {{user.is_block}}
+                   {% endif %}
+                </div>
             </div>
             <div class="col-sm-2 row-cols-2">
                 {% if request.user.role == 'A' or request.user.is_superuser %}
