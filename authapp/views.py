@@ -14,6 +14,7 @@ from django.utils.timezone import now
 from articleapp.models import Article
 from authapp.forms import UserLoginForm, UserRegisterForm, UserEditForm, ProfileEditForm, PasswordChangeForm
 from authapp.models import HabrUser
+from notificationapp.models import NotifyUser
 from ratingapp.models import AuthorRating
 
 
@@ -136,11 +137,14 @@ class UserDetailView(DetailView):
         context['articles_draft'] = articles.filter(status='DF')
         context['articles_moder'] = articles.filter(status='PB', approve=False)
         context['articles_public'] = articles.filter(status='PB', approve=True)
+
         try:
             rating = get_object_or_404(AuthorRating, author=self.object)
             context['rating'] = rating.value()
         except:
             pass
+
+        context['notify'] = NotifyUser.objects.all().filter(user_to=self.object)
         return context
 
 

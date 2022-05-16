@@ -4,6 +4,7 @@
 {% block css %}
 <link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
 <link href="{% static 'authapp/css/profile_style.css' %}" rel="stylesheet">
+<link href="{% static 'notificationapp/css/notify_style.css' %}" rel="stylesheet">
 {% endblock css %}
 
 {% block content %}
@@ -79,7 +80,8 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" style="color: #e96b56" id="public-tab" data-bs-toggle="tab"
+                            <button class="nav-link {% if request.user != object %}active{% endif %}e"
+                                    style="color: #e96b56" id="public-tab" data-bs-toggle="tab"
                                     data-bs-target="#public" type="button" role="tab" aria-controls="home"
                                     aria-selected="true">Публикации</button>
                         </li>
@@ -95,7 +97,8 @@
                                     aria-selected="false">Черновики</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="color: #e96b56" id="notify-tab" data-bs-toggle="tab"
+                            <button class="nav-link {% if request.user == object %}active{% endif %}"
+                                    style="color: #e96b56; position: relative;" id="notify-tab" data-bs-toggle="tab"
                                     data-bs-target="#notify" type="button" role="tab" aria-controls="notify"
                                     aria-selected="false">Уведомления</button>
                         </li>
@@ -104,7 +107,8 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content shadow" style="min-height:500px">
-                        <div class="tab-pane active" id="public" role="tabpanel" aria-labelledby="public-tab">
+                        <div class="tab-pane {% if request.user != object %}active{% endif %}"
+                             id="public" role="tabpanel" aria-labelledby="public-tab">
                             {% if articles_public %}
                             <div class="row" style="margin: 10px">
                                 {% for item in articles_public %}
@@ -224,7 +228,17 @@
                             </div>
                             {% endif %}
                         </div>
-                        <div class="tab-pane" id="notify" role="tabpanel" aria-labelledby="notify-tab">3</div>
+                        <div class="tab-pane {% if request.user == object %}active{% endif %}"
+                             id="notify" role="tabpanel" aria-labelledby="notify-tab">
+                            <a class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
+                               style="margin:10px 0 20px 0"
+                               href="{% url 'notify:notify_all' object.pk %}">все уведомления</a>
+                            {% for item in notify  %}
+                            {% if not item.is_read %}
+                                {% include 'notificationapp/includes/notify_list.html' %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
                 </div>
