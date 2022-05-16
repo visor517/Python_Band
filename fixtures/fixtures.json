@@ -11,8 +11,8 @@
         "updated": "2022-04-24T22:28:36.493Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:04:53.890Z",
         "liked": []
     }
 },
@@ -28,8 +28,8 @@
         "updated": "2022-04-24T22:36:49.739Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:04:08.820Z",
         "liked": []
     }
 },
@@ -45,8 +45,8 @@
         "updated": "2022-04-24T22:46:43.249Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T19:56:59.321Z",
         "liked": []
     }
 },
@@ -62,8 +62,8 @@
         "updated": "2022-04-24T22:44:09.410Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:00:02.605Z",
         "liked": []
     }
 },
@@ -79,8 +79,8 @@
         "updated": "2022-04-24T22:25:44.251Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:06:28.783Z",
         "liked": []
     }
 },
@@ -96,8 +96,8 @@
         "updated": "2022-04-24T22:22:41.916Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:08:00.106Z",
         "liked": []
     }
 },
@@ -113,8 +113,8 @@
         "updated": "2022-04-24T22:17:30.171Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:10:41.322Z",
         "liked": []
     }
 },
@@ -130,8 +130,8 @@
         "updated": "2022-04-24T22:09:02.601Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:12:53.351Z",
         "liked": []
     }
 },
@@ -147,8 +147,8 @@
         "updated": "2022-04-24T22:03:26.724Z",
         "image": "",
         "status": "PB",
-        "approve": false,
-        "publication_date": null,
+        "approve": true,
+        "publication_date": "2022-04-19T20:13:38.655Z",
         "liked": []
     }
 },

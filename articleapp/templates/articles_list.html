@@ -10,10 +10,8 @@
     <section id="blog" class="blog">
         <div class="container">
 
-
             {% for article in object_list %}
                 <article class="entry">
-
                     <h2 class="entry-title">
                         <a href="{% url 'article:detail' article.pk %}">{{ article.title }}</a>
                     </h2>
