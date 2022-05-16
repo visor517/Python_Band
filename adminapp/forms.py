@@ -83,7 +83,7 @@ class ArticleUpdateForm(forms.ModelForm):
     class Meta:
         model = Article
         # fields = ('title', 'category', 'content', 'author', 'image', 'status')
-        exclude = ['uid', 'likes']
+        exclude = ['uid', 'liked', 'publication_date', 'approve']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -113,7 +113,7 @@ class CommentUpdateForm(forms.ModelForm):
 class NewsCreateForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ('title', 'anons', 'full_text', 'author', 'image')
+        fields = ('title', 'anons', 'full_text', 'image')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -123,7 +123,7 @@ class NewsCreateForm(forms.ModelForm):
 class NewsUpdateForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ('title', 'anons', 'full_text', 'status', 'author', 'image')
+        fields = ('title', 'anons', 'full_text', 'author','image')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

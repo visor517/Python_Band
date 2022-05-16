@@ -31,12 +31,12 @@
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="submit" class="btn btn-outline-secondary"
-                       value="{% if comment_to_delete.is_active %} удалить {% else %} восстановить {% endif %}">
+                       value="{% if comment_to_delete.is_active %} Удалить {% else %} Восстановить {% endif %}">
             </form>
         </div>
         <div class="col-sm-3 align-self-center">
             <a href="{% url '_admin:comments' %}" class="btn btn-outline-secondary">
-                к списку комментариев
+                К списку комментариев
             </a>
         </div>
     </div>

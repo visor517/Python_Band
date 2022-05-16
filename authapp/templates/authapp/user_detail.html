@@ -232,7 +232,7 @@
                              id="notify" role="tabpanel" aria-labelledby="notify-tab">
                             <a class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
                                style="margin:10px 0 20px 0"
-                               href="{% url 'notify:notify_all' object.pk %}">все уведомления</a>
+                               href="{% url 'notify:notify_all' object.pk %}">Все уведомления</a>
                             {% for item in notify  %}
                             {% if not item.is_read %}
                                 {% include 'notificationapp/includes/notify_list.html' %}

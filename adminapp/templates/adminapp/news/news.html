@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-end ">
             <a href="{% url '_admin:news_create' %}" class="btn btn-outline-secondary m-b20-r10">
-                создать новость
+                Создать новость
             </a>
         </div>
     </div>
@@ -33,16 +33,16 @@
                 <div class="col-sm-9"><span>{{ news.title }}</span></div>
                 <div class="col-sm-2">
                     <a href="{% url 'news:news_detail' news.pk %}" target="_blank"
-                       class="btn btn-outline-secondary">к новости</a>
+                       class="btn btn-outline-secondary">К новости</a>
                 </div>
                 <div class="w-100 d-none d-md-block"></div>
                 <div class="col-sm-3">
                     <span>
-                        автор: <a href="{% url 'auth:profile' news.author.pk %}" target="_blank">
+                        Автор: <a href="{% url 'auth:profile' news.author.pk %}" target="_blank">
                         {{ news.author }}</a>
                     </span>
                 </div>
-                <div class="col-sm-3"><span>статус: {{ news.get_status_display }}</span></div>
+                <div class="col-sm-3"><span>Статус: {{ news.get_status_display }}</span></div>
             </div>
             <div class="col-sm-2 row-cols-2">
 

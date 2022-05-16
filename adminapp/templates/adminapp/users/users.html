@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-end ">
             <a href="{% url '_admin:user_create' %}" class="btn btn-outline-secondary m-b20-r10">
-                создать пользователя
+                Cоздать пользователя
             </a>
         </div>
     </div>
@@ -38,9 +38,9 @@
             </div>
             <div class="col-sm-5 row">
                 <div class="col-sm-4">
-                    <a href="{% url 'auth:profile' user.pk %}" target="_blank" title="к профилю">{{ user.username }}</a>
+                    <a href="{% url 'auth:profile' user.pk %}" target="_blank" title="К профилю">{{ user.username }}</a>
                 </div>
-                <div class="col-sm-8"><span>имя: {{ user }}</span></div>
+                <div class="col-sm-8"><span>Имя: {{ user }}</span></div>
 
                 <div class="w-100 d-none d-md-block"></div>
                 <div class="col-sm-12"><span>{{ user.email }}</span></div>
@@ -54,7 +54,7 @@
                             {% csrf_token %}
                             <input class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
                                    type="submit"
-                                   value="{% if not user.check_block %}блокировать{% else %}снять блокировку{% endif %}">
+                                   value="{% if not user.check_block %}Блокировать{% else %}Снять блокировку{% endif %}">
                         </form>
                 </div>
 

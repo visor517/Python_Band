@@ -170,6 +170,14 @@ class NewsCreateView(UserIsPersonalMixin, CreateView):
     template_name = 'adminapp/news/news_create.html'
     success_url = reverse_lazy('_admin:news')
 
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            news = form.save(commit=False)
+            news.author = request.user
+            self.object = form.save()
+            return super().form_valid(form)
+
 
 class NewsUpdateView(UserIsPersonalMixin, UpdateView):
     model = News

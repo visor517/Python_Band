@@ -24,7 +24,7 @@
         {% if request.user.role == 'A' or request.user.is_superuser %}
         <div class="col-sm-12 d-flex justify-content-end ">
             <a href="{% url '_admin:comment_create' %}" class="btn btn-outline-secondary m-b20-r10">
-                создать комментарий
+                Создать комментарий
             </a>
         </div>
         {% endif %}
@@ -47,7 +47,7 @@
                 {% if request.user.role == 'A' or request.user.is_superuser %}
                     <div class="col-sm-12 mar-b-5">
                         <a href="{% url '_admin:comment_update' comment.pk %}"
-                            class="btn btn-outline-secondary btn-block align-items-start d-b">edit</a>
+                            class="btn btn-outline-secondary btn-block align-items-start d-b">Редактировать</a>
                     </div>
                 {% endif %}
                 <div class="col-sm-12">
