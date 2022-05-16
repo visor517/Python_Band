@@ -39,7 +39,7 @@
                 <div class="entry-meta">
                     <ul>
                         <li class="d-flex align-items-center"><i class="bi bi-person"></i>
-                            <span>автор:
+                            <span>Автор:
 
                                 <a href="{% url 'auth:profile' article.author.pk %}"
 				                           target="_blank"
@@ -54,7 +54,7 @@
                         <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
                             <a>{{ article.publication_date }}</a></li>
                         <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>
-                            <a>комментариев: {{article.comments_articles.all.count }}</a>
+                            <a>Комментариев: {{article.comments_articles.all.count }}</a>
                         </li>
                     </ul>
                 </div>

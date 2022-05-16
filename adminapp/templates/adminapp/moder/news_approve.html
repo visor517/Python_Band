@@ -46,7 +46,7 @@
                                 {% csrf_token %}
                                 <div class="row">
                                     {{ form.as_p }}
-                                    <input class="btn btn-outline-secondary" type="submit" value="опубликовать">
+                                    <input class="btn btn-outline-secondary" type="submit" value="Опубликовать">
                                 </div>
                             </form>
                         </div>
@@ -55,7 +55,7 @@
                             <form method="get" action="{% url '_admin:news_update' news.pk %}">
                                 {% csrf_token %}
                                 <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
-                                       type="submit" value="редактировать">
+                                       type="submit" value="Редактировать">
                             </form>
                         </div>
 
@@ -64,7 +64,7 @@
                                 {% csrf_token %}
                                 <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
                                        type="submit"
-                                       value="{% if article.status != 'DT' %} удалить {% else %} restore {% endif %}">
+                                       value="{% if article.status != 'DT' %} Удалить {% else %} restore {% endif %}">
                             </form>
                         </div>
                     </div>

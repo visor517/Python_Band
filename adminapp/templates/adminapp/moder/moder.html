@@ -45,12 +45,12 @@
                                 <div class="col-sm-12">
                                     <a class="btn btn-outline-secondary btn-block align-items-start d-b"
                                        href="{% url 'article:detail' object.article_id %}" target="_blank">
-                                        к статье</a></div>
+                                        К статье</a></div>
                                 <div class="col-sm-12">
                                     <form method="POST" action="{% url '_admin:notify_delete' object.pk %}">
                                         {% csrf_token %}
                                         <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
-                                            type="submit" value="прочитано">
+                                            type="submit" value="Прочитано">
                                     </form>
                                 </div>
                             </div>
@@ -131,7 +131,3 @@
     </div>
 </div>
 {% endblock content %}
-<!--<script>-->
-<!--  $('.collapse').collapse()-->
-<!---->
-<!--</script>-->

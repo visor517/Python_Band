@@ -18,24 +18,16 @@
                             {% csrf_token %}
                             {{ form.as_p }}
                             <br>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="зарегистрироваться">
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Зарегистрироваться">
                         </fieldset>
                     </form>
                     <hr/>
-{#                    <center><h4>или</h4></center>#}
-{#                    <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/" class="">##}
+
                 </div>
             </div>
         </div>
     </div>
 </div>
     <br><br><br>
-
-{#    <form class="form-horizontal" action="{% url 'auth:register' %}" method="post" enctype="multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        {{ register_form.as_p }}#}
-{#        <br>#}
-{#        <input class="form-control" type="submit" value="зарегистрироваться">#}
-{#    </form>#}
 
 {% endblock %}

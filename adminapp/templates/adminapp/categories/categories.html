@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-sm-12 d-flex justify-content-end ">
             <a href="{% url '_admin:category_create' %}" class="btn btn-outline-secondary m-b20-r10">
-                создать категорию
+                Создать категорию
             </a>
         </div>
     </div>
@@ -43,7 +43,7 @@
                 {% if request.user.role == 'A' or request.user.is_superuser %}
                     <div class="col-sm-12 mar-b-5">
                         <a href="{% url '_admin:category_update' category.pk %}"
-                            class="btn btn-outline-secondary btn-block align-items-start d-b">edit</a>
+                            class="btn btn-outline-secondary btn-block align-items-start d-b">Редактировать</a>
                     </div>
 
                 <div class="col-sm-12">
