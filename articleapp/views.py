@@ -19,7 +19,7 @@ class IndexView(ListView):
     класс - Index
     """
     queryset = Article.objects.filter(approve=True)
-    paginate_by = 3
+    paginate_by = 4
     template_name = 'mainapp/index.html'
     ordering = ('-publication_date', '-created')
 
