@@ -8,3 +8,18 @@ def main(request):
 
     return render(request, "mainapp/index.html", content)
 
+
+def about(request):
+    title = "About"
+
+    content = {"title": title}
+
+    return render(request, "mainapp/about.html", content)
+
+
+def help(request):
+    title = "help"
+
+    content = {"title": title}
+
+    return render(request, "mainapp/help.html", content)
