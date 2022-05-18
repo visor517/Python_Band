@@ -10,8 +10,8 @@ from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
+from ratingapp.queryset import add_rating
 from .mixins import UserIsNoBlockMixin
-
 
 # Отображение содержимого из модели Article
 class IndexView(ListView):
@@ -39,6 +39,13 @@ class ArticleListView(ListView):
         """
         return Article.objects.filter(author=self.request.user)
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['object_list'] = add_rating(context['object_list'])
+
+        return context
+
 
 # Отображение содержимого
 class ArticleDetailView(CommentView, FormMixin, DetailView):
@@ -60,6 +67,15 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
             context['form'] = self.form_class(instance=self.object.comments)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(instance=self.object)
+
+        try:
+            rating = get_object_or_404(ArticleRating, article=self.object)
+            context['rating'] = rating.value()
+        except Exception:
+            # TODO обработать конкретное исключение
+            context['rating'] = 0
+
+
         return context
 
     # Убрал форму апрува статьи, так как при создании нового коммента статья отправляется на модерацию
@@ -192,8 +208,11 @@ class CategoryArticleView(ListView):
         :return:
         """
         self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
-        return Article.objects.filter(category=self.category) \
+
+        queryset = Article.objects.filter(category=self.category)\
             .filter(status='PB', approve=True)
+        queryset = add_rating(queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         """

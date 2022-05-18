@@ -141,10 +141,11 @@ class UserDetailView(DetailView):
         try:
             rating = get_object_or_404(AuthorRating, author=self.object)
             context['rating'] = rating.value()
-        except:
+        except Exception:
+            #TODO обработать конкретное исключение
             pass
-
         context['notify'] = NotifyUser.objects.all().filter(user_to=self.object)
+
         return context
 
 
