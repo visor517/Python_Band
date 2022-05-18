@@ -10,15 +10,16 @@ from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
+from ratingapp.models import ArticleRating
+from ratingapp.queryset import add_rating
 from .mixins import UserIsNoBlockMixin
-
 
 # Отображение содержимого из модели Article
 class IndexView(ListView):
     """
     класс - Index
     """
-    queryset = Article.objects.filter(approve=True)
+    queryset = add_rating(Article.objects.filter(approve=True))
     paginate_by = 4
     template_name = 'mainapp/index.html'
     ordering = ('-publication_date', '-created')
@@ -38,6 +39,13 @@ class ArticleListView(ListView):
         :return:
         """
         return Article.objects.filter(author=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['object_list'] = add_rating(context['object_list'])
+
+        return context
 
 
 # Отображение содержимого
@@ -60,28 +68,18 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
             context['form'] = self.form_class(instance=self.object.comments)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(instance=self.object)
+
+        try:
+            rating = get_object_or_404(ArticleRating, article=self.object)
+            context['rating'] = rating.value()
+        except Exception:
+            # TODO обработать конкретное исключение
+            context['rating'] = 0
+
         return context
 
-    # Убрал форму апрува статьи, так как при создании нового коммента статья отправляется на модерацию
-    # Не понимаю назначения этого действия!!
-    # def post(self, request, *args, **kwargs):
-    #     """
-    #     :param request:
-    #     :param args:
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #     self.object = self.get_object()
-    #     form2 = self.second_form_class(request.POST, instance=self.object)
-    #     if form2.is_valid():
-    #         form2.save()
-    #         return super().post(request, *args, **kwargs)
-    #     else:
-    #         return self.render_to_response(
-    #             self.get_context_data(form2=form2))
 
-
-class ArticleCreateView(CreateView):
+class ArticleCreateView(UserIsNoBlockMixin, CreateView):
     """
     класс - ArticleCreate
     """
@@ -192,8 +190,11 @@ class CategoryArticleView(ListView):
         :return:
         """
         self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
-        return Article.objects.filter(category=self.category) \
+
+        queryset = Article.objects.filter(category=self.category)\
             .filter(status='PB', approve=True)
+        queryset = add_rating(queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         """

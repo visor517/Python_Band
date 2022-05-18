@@ -76,6 +76,7 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
         """ Проверяем форму регистрации """
 
         register_form = UserRegisterForm(request.POST, request.FILES)
+
         if register_form.is_valid():
             if HabrUser.objects.all().filter(email=register_form.data['email']):
                 context = {'error': f'пользователь уже зарегистрирован с данным EMAIL:{register_form.data["email"]}'}
@@ -141,10 +142,11 @@ class UserDetailView(DetailView):
         try:
             rating = get_object_or_404(AuthorRating, author=self.object)
             context['rating'] = rating.value()
-        except:
+        except Exception:
+            #TODO обработать конкретное исключение
             pass
-
         context['notify'] = NotifyUser.objects.all().filter(user_to=self.object)
+
         return context
 
 

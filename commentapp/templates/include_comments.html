@@ -25,7 +25,7 @@
             </div>
             {% if request.user.is_authenticated and request.user.role != 'U' %}
             <div class="row">
-                <div class="col-sm-2 d-flex align-items-end" style="margin-bottom:10px">Для администраторов:</div>
+                <div class="col-sm-3 d-flex align-items-end" style="margin-bottom:10px">Для администраторов:</div>
                 {% if request.user.role == 'A' or request.user.is_superuser %}
                 <div class="col-sm-2">
                     <a href="{% url '_admin:comment_update' item.pk %}"
@@ -76,8 +76,7 @@
 
     {% else %}
     <div class="col-5">
-        <p>Чтобы добавить комментарий <a href="{% url 'auth:login' %}">Войдите</a>
-            или <a href="{% url 'auth:register' %}">Зарегистрируйтесь</a></p>
+        <p>Чтобы добавить комментарий войдите или зарегистрируйтесь</p>
     </div>
     {% endif %}
     <br>
