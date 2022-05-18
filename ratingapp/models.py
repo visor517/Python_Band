@@ -19,6 +19,11 @@ class ArticleRating(models.Model):
         """ рейтинг """
         return self.likes + self.comments
 
+    @property
+    def rating(self):
+        return self.value()
+
+
 class AuthorRating(models.Model):
     """ Рейтинг автора """
 

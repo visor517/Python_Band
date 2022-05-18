@@ -53,6 +53,9 @@
                         <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i>
                             <a>комментариев: {{article.comments_articles.all.count }}</a>
                         </li>
+                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a
+                                 href="{% url 'article:detail' article.pk %}">Рейтинг: {{ article.rating }}</a>
+                        </li>
                     </ul>
                 </div>
 
