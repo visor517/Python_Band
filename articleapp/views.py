@@ -76,29 +76,10 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
             # TODO обработать конкретное исключение
             context['rating'] = 0
 
-
         return context
 
-    # Убрал форму апрува статьи, так как при создании нового коммента статья отправляется на модерацию
-    # Не понимаю назначения этого действия!!
-    # def post(self, request, *args, **kwargs):
-    #     """
-    #     :param request:
-    #     :param args:
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #     self.object = self.get_object()
-    #     form2 = self.second_form_class(request.POST, instance=self.object)
-    #     if form2.is_valid():
-    #         form2.save()
-    #         return super().post(request, *args, **kwargs)
-    #     else:
-    #         return self.render_to_response(
-    #             self.get_context_data(form2=form2))
 
-
-class ArticleCreateView(CreateView):
+class ArticleCreateView(UserIsNoBlockMixin, CreateView):
     """
     класс - ArticleCreate
     """

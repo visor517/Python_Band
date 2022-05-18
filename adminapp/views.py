@@ -153,8 +153,10 @@ class CommentDeleteView(UserIsPersonalMixin, DeleteView):
     model = Comments
     template_name = 'adminapp/comment/comment_delete.html'
     context_object_name = 'comment_to_delete'
-    success_url = reverse_lazy('_admin:comments')
+    # success_url = reverse_lazy('_admin:comments')
 
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
 
 # контроллеры для новостей
 class NewsListView(UserIsPersonalMixin, ListView):
