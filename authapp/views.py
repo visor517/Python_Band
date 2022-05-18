@@ -77,13 +77,20 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
 
         register_form = UserRegisterForm(request.POST, request.FILES)
 
-        if register_form.is_valid():
-            if HabrUser.objects.all().filter(email=register_form.data['email']):
-                context = {'error': f'пользователь уже зарегистрирован с данным EMAIL:{register_form.data["email"]}'}
-                return render(request, 'authapp/error.html', context)
-            user = register_form.save()
-            SendVerifyMail(user)
-            return HttpResponseRedirect(reverse('auth:login'))
+        if request.method == "POST":
+            if register_form.is_valid():
+                if HabrUser.objects.all().filter(email=register_form.data['email']):
+                    context = {'error': f'пользователь уже зарегистрирован с данным EMAIL:{register_form.data["email"]}'}
+                    return render(request, 'authapp/error.html', context)
+                user = register_form.save()
+                SendVerifyMail(user)
+                return HttpResponseRedirect(reverse('auth:login'))
+        else:
+            return render(
+                request,
+                HttpResponseRedirect(reverse('main')),
+                {}
+            )
 
 
 class UserIsUserMixin(UserPassesTestMixin):
