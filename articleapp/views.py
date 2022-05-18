@@ -3,6 +3,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 
 from articleapp.forms import ArticleForm, ArticleApprove
@@ -79,7 +80,7 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
         return context
 
 
-class ArticleCreateView(UserIsNoBlockMixin, CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     """
     класс - ArticleCreate
     """
