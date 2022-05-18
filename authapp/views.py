@@ -63,7 +63,10 @@ class LoginUserView(LoginView):
 
 class LogoutUserView(LogoutView):
     """ Контроллер выхода из системы """
-    pass
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
 
 
 class RegisterUserView(SuccessMessageMixin, CreateView):
@@ -85,12 +88,16 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
                 user = register_form.save()
                 SendVerifyMail(user)
                 return HttpResponseRedirect(reverse('auth:login'))
+            else:
+                context = {'error': f'Форма заполнена не корректна'}
+                return render(request, 'authapp/error.html', context)
         else:
             return render(
                 request,
                 HttpResponseRedirect(reverse('main')),
                 {}
             )
+
 
 
 class UserIsUserMixin(UserPassesTestMixin):
