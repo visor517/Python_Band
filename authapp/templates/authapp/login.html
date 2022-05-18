@@ -19,18 +19,17 @@
                             {% endif %}
                             {{ form.as_p }}
                             <br>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="войти">
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Войти">
                             <bottom class="btn btn-lg btn-primary btn-block">
-                                <a href="{% url 'auth:register' %}"> зарегистрироваться </a>
+                                <a href="{% url 'auth:register' %}"> Зарегистрироваться </a>
                             </bottom>
                             <bottom class="btn btn-lg btn-primary btn-block google">
-                                <a href="{% url "social:begin" "google-oauth2" %}"> зайти через Google </a>
+                                <a href="{% url "social:begin" "google-oauth2" %}"> Зайти через Google </a>
                             </bottom>
                         </fieldset>
                     </form>
                     <hr/>
-{#                    <center><h4>или</h4></center>#}
-{#                    <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/" class="">##}
+
                 </div>
             </div>
         </div>

@@ -1,9 +1,10 @@
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
     DeleteView
 from django.views.generic.edit import FormMixin
+
 from articleapp.forms import ArticleForm, ArticleApprove
 from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
@@ -17,9 +18,10 @@ class IndexView(ListView):
     """
     класс - Index
     """
-    model = Article
-    paginate_by = 3
+    queryset = Article.objects.filter(approve=True)
+    paginate_by = 4
     template_name = 'mainapp/index.html'
+    ordering = ('-publication_date', '-created')
 
 
 # Отображение списка статей
@@ -96,7 +98,6 @@ class ArticleDetailView(CommentView, FormMixin, DetailView):
 
 
 class ArticleCreateView(CreateView):
-
     """
     класс - ArticleCreate
     """
@@ -207,6 +208,7 @@ class CategoryArticleView(ListView):
         :return:
         """
         self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+
         queryset = Article.objects.filter(category=self.category)\
             .filter(status='PB', approve=True)
         queryset = add_rating(queryset)

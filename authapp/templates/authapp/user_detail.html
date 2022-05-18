@@ -4,6 +4,7 @@
 {% block css %}
 <link href="{% static 'adminapp/css/admin_style.css' %}" rel="stylesheet">
 <link href="{% static 'authapp/css/profile_style.css' %}" rel="stylesheet">
+<link href="{% static 'notificationapp/css/notify_style.css' %}" rel="stylesheet">
 {% endblock css %}
 
 {% block content %}
@@ -20,8 +21,10 @@
                     <div class="row">
                         <div class="col-sm-5 mar-b-5">Статус</div>
                         <div class="col-sm-7 mar-b-5">{{ object.get_role_display }}</div>
+                        {% if rating %}
                         <div class="col-sm-5 mar-b-5">Рейтинг</div>
                         <div class="col-sm-7 mar-b-5">{{ rating }} HABR-point</div>
+                        {% endif %}
                         <div class="col-sm-5 mar-b-5">Зарегистрирован</div>
                         <div class="col-sm-7 mar-b-5">{{ object.date_joined|date:"d-M-Y" }}</div>
                         <div class="col-sm-12 overflow-hidden mar-b-5"><p>{{object.habrprofile.tagline}}</p></div>
@@ -37,11 +40,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                            href="{% url 'auth:edit' user.pk %}">редактировать профиль</a>
+                            href="{% url 'auth:edit' user.pk %}">Редактировать профиль</a>
                     </div>
                     <div class="col-sm-12">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url 'auth:change_pass' %}">сменить пароль</a>
+                           href="{% url 'auth:change_pass' %}">Сменить пароль</a>
                     </div>
                 </div>
                 {% endif %}
@@ -52,7 +55,7 @@
                     {% if request.user.role == 'A'%}
                     <div class="col-sm-12  d-flex justify-content-center">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url '_admin:user_update' user.pk %}">редактировать</a>
+                           href="{% url '_admin:user_update' user.pk %}">Редактировать</a>
                     </div>
                     {% endif %}
                     <div class="col-sm-12 d-flex justify-align-center">
@@ -60,12 +63,12 @@
                             {% csrf_token %}
                             <input class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
                                    type="submit"
-                                   value="{% if not object.check_block %}блокировать{% else %}снять блокировку{% endif %}">
+                                   value="{% if not object.check_block %}Блокировать{% else %}Снять блокировку{% endif %}">
                         </form>
                     </div>
                     <div class="col-sm-12  d-flex justify-content-center">
                         <a class="btn btn-outline-secondary btn-block w-100 mar-b-5"
-                           href="{% url '_admin:user_delete' user.pk %}">удалить</a>
+                           href="{% url '_admin:user_delete' user.pk %}">Удалить</a>
                     </div>
                 </div>
                 {% endif %}
@@ -77,7 +80,8 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" style="color: #e96b56" id="public-tab" data-bs-toggle="tab"
+                            <button class="nav-link {% if request.user != object %}active{% endif %}e"
+                                    style="color: #e96b56" id="public-tab" data-bs-toggle="tab"
                                     data-bs-target="#public" type="button" role="tab" aria-controls="home"
                                     aria-selected="true">Публикации</button>
                         </li>
@@ -93,7 +97,8 @@
                                     aria-selected="false">Черновики</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" style="color: #e96b56" id="notify-tab" data-bs-toggle="tab"
+                            <button class="nav-link {% if request.user == object %}active{% endif %}"
+                                    style="color: #e96b56; position: relative;" id="notify-tab" data-bs-toggle="tab"
                                     data-bs-target="#notify" type="button" role="tab" aria-controls="notify"
                                     aria-selected="false">Уведомления</button>
                         </li>
@@ -102,7 +107,8 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content shadow" style="min-height:500px">
-                        <div class="tab-pane active" id="public" role="tabpanel" aria-labelledby="public-tab">
+                        <div class="tab-pane {% if request.user != object %}active{% endif %}"
+                             id="public" role="tabpanel" aria-labelledby="public-tab">
                             {% if articles_public %}
                             <div class="row" style="margin: 10px">
                                 {% for item in articles_public %}
@@ -113,21 +119,21 @@
                                             {{ item.publication_date }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center"><i class="bi bi-chat-dots"></i>
-                                            {{ item.comments_articles.all.count }}</a>
+                                            {{ item.comments_articles.all.count }}
                                         </div>
                                         <div class="col-sm-1 d-flex align-items-center"><i
                                                 class="bi bi-hand-thumbs-up"></i>
-                                            {{ item.liked.all.count }}</a>
+                                            {{ item.liked.all.count }}
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
+                                               href="{% url 'article:edit' item.pk %}">Редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -136,7 +142,7 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">опубликованных статей нет</h5>
+                                <h5 style="margin:20px auto">Опубликованных статей нет</h5>
                             </div>
                             {% endif %}
                         </div>
@@ -161,12 +167,12 @@
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:edit' item.pk %}">редактировать</a>
+                                               href="{% url 'article:edit' item.pk %}">Редактировать</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -175,7 +181,7 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">статей проходящих модерацию нет</h5>
+                                <h5 style="margin:20px auto">Статей проходящих модерацию нет</h5>
                             </div>
                             {% endif %}
                         </div>
@@ -199,7 +205,7 @@
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <a class="btn btn-secondary w-100"
                                                style="background-color: #e96b56; border-color: #e96b56;"
-                                               href="{% url 'article:detail' item.pk %}">читать</a>
+                                               href="{% url 'article:detail' item.pk %}">Читать</a>
                                         </div>
                                         <div class="col-sm-3 d-flex align-items-center ">
                                             <form method="POST" class="w-100 mar-b-5"
@@ -208,7 +214,7 @@
                                                 <input class="btn btn-secondary btn-block w-100 d-flex
                                                     justify-content-center" type="submit"
                                                        style="background-color: #e96b56; border-color: #e96b56;"
-                                                      value="опубликовать">
+                                                      value="Опубликовать">
                                             </form>
                                         </div>
                                     </div>
@@ -218,11 +224,21 @@
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-center">
-                                <h5 style="margin:20px auto">в черновиках пусто</h5>
+                                <h5 style="margin:20px auto">В черновиках пусто</h5>
                             </div>
                             {% endif %}
                         </div>
-                        <div class="tab-pane" id="notify" role="tabpanel" aria-labelledby="notify-tab">3</div>
+                        <div class="tab-pane {% if request.user == object %}active{% endif %}"
+                             id="notify" role="tabpanel" aria-labelledby="notify-tab">
+                            <a class="btn btn-outline-secondary btn-block w-100 d-flex justify-content-center"
+                               style="margin:10px 0 20px 0"
+                               href="{% url 'notify:notify_all' object.pk %}">Все уведомления</a>
+                            {% for item in notify  %}
+                            {% if not item.is_read %}
+                                {% include 'notificationapp/includes/notify_list.html' %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
                 </div>

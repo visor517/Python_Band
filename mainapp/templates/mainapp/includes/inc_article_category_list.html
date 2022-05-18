@@ -5,10 +5,9 @@
          <div class="row">
              {% for category in categories %}
              <div class="col-lg-3 col-md-6">
-                 <div class="icon-box">
-                     <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                 <div class="icon-box h-100">
+                     <div class="icon"><i class="bx bx-file"></i></div>
                      <h4><a href="{% url 'article:article_category' category.pk %}">{{ category }}</a></h4>
-                     <p>Статьи о {{ category }}.</p>
                  </div>
              </div>
              {% endfor %}

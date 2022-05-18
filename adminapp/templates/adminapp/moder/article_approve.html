@@ -12,7 +12,7 @@
                 <p>{{ article.author }}</p>
                 <p>{{ article.category }}</p>
                 <p>{{ article.content | safe }}</p>
-                {#<p>{{ article.image }}</p>#}
+
             </div>
             <div class="row align-items-end">
                 <div class="col-sm-2">
@@ -20,7 +20,7 @@
                         {% csrf_token %}
                         <div class="row">
                         {{ form.as_p }}
-                        <input class="btn btn-outline-secondary" type="submit" value="опубликовать">
+                        <input class="btn btn-outline-secondary" type="submit" value="Опубликовать">
                         </div>
                     </form>
                 </div>
@@ -30,7 +30,7 @@
                             {% csrf_token %}
 
                             <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
-                               type="submit" value="редактировать">
+                               type="submit" value="Редактировать">
                         </form>
                     </div>
                 {% endif %}
@@ -39,7 +39,7 @@
                         {% csrf_token %}
                         <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
                                type="submit"
-                               value="{% if article.status != 'DT' %} удалить {% else %} restore {% endif %}">
+                               value="{% if article.status != 'DT' %} Удалить {% else %} restore {% endif %}">
                     </form>
                 </div>
             </div>

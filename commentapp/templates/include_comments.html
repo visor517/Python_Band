@@ -25,11 +25,11 @@
             </div>
             {% if request.user.is_authenticated and request.user.role != 'U' %}
             <div class="row">
-                <div class="col-sm-2 d-flex align-items-end" style="margin-bottom:10px">Для админстраторов:</div>
+                <div class="col-sm-2 d-flex align-items-end" style="margin-bottom:10px">Для администраторов:</div>
                 {% if request.user.role == 'A' or request.user.is_superuser %}
                 <div class="col-sm-2">
                     <a href="{% url '_admin:comment_update' item.pk %}"
-                       class="btn btn-outline-secondary btn-block align-items-start d-b h-100 w-100">редактировать</a>
+                       class="btn btn-outline-secondary btn-block align-items-start d-b h-100 w-100">Редактировать</a>
                 </div>
                 {% endif %}
                 <div class="col-sm-2">
@@ -37,7 +37,7 @@
                         {% csrf_token %}
                         <input class="btn btn-outline-secondary btn-block align-items-end d-b w-100"
                                type="submit"
-                               value="{% if article.status != 'DT' %} удалить {% else %} восстановить {% endif %}">
+                               value="{% if article.status != 'DT' %} Удалить {% else %} Восстановить {% endif %}">
                     </form>
                 </div>
             </div>
@@ -70,14 +70,14 @@
         </div>
         {% else %}
         <div class="col-12">
-            <p>Вы не можете оставлять комментарии так как заблокированы до {{ user.is_block }}</p>
+            <p>Вы не можете оставлять комментарии, так как заблокированы до {{ user.is_block }}</p>
         </div>
         {% endif %}
 
     {% else %}
     <div class="col-5">
-        <p>Чтобы добавить комментарий <a href="{% url 'auth:login' %}">войдите</a>
-            или <a href="{% url 'auth:register' %}">зарегистрируйтесь.</a></p>
+        <p>Чтобы добавить комментарий <a href="{% url 'auth:login' %}">Войдите</a>
+            или <a href="{% url 'auth:register' %}">Зарегистрируйтесь</a></p>
     </div>
     {% endif %}
     <br>
