@@ -76,6 +76,7 @@ class RegisterUserView(SuccessMessageMixin, CreateView):
         """ Проверяем форму регистрации """
 
         register_form = UserRegisterForm(request.POST, request.FILES)
+
         if register_form.is_valid():
             if HabrUser.objects.all().filter(email=register_form.data['email']):
                 context = {'error': f'пользователь уже зарегистрирован с данным EMAIL:{register_form.data["email"]}'}

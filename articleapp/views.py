@@ -10,6 +10,7 @@ from articleapp.models import Article, Like, Category
 from commentapp.forms import CommentsForm
 from commentapp.views import CommentView
 from mainapp.views import main
+from ratingapp.models import ArticleRating
 from ratingapp.queryset import add_rating
 from .mixins import UserIsNoBlockMixin
 
